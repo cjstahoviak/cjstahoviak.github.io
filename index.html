@@ -69,17 +69,6 @@
             margin-left: 20px;
             font-size: 0.95em;
         }
-        .contact-info {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-            color: #333;
-        }
-        .contact-info div {
-            flex-basis: 32%;
-            margin-bottom: 10px;
-        }
         .skills {
             display: flex;
             flex-wrap: wrap;
@@ -124,6 +113,26 @@
         .cta-button:hover {
             background-color: #d76d77;
         }
+        .profile-pictures {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+        .profile-pictures figure {
+            text-align: center;
+            width: 300px; /* Fixed width for the images */
+        }
+        figure img {
+            width: 300px; /* Fixed image size */
+            height: auto;
+        }
+        figcaption {
+            margin-top: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            color: #3a1c71;
+        }
         @media screen and (max-width: 768px) {
             header h1 {
                 font-size: 2.5em;
@@ -144,7 +153,10 @@
     <div class="container">
         <section>
             <h2>About Me</h2>
-            <p>I’m a dedicated tech enthusiast pursuing a Master’s degree in Computer Science with a focus on robotics and intelligent systems. My expertise lies in C++, sensor fusion, and robotics control systems. I am passionate about pushing the boundaries of what machines can achieve in autonomous navigation and beyond.</p>
+            <p>I'm currently a master’s student in Computer Science at the University of New Mexico. I specialize in 
+                autonomous robotics, AI, and ROS-based development. I have a strong passion for research in autonomous
+                manipulation and algorithm development. I also enjoy competing in AI challenges in my free time. 
+            </p>
         </section>
 
         <section>
@@ -160,7 +172,8 @@
                     <strong>Location:</strong> Albuquerque, NM
                 </div>
             </div>
-            <a href="#" class="cta-button">Download Résumé</a>
+            <a href="Calvin Stahoviak 2024-09 Resume.pdf" class="cta-button">Download Résumé</a>
+            <a href="Calvin Stahoviak 2024-09 CV.pdf" class="cta-button">Download CV</a>
         </section>
 
         <section>
@@ -171,16 +184,24 @@
                     <em>Research and Development Intern (Apr 2019 – Aug 2022)</em>
                     <ul>
                         <li>Developed robotics projects for autonomous mapping and navigation using ROS.</li>
-                        <li>Designed motor control algorithms integrated with robotic platforms.</li>
-                        <li>Created a vision package for segmentation using RGBD sensor data.</li>
+                        <li>Implemented motor control algorithms using Arduino and ROS systems.</li>
+                        <li>Developed segmentation and localization systems with RGBD sensor data.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Sandia National Laboratories</strong> - Albuquerque, NM<br>
+                    <em>Graduate Intern (June 2024 – Present)</em>
+                    <ul>
+                        <li>Developing ROS2 driver for motor controllers and object manipulation algorithms.</li>
+                        <li>Created gesture recognition setup for moving robots.</li>
                     </ul>
                 </li>
                 <li>
                     <strong>University of New Mexico</strong> - Albuquerque, NM<br>
                     <em>Graduate Research Assistant (Aug 2023 – Present)</em>
                     <ul>
-                        <li>Worked on collaborative algorithms for mobile robot platforms.</li>
-                        <li>Conducted literature reviews and experiments to enhance autonomous navigation systems.</li>
+                        <li>Leading the development of mobile robots with cooperative lifting algorithms.</li>
+                        <li>Managed a team of undergraduates on mobile robotics projects.</li>
                     </ul>
                 </li>
             </ul>
@@ -197,6 +218,8 @@
                 <div class="skill-item">Bash</div>
                 <div class="skill-item">MATLAB</div>
                 <div class="skill-item">Simulink</div>
+                <div class="skill-item">TensorFlow</div>
+                <div class="skill-item">PyTorch</div>
             </div>
         </section>
 
@@ -206,7 +229,7 @@
                 <li>
                     <strong>University of New Mexico</strong> - Albuquerque, NM<br>
                     <em>Master of Science in Computer Science (Aug 2023 – Present)</em><br>
-                    GPA: 3.67
+                    GPA: 3.83
                 </li>
                 <li>
                     <strong>University of New Mexico</strong> - Albuquerque, NM<br>
@@ -215,6 +238,29 @@
                 </li>
             </ul>
         </section>
+
+        <section>
+            <h2>Publications</h2>
+            <ul>
+                <li>
+                    C. Young, C. Stahoviak, R. Kim, and J. E. Slightam, "Rapid Constrained Object Motion Estimation based on Centroid Localization of Semantically Labeled Objects," 2024 IEEE International Conference on Advanced Intelligent Mechatronics (AIM), Boston, MA, USA, 2024, pp. 791-798, doi: <a href="https://doi.org/10.1109/AIM55361.2024.10637056" target="_blank">10.1109/AIM55361.2024.10637056</a>.
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Photos</h2>
+            <div class="profile-pictures">
+                <figure>
+                    <img src="calvin-stahoviak.jpg" alt="Calvin J. Stahoviak">
+                    <figcaption>Myself</figcaption>
+                </figure>
+                <figure>
+                    <img src="scratch2.jpg" alt="My Cat">
+                    <figcaption>My Cat, "Scratch"</figcaption>
+                </figure>
+            </div>
+        </section>
     </div>
 </body>
-</html>
+</html> 
