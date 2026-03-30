@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calvin J. Stahoviak</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #3a1c71;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3.5em;
+            font-weight: 900;
+        }
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+        .container {
+            width: 85%;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        section h2 {
+            color: #3a1c71;
+            font-size: 2.2em;
+            border-bottom: 3px solid #d76d77;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+        section p {
+            font-size: 1.1em;
+            color: #555;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul li {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #555;
+        }
+        ul ul {
+            margin-top: 10px;
+            margin-left: 20px;
+            font-size: 0.95em;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .skill-item {
+            background-color: #f7f7f7;
+            color: #3a1c71;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .skill-item:hover {
+            background-color: #3a1c71;
+            color: white;
+            transform: translateY(-5px);
+        }
+        a {
+            color: #d76d77;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        a:hover {
+            border-color: #d76d77;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: #3a1c71;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        .cta-button:hover {
+            background-color: #d76d77;
+        }
+        .profile-pictures {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+        .profile-pictures figure {
+            text-align: center;
+            width: 300px; /* Fixed width for the images */
+        }
+        figure img {
+            width: 300px; /* Fixed image size */
+            height: auto;
+        }
+        figcaption {
+            margin-top: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            color: #3a1c71;
+        }
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+            .contact-info div {
+                flex-basis: 100%;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Calvin J. Stahoviak</h1>
+        <p>Tech Enthusiast | Robotics Specialist | Innovator</p>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>About Me</h2>
+            <p>I'm currently a master’s student in Computer Science at the University of New Mexico. I specialize in 
+                autonomous robotics, AI, and ROS-based development. I have a strong passion for research in autonomous
+                manipulation and algorithm development. I also enjoy competing in AI challenges in my free time. 
+            </p>
+        </section>
+
+        <section>
+            <h2>Contact Me</h2>
+            <div class="contact-info">
+                <div>
+                    <strong>Email:</strong> <a href="mailto:cjstahoviak@gmail.com">cjstahoviak@gmail.com</a>
+                </div>
+                <div>
+                    <strong>Phone:</strong> <a href="tel:+15055088249">(505) 508-8249</a>
+                </div>
+                <div>
+                    <strong>Location:</strong> Albuquerque, NM
+                </div>
+            </div>
+            <a href="Calvin Stahoviak 2024-09 Resume.pdf" class="cta-button">Download Résumé</a>
+            <a href="Calvin Stahoviak 2024-09 CV.pdf" class="cta-button">Download CV</a>
+        </section>
+
+        <section>
+            <h2>Experience</h2>
+            <ul>
+                <li>
+                    <strong>Sandia National Laboratories</strong> - Albuquerque, NM<br>
+                    <em>Research and Development Intern (Apr 2019 – Aug 2022)</em>
+                    <ul>
+                        <li>Developed robotics projects for autonomous mapping and navigation using ROS.</li>
+                        <li>Implemented motor control algorithms using Arduino and ROS systems.</li>
+                        <li>Developed segmentation and localization systems with RGBD sensor data.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Sandia National Laboratories</strong> - Albuquerque, NM<br>
+                    <em>Graduate Intern (June 2024 – Present)</em>
+                    <ul>
+                        <li>Developing ROS2 driver for motor controllers and object manipulation algorithms.</li>
+                        <li>Created gesture recognition setup for moving robots.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>University of New Mexico</strong> - Albuquerque, NM<br>
+                    <em>Graduate Research Assistant (Aug 2023 – Present)</em>
+                    <ul>
+                        <li>Leading the development of mobile robots with cooperative lifting algorithms.</li>
+                        <li>Managed a team of undergraduates on mobile robotics projects.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Skills</h2>
+            <div class="skills">
+                <div class="skill-item">C++</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">ROS</div>
+                <div class="skill-item">OpenCV</div>
+                <div class="skill-item">JavaScript</div>
+                <div class="skill-item">Bash</div>
+                <div class="skill-item">MATLAB</div>
+                <div class="skill-item">Simulink</div>
+                <div class="skill-item">TensorFlow</div>
+                <div class="skill-item">PyTorch</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <ul>
+                <li>
+                    <strong>University of New Mexico</strong> - Albuquerque, NM<br>
+                    <em>Master of Science in Computer Science (Aug 2023 – Present)</em><br>
+                    GPA: 3.83
+                </li>
+                <li>
+                    <strong>University of New Mexico</strong> - Albuquerque, NM<br>
+                    <em>Bachelor of Science in Computer Science (Aug 2018 – May 2022)</em><br>
+                    GPA: 3.47
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Publications</h2>
+            <ul>
+                <li>
+                    C. Young, C. Stahoviak, R. Kim, and J. E. Slightam, "Rapid Constrained Object Motion Estimation based on Centroid Localization of Semantically Labeled Objects," 2024 IEEE International Conference on Advanced Intelligent Mechatronics (AIM), Boston, MA, USA, 2024, pp. 791-798, doi: <a href="https://doi.org/10.1109/AIM55361.2024.10637056" target="_blank">10.1109/AIM55361.2024.10637056</a>.
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Photos</h2>
+            <div class="profile-pictures">
+                <figure>
+                    <img src="calvin_stahoviak.jpg" alt="Calvin J. Stahoviak">
+                    <figcaption>Myself</figcaption>
+                </figure>
+                <figure>
+                    <img src="scratch.jpg" alt="My Cat">
+                    <figcaption>My Cat, "Scratch"</figcaption>
+                </figure>
+            </div>
+        </section>
+    </div>
+</body>
+</html> 

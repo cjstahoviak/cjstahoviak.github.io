@@ -18,14 +18,24 @@ import SkillCategory from '../components/SkillCategory.astro';
       <!-- Left column: Bio + photo -->
       <div class="lg:col-span-2 space-y-6">
         <div class="flex flex-col sm:flex-row gap-8 items-start">
-          <img
-            src="/calvin_stahoviak.jpg"
-            alt="Calvin Stahoviak"
-            class="w-36 h-36 rounded-lg object-cover border-2 shrink-0"
-            style={`border-color: var(--color-border)`}
-            width="144"
-            height="144"
-          />
+          <div class="flex flex-col gap-4 shrink-0">
+            <img
+              src="/calvin_stahoviak.jpg"
+              alt="Calvin Stahoviak"
+              class="w-36 h-36 rounded-lg object-cover border-2"
+              style={`border-color: var(--color-border)`}
+              width="144"
+              height="144"
+            />
+            <img
+              src="/scratch.jpg"
+              alt="Scratch the cat"
+              class="w-36 h-36 rounded-lg object-cover border-2"
+              style={`border-color: var(--color-border)`}
+              width="144"
+              height="144"
+            />
+          </div>
           <div>
             <p class="text-base leading-relaxed mb-4" style={`color: var(--color-text-secondary)`}>
               I'm a computer scientist and roboticist based in Albuquerque, New Mexico.
@@ -76,15 +86,26 @@ import SkillCategory from '../components/SkillCategory.astro';
 
         <a
           href="/Calvin_Stahoviak_Resume.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center justify-center gap-2 w-full px-4 py-3 font-mono text-sm font-semibold rounded-md border transition-colors"
+          download
+          class="group flex items-center justify-center gap-2 w-full px-4 py-3 font-mono text-sm font-semibold rounded-md border transition-colors"
           style={`border-color: var(--color-accent-blue); color: var(--color-accent-blue)`}
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
-          Download Resume
+          <span data-scramble data-scramble-trigger="parent">Download Resume</span>
+        </a>
+
+        <a
+          href="/Calvin_Stahoviak_CV.pdf"
+          download
+          class="group flex items-center justify-center gap-2 w-full px-4 py-3 font-mono text-sm font-semibold rounded-md border transition-colors"
+          style={`border-color: var(--color-accent-coral); color: var(--color-accent-coral)`}
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <span data-scramble data-scramble-trigger="parent">Download CV</span>
         </a>
       </div>
     </div>

@@ -7,7 +7,7 @@
 ---
 
 <script>
-  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?<>{}[]';
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const MS_PER_CHAR = 15;
   const MIN_DURATION = 500;
 
@@ -50,9 +50,17 @@
         }
       }
 
-      el.textContent = result;
-
       if (resolvedCount < len) {
+        // Build DOM: text before cursor, cursor block, text after cursor
+        el.textContent = '';
+        el.appendChild(document.createTextNode(result.slice(0, resolvedCount)));
+        const cursor = document.createElement('span');
+        cursor.className = 'scramble-cursor';
+        cursor.textContent = result[resolvedCount] || '';
+        el.appendChild(cursor);
+        if (resolvedCount + 1 < len) {
+          el.appendChild(document.createTextNode(result.slice(resolvedCount + 1)));
+        }
         s.frame = requestAnimationFrame(tick);
       } else {
         el.textContent = s.original;
