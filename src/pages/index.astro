@@ -2,37 +2,71 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TypingEffect from '../components/TypingEffect.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+
+// All projects + publications for the combined carousel
+const carouselItems = [
+  { title: "DYNAMO — Multi-Robot Transport", description: "Dynamic admittance parameterization for non-prehensile cooperative transport using mobile robots with manipulator arms.", tags: ["ROS", "C++", "Python", "SLAM", "Controls"], type: "project" as const },
+  { title: "RL Quadrotor Control", description: "End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques.", tags: ["PyTorch", "Isaac Sim", "RL", "CUDA"], type: "project" as const },
+  { title: "Real-Time Object Tracking", description: "Computer vision pipeline for simultaneously tracking small objects across multiple video feeds.", tags: ["OpenCV", "Python", "Computer Vision"], type: "project" as const },
+  { title: "Physics-Informed Constraint Estimation", description: "Physics-informed deep neural network to rapidly estimate mechanical constraints of objects for robotic manipulation.", tags: ["PyTorch", "Physics-Informed ML", "Robotics"], type: "project" as const },
+  { title: "RGBD Detection & Localization", description: "Real-time RGBD-based detection, segmentation, and localization ROS package with CUDA-accelerated inference.", tags: ["ROS", "YOLO", "OpenCV", "CUDA"], type: "project" as const },
+  { title: "Gesture Recognition Testbed", description: "AprilTag and PID-based outdoor testbed for benchmarking gesture recognition on mobile robots.", tags: ["ROS", "AprilTag", "PID Control"], type: "project" as const },
+  { title: "Productivity Web App", description: "Full-stack web and mobile application for habit tracking with smart adherence mechanisms.", tags: ["Firebase", "Flutter", "Dart"], type: "project" as const },
+  { title: "Legislature Summarizer", description: "AI-powered web app for consolidating and summarizing government legislature. 4th place at Lobo Hackathon.", tags: ["AI", "Web App", "NLP"], type: "project" as const },
+  { title: "Dynamic Admittance Parametrisation of Non-Prehensile Multi-Robot Transport", description: "Stahoviak, C. et al. — MECC, 2026. (in preparation)", tags: ["Controls", "Multi-Robot", "Planning"], type: "publication" as const },
+  { title: "Reliability of Mobile Camera-Based Hand Sign Recognition in Outdoor Environments", description: "Stocco, P. et al. — MECC, 2026. (in preparation)", tags: ["Computer Vision", "Mobile Robots", "HRI"], type: "publication" as const },
+  { title: "Perceived Constraint Identification Using Physics-Informed Deep Neural Networks", description: "Kim, R. et al. — ASME LDSC, 2025.", tags: ["Physics-Informed ML", "Deep Learning"], type: "publication" as const },
+  { title: "Rapid Constrained Object Motion Estimation via Centroid Localization", description: "Young, C. et al. — AIM, 2024.", tags: ["Computer Vision", "CUDA", "ROS"], type: "publication" as const },
+];
+
+// Shuffle at build time
+const shuffled = [...carouselItems].sort(() => Math.random() - 0.5);
+
+const skills = [
+  "M.S. Computer Science",
+  "DOE L Clearance",
+  "5+ Years Research",
+  "Machine Learning",
+  "Robotics",
+  "Computer Vision",
+];
 ---
 
 <BaseLayout title="Calvin Stahoviak — Roboticist & Computer Scientist">
   <!-- Hero Section -->
-  <section class="relative min-h-screen flex items-center overflow-hidden">
-    <!-- Grid background -->
+  <section class="relative min-h-screen flex items-center overflow-hidden" id="hero-section">
+    <!-- Grid background (drifts) -->
     <div class="absolute inset-0 grid-overlay pointer-events-none"></div>
+    <!-- Grid mouse glow -->
+    <div class="absolute inset-0 grid-glow pointer-events-none" id="grid-glow"></div>
 
-    <!-- Geometric accents -->
-    <div class="absolute top-20 right-10 w-32 h-32 border rotate-12 opacity-20 hidden md:block" style={`border-color: var(--color-accent-blue)`}></div>
-    <div class="absolute bottom-32 left-10 w-16 h-16 rounded-full opacity-15 hidden md:block" style={`background: var(--color-accent-coral)`}></div>
-    <div class="absolute top-1/3 right-1/4 w-4 h-4 opacity-30 hidden md:block" style={`background: var(--color-accent-yellow)`}></div>
+    <!-- Blue radial glow at top -->
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
+      style="width: 900px; height: 650px; background: radial-gradient(ellipse at center, rgba(0,102,255,0.15), transparent 70%); z-index: 0"
+    ></div>
 
     <div class="max-w-6xl mx-auto px-6 py-32 relative z-10">
       <div class="max-w-3xl">
         <!-- Terminal-style label -->
         <div class="flex items-center gap-2 mb-6 animate-fade-in">
-          <span class="inline-block w-2 h-2 rounded-full animate-pulse" style={`background: var(--color-accent-yellow)`}></span>
+          <span
+            class="inline-block w-2.5 h-2.5 rounded-full animate-pulse"
+            style="background: #39FF14; box-shadow: 0 0 8px #39FF14, 0 0 16px rgba(57,255,20,0.3)"
+          ></span>
           <span class="font-mono text-xs tracking-widest uppercase" style={`color: var(--color-text-secondary)`}>
             Available for opportunities
           </span>
         </div>
 
         <!-- Name -->
-        <h1 class="text-5xl sm:text-6xl md:text-7xl font-mono font-bold tracking-tighter mb-6 animate-slide-up" style={`color: var(--color-text)`}>
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-mono font-bold tracking-tighter mb-6 animate-slide-up" style={`color: var(--color-text); animation-delay: 0.4s; opacity: 0;`}>
           Calvin<br />
           <span class="text-gradient">Stahoviak</span>
         </h1>
 
         <!-- Typing tagline -->
-        <div class="text-xl md:text-2xl font-mono mb-8 h-8 animate-slide-up" style="animation-delay: 0.15s; opacity: 0;">
+        <div class="text-xl md:text-2xl font-mono mb-8 h-8 animate-slide-up" style="animation-delay: 0.9s; opacity: 0;">
           <TypingEffect
             phrases={[
               "Roboticist & Computer Scientist",
@@ -45,14 +79,32 @@ import ProjectCard from '../components/ProjectCard.astro';
         </div>
 
         <!-- Bio -->
-        <p class="text-base md:text-lg leading-relaxed max-w-xl mb-10 animate-slide-up" style={`color: var(--color-text-secondary); animation-delay: 0.3s; opacity: 0;`}>
+        <p class="text-base md:text-lg leading-relaxed max-w-xl mb-8 animate-slide-up" style={`color: var(--color-text-secondary); animation-delay: 1.4s; opacity: 0;`}>
           M.S. in Computer Science from the University of New Mexico. I build intelligent robots
           that cooperate, perceive, and learn — from multi-robot transport systems to
           reinforcement-learned quadrotor controllers.
         </p>
 
+        <!-- Skills sliding window -->
+        <div class="relative overflow-hidden mb-10 animate-slide-up" style="animation-delay: 1.8s; opacity: 0;">
+          <!-- Fade edges -->
+          <div class="absolute left-0 top-0 bottom-0 w-12 z-10 pointer-events-none" style="background: linear-gradient(to right, var(--color-bg), transparent)"></div>
+          <div class="absolute right-0 top-0 bottom-0 w-12 z-10 pointer-events-none" style="background: linear-gradient(to left, var(--color-bg), transparent)"></div>
+
+          <div class="flex gap-3" style="animation: marquee 20s linear infinite; width: max-content;">
+            {[...skills, ...skills].map((skill) => (
+              <span
+                class="shrink-0 px-4 py-1.5 font-mono text-xs rounded-full whitespace-nowrap"
+                style={`background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-secondary)`}
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+
         <!-- CTAs -->
-        <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 0.45s; opacity: 0;">
+        <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 2.2s; opacity: 0;">
           <a
             href="/projects"
             class="inline-flex items-center gap-2 px-6 py-3 font-mono text-sm font-semibold rounded-md transition-all duration-200 hover:-translate-y-0.5"
@@ -75,14 +127,14 @@ import ProjectCard from '../components/ProjectCard.astro';
     </div>
 
     <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in" style="animation-delay: 1s; opacity: 0;">
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in" style="animation-delay: 3s; opacity: 0;">
       <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>scroll</span>
       <div class="w-px h-8" style={`background: var(--color-border)`}></div>
     </div>
   </section>
 
-  <!-- Featured projects teaser -->
-  <section class="py-24 border-t" style={`border-color: var(--color-border)`}>
+  <!-- Featured work carousel (projects + publications, shuffled) -->
+  <section class="py-24 border-t overflow-hidden" style={`border-color: var(--color-border)`}>
     <div class="max-w-6xl mx-auto px-6">
       <div class="flex items-baseline justify-between mb-12">
         <div>
@@ -90,7 +142,7 @@ import ProjectCard from '../components/ProjectCard.astro';
             Featured Work
           </h2>
           <p class="font-mono text-sm" style={`color: var(--color-text-secondary)`}>
-            Selected research and engineering projects
+            Selected research, engineering, and publications
           </p>
         </div>
         <a
@@ -101,20 +153,26 @@ import ProjectCard from '../components/ProjectCard.astro';
           All projects &rarr;
         </a>
       </div>
+    </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ProjectCard
-          title="DYNAMO — Multi-Robot Transport"
-          description="Dynamic admittance parameterization for non-prehensile cooperative transport using mobile robots with manipulator arms. Combines hybrid admittance-impedance control with optimal coordinated planning."
-          tags={["ROS", "C++", "Python", "SLAM", "Controls"]}
-          status="active"
-        />
-        <ProjectCard
-          title="RL Quadrotor Control"
-          description="End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques, trained in NVIDIA Isaac simulation environments."
-          tags={["PyTorch", "Isaac Sim", "Reinforcement Learning", "CUDA"]}
-          status="active"
-        />
+    <!-- Marquee container (full-width) -->
+    <div class="relative">
+      <!-- Fade edges -->
+      <div class="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style="background: linear-gradient(to right, var(--color-bg), transparent)"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style="background: linear-gradient(to left, var(--color-bg), transparent)"></div>
+
+      <div class="flex gap-6" style="animation: marquee 60s linear infinite; width: max-content;">
+        {/* Render shuffled items twice for seamless loop */}
+        {[...shuffled, ...shuffled].map((item) => (
+          <div class="shrink-0 w-[350px] h-[300px]">
+            <ProjectCard
+              title={item.title}
+              description={item.description}
+              tags={item.tags}
+              type={item.type}
+            />
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -126,24 +184,46 @@ import ProjectCard from '../components/ProjectCard.astro';
         class="rounded-lg border p-6 font-mono text-sm leading-relaxed"
         style={`background: var(--color-surface); border-color: var(--color-border)`}
       >
-        <div class="flex items-center gap-2 mb-4">
-          <span class="w-3 h-3 rounded-full" style={`background: var(--color-accent-coral)`}></span>
-          <span class="w-3 h-3 rounded-full" style={`background: var(--color-accent-yellow)`}></span>
-          <span class="w-3 h-3 rounded-full" style="background: #22C55E"></span>
-          <span class="ml-2" style={`color: var(--color-text-secondary)`}>~/calvin</span>
+        <div class="mb-4" style={`color: var(--color-text-secondary)`}>
+          <span style={`color: var(--color-border)`}>┌─[</span><span style="color: #22C55E">calvin@linux</span><span style={`color: var(--color-border)`}>]─[</span><span style={`color: var(--color-accent-blue)`}>~</span><span style={`color: var(--color-border)`}>]</span>
         </div>
         <div style={`color: var(--color-text-secondary)`}>
-          <span style={`color: var(--color-accent-blue)`}>$</span> cat stats.txt<br />
+          <span style={`color: var(--color-border)`}>└──╼</span> <span style={`color: var(--color-accent-blue)`}>$</span> cat stats.txt<br />
           <br />
-          <span style={`color: var(--color-text)`}>Education</span>&nbsp;&nbsp;&nbsp;&nbsp;M.S. Computer Science, University of New Mexico (GPA 3.83)<br />
-          <span style={`color: var(--color-text)`}>Thesis</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Awarded distinction, Dec. 2025<br />
-          <span style={`color: var(--color-text)`}>Publications</span>&nbsp;4 peer-reviewed papers (2 in preparation)<br />
-          <span style={`color: var(--color-text)`}>Languages</span>&nbsp;&nbsp;&nbsp;C++, CUDA, Python, MATLAB, and more<br />
-          <span style={`color: var(--color-text)`}>Focus</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Autonomous robotics, RL, computer vision<br />
+          <span style={`color: var(--color-text); display: inline-block; width: 14ch`}>Education</span>M.S. Computer Science, University of New Mexico (GPA 3.83)<br />
+          <span style={`color: var(--color-text); display: inline-block; width: 14ch`}>Thesis</span>Awarded distinction, Dec. 2025<br />
+          <span style={`color: var(--color-text); display: inline-block; width: 14ch`}>Publications</span>4 peer-reviewed papers (2 in preparation)<br />
+          <span style={`color: var(--color-text); display: inline-block; width: 14ch`}>Languages</span>C++, CUDA, Python, MATLAB, and more<br />
+          <span style={`color: var(--color-text); display: inline-block; width: 14ch`}>Focus</span>Autonomous robotics, RL, computer vision<br />
           <br />
-          <span style={`color: var(--color-accent-blue)`}>$</span> <span class="cursor-blink"></span>
+          <span style={`color: var(--color-border)`}>┌─[</span><span style="color: #22C55E">calvin@linux</span><span style={`color: var(--color-border)`}>]─[</span><span style={`color: var(--color-accent-blue)`}>~</span><span style={`color: var(--color-border)`}>]</span><br />
+          <span style={`color: var(--color-border)`}>└──╼</span> <span style={`color: var(--color-accent-blue)`}>$</span> <a href="/about" class="transition-colors hover:underline" style={`color: var(--color-accent-blue)`}>more about me</a> <span class="cursor-blink"></span>
         </div>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  function initGridGlow() {
+    const hero = document.getElementById('hero-section');
+    const glow = document.getElementById('grid-glow');
+    if (!hero || !glow) return;
+
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      glow.style.setProperty('--mouse-x', `${x}px`);
+      glow.style.setProperty('--mouse-y', `${y}px`);
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      glow.style.setProperty('--mouse-x', '-1000px');
+      glow.style.setProperty('--mouse-y', '-1000px');
+    });
+  }
+
+  initGridGlow();
+  document.addEventListener('astro:after-swap', initGridGlow);
+</script>

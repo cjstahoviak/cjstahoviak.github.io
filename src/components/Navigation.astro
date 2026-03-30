@@ -17,12 +17,15 @@ const links = [
   style={`background: color-mix(in srgb, var(--color-bg) 80%, transparent); border-color: var(--color-border)`}
   id="main-nav"
 >
-  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-    <!-- Logo -->
-    <a href="/" class="font-mono font-bold text-lg tracking-tight group flex items-center gap-2">
-      <span class="inline-block w-3 h-3 rounded-sm" style={`background: var(--color-accent-blue)`}></span>
-      <span style={`color: var(--color-text)`}>CS</span>
-      <span class="font-normal" style={`color: var(--color-text-secondary)`}>//</span>
+  <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    <!-- Logo with expanding blue dot → gradient -->
+    <a href="/" class="nav-logo relative font-mono font-bold text-xl tracking-tight flex items-center gap-2 px-2 py-1 rounded-md" aria-label="Home">
+      <span
+        class="nav-logo-dot absolute rounded-sm transition-all duration-300 ease-in-out"
+        style={`background: var(--color-accent-blue); width: 14px; height: 14px; left: 8px; top: 50%; transform: translateY(-50%); z-index: 0`}
+      ></span>
+      <span class="nav-logo-text relative z-10 transition-colors duration-300" style={`color: var(--color-text)`}>CS</span>
+      <span class="nav-logo-text relative z-10 font-normal transition-colors duration-300" style={`color: var(--color-text-secondary)`}>//</span>
     </a>
 
     <!-- Desktop nav -->
@@ -33,18 +36,18 @@ const links = [
           <a
             href={href}
             class:list={[
-              'px-3 py-2 font-mono text-sm rounded-md transition-colors',
+              'px-4 py-2 font-mono text-base rounded-md transition-colors',
               isActive ? 'nav-link-active' : 'nav-link',
             ]}
             style={isActive
               ? `color: var(--color-accent-blue); background: color-mix(in srgb, var(--color-accent-blue) 10%, transparent)`
               : `color: var(--color-text-secondary)`}
           >
-            {label}
+            <span data-scramble>{label}</span>
           </a>
         );
       })}
-      <div class="ml-3 pl-3" style={`border-left: 1px solid var(--color-border)`}>
+      <div class="ml-4 pl-4" style={`border-left: 1px solid var(--color-border)`}>
         <ThemeToggle />
       </div>
     </div>
@@ -95,6 +98,7 @@ const links = [
 </nav>
 
 <script>
+  // Mobile menu toggle
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
   const iconOpen = document.getElementById('menu-icon-open');
@@ -107,4 +111,38 @@ const links = [
     iconClose?.classList.toggle('hidden');
     btn.setAttribute('aria-expanded', String(!isOpen));
   });
+
+  // Logo hover: expand blue dot to full gradient, shrink back on leave
+  function initLogoHover() {
+    const logo = document.querySelector('.nav-logo') as HTMLElement | null;
+    const dot = document.querySelector('.nav-logo-dot') as HTMLElement | null;
+    const textSpans = logo?.querySelectorAll<HTMLElement>('.nav-logo-text');
+
+    if (!logo || !dot) return;
+
+    logo.addEventListener('mouseenter', () => {
+      dot.style.width = '100%';
+      dot.style.height = '100%';
+      dot.style.left = '0';
+      dot.style.top = '0';
+      dot.style.transform = 'none';
+      dot.style.borderRadius = '6px';
+      dot.style.background = 'linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-coral))';
+      textSpans?.forEach((span) => { span.style.color = 'white'; });
+    });
+
+    logo.addEventListener('mouseleave', () => {
+      dot.style.width = '14px';
+      dot.style.height = '14px';
+      dot.style.left = '8px';
+      dot.style.top = '50%';
+      dot.style.transform = 'translateY(-50%)';
+      dot.style.borderRadius = '';
+      dot.style.background = 'var(--color-accent-blue)';
+      textSpans?.forEach((span) => { span.style.color = ''; });
+    });
+  }
+
+  initLogoHover();
+  document.addEventListener('astro:after-swap', initLogoHover);
 </script>

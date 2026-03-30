@@ -94,6 +94,7 @@
       linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
     background-size: 4rem 4rem;
     opacity: 0.3;
+    animation: gridDrift 20s linear infinite;
   }
 
   html.light .grid-overlay {
@@ -102,12 +103,30 @@
       linear-gradient(to bottom, var(--color-border-light) 1px, transparent 1px);
   }
 
+  .grid-glow {
+    background-image:
+      linear-gradient(to right, var(--color-accent-blue) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-accent-blue) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+    opacity: 0.4;
+    animation: gridDrift 20s linear infinite;
+    -webkit-mask-image: radial-gradient(circle 300px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), white, transparent);
+    mask-image: radial-gradient(circle 300px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), white, transparent);
+  }
+
+  html.light .grid-glow {
+    background-image:
+      linear-gradient(to right, var(--color-accent-blue) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-accent-blue) 1px, transparent 1px);
+    opacity: 0.25;
+  }
+
   .animate-fade-in {
     animation: fadeIn 0.6s ease-out forwards;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.6s ease-out forwards;
+    animation: slideUp 0.8s ease-out forwards;
   }
 
   .cursor-blink::after {
@@ -115,6 +134,12 @@
     animation: blink 1s step-end infinite;
     color: var(--color-accent-blue);
   }
+
+  /* Accent bars: delay on hover-enter only, instant retract on leave */
+  .accent-bar-1 { transition-delay: 0s; }
+  .group:hover .accent-bar-1 { transition-delay: 0.2s; }
+  .accent-bar-2 { transition-delay: 0s; }
+  .group:hover .accent-bar-2 { transition-delay: 0.4s; }
 }
 
 /* ── Animations ── */
@@ -131,6 +156,16 @@
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+@keyframes gridDrift {
+  from { background-position: 0 0; }
+  to { background-position: 4rem 4rem; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 /* ── Typography for blog posts ── */

@@ -18,7 +18,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <!-- Publications list -->
     <div class="max-w-3xl space-y-8">
       <!-- Publication 1 -->
-      <article class="relative rounded-lg border p-6 group" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+      <article class="group relative rounded-lg border p-6 transition-all duration-300 hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
         <div class="flex items-center gap-3 mb-3">
           <span class="font-mono text-xs font-bold px-2 py-0.5 rounded" style={`background: color-mix(in srgb, var(--color-accent-blue) 15%, transparent); color: var(--color-accent-blue)`}>
             [1]
@@ -27,7 +27,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             In Preparation
           </span>
         </div>
-        <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`}>
+        <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">
           Dynamic Admittance Parametrisation of Non-Prehensile Multi-Robot Transport with Optimal Coordinated Planning
         </h3>
         <p class="text-sm mb-3" style={`color: var(--color-text-secondary)`}>
@@ -36,10 +36,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
           <em>MECC</em>, 2026.
         </p>
+        <div
+          class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style={`background: var(--color-accent-blue)`}
+        ></div>
+        <div
+          class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style={`background: var(--color-accent-coral); z-index: 1`}
+        ></div>
+        <div
+          class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style="background: #22C55E; z-index: 2"
+        ></div>
       </article>
 
       <!-- Publication 2 -->
-      <article class="relative rounded-lg border p-6 group" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+      <article class="group relative rounded-lg border p-6 transition-all duration-300 hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
         <div class="flex items-center gap-3 mb-3">
           <span class="font-mono text-xs font-bold px-2 py-0.5 rounded" style={`background: color-mix(in srgb, var(--color-accent-blue) 15%, transparent); color: var(--color-accent-blue)`}>
             [2]
@@ -48,7 +60,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             In Preparation
           </span>
         </div>
-        <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`}>
+        <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">
           Reliability of Mobile Camera-Based Hand Sign Recognition in Outdoor Environments
         </h3>
         <p class="text-sm mb-3" style={`color: var(--color-text-secondary)`}>
@@ -57,10 +69,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
           <em>MECC</em>, 2026.
         </p>
+        <div
+          class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style={`background: var(--color-accent-blue)`}
+        ></div>
+        <div
+          class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style={`background: var(--color-accent-coral); z-index: 1`}
+        ></div>
+        <div
+          class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style="background: #22C55E; z-index: 2"
+        ></div>
       </article>
 
       <!-- Publication 3 -->
-      <article class="relative rounded-lg border p-6 group" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+      <article class="group relative rounded-lg border p-6 transition-all duration-300 hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
         <div class="flex items-center gap-3 mb-3">
           <span class="font-mono text-xs font-bold px-2 py-0.5 rounded" style={`background: color-mix(in srgb, var(--color-accent-blue) 15%, transparent); color: var(--color-accent-blue)`}>
             [3]
@@ -69,7 +93,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Published
           </span>
         </div>
-        <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`}>
+        <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">
           Perceived Constraint Identification Using Physics-Informed Deep Neural Networks
         </h3>
         <p class="text-sm mb-3" style={`color: var(--color-text-secondary)`}>
@@ -78,10 +102,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
           <em>ASME LDSC</em>, 2025.
         </p>
+        <div
+          class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style={`background: var(--color-accent-blue)`}
+        ></div>
+        <div
+          class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style={`background: var(--color-accent-coral); z-index: 1`}
+        ></div>
+        <div
+          class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style="background: #22C55E; z-index: 2"
+        ></div>
       </article>
 
       <!-- Publication 4 -->
-      <article class="relative rounded-lg border p-6 group" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+      <article class="group relative rounded-lg border p-6 transition-all duration-300 hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
         <div class="flex items-center gap-3 mb-3">
           <span class="font-mono text-xs font-bold px-2 py-0.5 rounded" style={`background: color-mix(in srgb, var(--color-accent-blue) 15%, transparent); color: var(--color-accent-blue)`}>
             [4]
@@ -90,7 +126,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             Published
           </span>
         </div>
-        <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`}>
+        <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">
           Rapid Constrained Object Motion Estimation based on Centroid Localization of Semantically Labeled Objects
         </h3>
         <p class="text-sm mb-3" style={`color: var(--color-text-secondary)`}>
@@ -99,6 +135,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
           <em>AIM</em>, 2024.
         </p>
+        <div
+          class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style={`background: var(--color-accent-blue)`}
+        ></div>
+        <div
+          class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style={`background: var(--color-accent-coral); z-index: 1`}
+        ></div>
+        <div
+          class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+          style="background: #22C55E; z-index: 2"
+        ></div>
       </article>
     </div>
   </section>

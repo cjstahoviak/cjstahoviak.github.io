@@ -1,6 +1,7 @@
 ---
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+import TextScrambler from '../components/TextScrambler.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -63,5 +64,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <Footer />
+    <TextScrambler />
   </body>
 </html>

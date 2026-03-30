@@ -1,0 +1,91 @@
+---
+// TextScrambler — import once in BaseLayout.
+// Any element with data-scramble gets a crypto-decode hover effect.
+// If data-scramble-trigger="parent" is set, the effect triggers on the parent's hover instead.
+// Duration scales with text length: Math.max(500, len * 15).
+// Override with data-scramble-duration="1000" for custom timing.
+---
+
+<script>
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?<>{}[]';
+  const MS_PER_CHAR = 15;
+  const MIN_DURATION = 500;
+
+  interface ScramblerState {
+    original: string;
+    running: boolean;
+    frame: number;
+    duration: number;
+  }
+
+  const state = new WeakMap<Element, ScramblerState>();
+
+  function getDuration(el: Element, len: number): number {
+    const override = el.getAttribute('data-scramble-duration');
+    if (override) return parseInt(override, 10);
+    return Math.max(MIN_DURATION, len * MS_PER_CHAR);
+  }
+
+  function scramble(el: Element) {
+    const s = state.get(el);
+    if (!s || s.running) return;
+    s.running = true;
+
+    const len = s.original.length;
+    const resolveDelay = s.duration / len;
+    const startTime = performance.now();
+
+    function tick() {
+      const elapsed = performance.now() - startTime;
+      const resolvedCount = Math.min(len, Math.floor(elapsed / resolveDelay));
+      let result = '';
+
+      for (let i = 0; i < len; i++) {
+        if (s.original[i] === ' ') {
+          result += ' ';
+        } else if (i < resolvedCount) {
+          result += s.original[i];
+        } else {
+          result += CHARS[Math.floor(Math.random() * CHARS.length)];
+        }
+      }
+
+      el.textContent = result;
+
+      if (resolvedCount < len) {
+        s.frame = requestAnimationFrame(tick);
+      } else {
+        el.textContent = s.original;
+        s.running = false;
+      }
+    }
+
+    s.frame = requestAnimationFrame(tick);
+  }
+
+  function init() {
+    document.querySelectorAll('[data-scramble]').forEach((el) => {
+      if (state.has(el)) return;
+
+      const original = el.textContent || '';
+      state.set(el, {
+        original,
+        running: false,
+        frame: 0,
+        duration: getDuration(el, original.length),
+      });
+
+      const trigger = el.getAttribute('data-scramble-trigger');
+
+      if (trigger === 'parent' && el.parentElement) {
+        const card = el.closest('.group') || el.parentElement;
+        card.addEventListener('mouseenter', () => scramble(el));
+      } else {
+        el.addEventListener('mouseenter', () => scramble(el));
+      }
+    });
+  }
+
+  init();
+  document.addEventListener('astro:after-swap', init);
+</script>

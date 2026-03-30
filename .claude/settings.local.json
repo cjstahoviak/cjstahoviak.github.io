@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "Bash(node -e \"const{execSync}=require\\(''child_process''\\);console.log\\(execSync\\(''npm run build'',{encoding:''utf-8'',cwd:''c:/Users/cjsta/git/cjstahoviak.github.io'',env:{...process.env,FORCE_COLOR:''0''}}\\)\\)\")"
     ]
   }
 }
