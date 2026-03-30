@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+---
+
+<BaseLayout title="Projects — Calvin Stahoviak" description="Research and engineering projects by Calvin Stahoviak.">
+  <section class="max-w-6xl mx-auto px-6 pt-28 pb-20">
+    <!-- Page header -->
+    <div class="mb-16">
+      <h1 class="text-4xl md:text-5xl font-mono font-bold tracking-tight mb-4" style={`color: var(--color-text)`}>
+        Projects
+      </h1>
+      <p class="text-base max-w-xl" style={`color: var(--color-text-secondary)`}>
+        A selection of research and engineering work spanning robotics, machine learning, computer vision, and software development.
+      </p>
+      <div class="h-1 w-16 rounded mt-4" style={`background: var(--color-accent-coral)`}></div>
+    </div>
+
+    <!-- Projects grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <ProjectCard
+        title="DYNAMO — Multi-Robot Transport"
+        description="My M.S. thesis research (awarded distinction). Developed dynamic admittance parameterization for non-prehensile cooperative transport using mobile robots with fixed manipulator arms. Combines hybrid admittance-impedance control with optimal coordinated planning for robust payload manipulation without grasping."
+        tags={["ROS", "C++", "Python", "SLAM", "Admittance Control", "Motion Planning"]}
+        status="active"
+      />
+
+      <ProjectCard
+        title="RL Quadrotor Control"
+        description="End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques. Trained in NVIDIA Isaac simulation environments with sim-to-real transfer capabilities, enabling complex autonomous flight behaviors from a single learned policy."
+        tags={["PyTorch", "Isaac Sim", "Reinforcement Learning", "CUDA", "Python"]}
+        status="active"
+      />
+
+      <ProjectCard
+        title="Real-Time Object Tracking Pipeline"
+        description="Computer vision pipeline for simultaneously tracking small objects across multiple video feeds. Developed at Sandia National Laboratories, combining custom detection models with multi-camera synchronization for reliable real-time object localization."
+        tags={["OpenCV", "Python", "Computer Vision", "Real-Time Systems"]}
+        status="completed"
+      />
+
+      <ProjectCard
+        title="Physics-Informed Constraint Estimation"
+        description="Trained a physics-informed deep neural network and novel localization algorithm to rapidly estimate mechanical constraints of objects. Enables robust autonomous robotic manipulation by understanding physical properties before contact."
+        tags={["PyTorch", "Physics-Informed ML", "Robotics", "Python"]}
+        status="published"
+      />
+
+      <ProjectCard
+        title="RGBD Detection & Localization"
+        description="Novel real-time RGBD-based detection, segmentation, and localization ROS package. Integrated custom YOLO models with OpenCV filters and CUDA acceleration, achieving accurate centroid estimation with sub-frame inference on a single GPU."
+        tags={["ROS", "YOLO", "OpenCV", "CUDA", "C++", "Python"]}
+        status="published"
+      />
+
+      <ProjectCard
+        title="Gesture Recognition Testbed"
+        description="Designed and built an AprilTag and PID-based outdoor experimental testbed for benchmarking gesture recognition algorithms on mobile robots. Evaluated reliability and accuracy of hand-sign recognition across multiple robot platforms in outdoor environments."
+        tags={["ROS", "AprilTag", "PID Control", "Python", "Mobile Robots"]}
+        status="active"
+      />
+
+      <ProjectCard
+        title="Productivity Web App"
+        description="Full-stack web and mobile application for habit tracking. Built with Firebase backend and Flutter frontend, featuring smart habit adherence mechanisms. Included project planning, task management, and milestone tracking for collaborators."
+        tags={["Firebase", "Flutter", "Dart", "Full-Stack"]}
+        status="completed"
+      />
+
+      <ProjectCard
+        title="Legislature Summarizer"
+        description="AI-powered web application that consolidates and summarizes government legislature, making policy accessible and searchable. Built during the 2025 Lobo Hackathon, where it placed fourth."
+        tags={["AI", "Web App", "NLP", "Hackathon"]}
+        status="completed"
+      />
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TypingEffect from '../components/TypingEffect.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+---
+
+<BaseLayout title="Calvin Stahoviak — Roboticist & Computer Scientist">
+  <!-- Hero Section -->
+  <section class="relative min-h-screen flex items-center overflow-hidden">
+    <!-- Grid background -->
+    <div class="absolute inset-0 grid-overlay pointer-events-none"></div>
+
+    <!-- Geometric accents -->
+    <div class="absolute top-20 right-10 w-32 h-32 border rotate-12 opacity-20 hidden md:block" style={`border-color: var(--color-accent-blue)`}></div>
+    <div class="absolute bottom-32 left-10 w-16 h-16 rounded-full opacity-15 hidden md:block" style={`background: var(--color-accent-coral)`}></div>
+    <div class="absolute top-1/3 right-1/4 w-4 h-4 opacity-30 hidden md:block" style={`background: var(--color-accent-yellow)`}></div>
+
+    <div class="max-w-6xl mx-auto px-6 py-32 relative z-10">
+      <div class="max-w-3xl">
+        <!-- Terminal-style label -->
+        <div class="flex items-center gap-2 mb-6 animate-fade-in">
+          <span class="inline-block w-2 h-2 rounded-full animate-pulse" style={`background: var(--color-accent-yellow)`}></span>
+          <span class="font-mono text-xs tracking-widest uppercase" style={`color: var(--color-text-secondary)`}>
+            Available for opportunities
+          </span>
+        </div>
+
+        <!-- Name -->
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-mono font-bold tracking-tighter mb-6 animate-slide-up" style={`color: var(--color-text)`}>
+          Calvin<br />
+          <span class="text-gradient">Stahoviak</span>
+        </h1>
+
+        <!-- Typing tagline -->
+        <div class="text-xl md:text-2xl font-mono mb-8 h-8 animate-slide-up" style="animation-delay: 0.15s; opacity: 0;">
+          <TypingEffect
+            phrases={[
+              "Roboticist & Computer Scientist",
+              "Reinforcement Learning Researcher",
+              "Multi-Robot Systems Engineer",
+              "Computer Vision Developer",
+            ]}
+            class="text-gradient"
+          /><span class="cursor-blink"></span>
+        </div>
+
+        <!-- Bio -->
+        <p class="text-base md:text-lg leading-relaxed max-w-xl mb-10 animate-slide-up" style={`color: var(--color-text-secondary); animation-delay: 0.3s; opacity: 0;`}>
+          M.S. in Computer Science from the University of New Mexico. I build intelligent robots
+          that cooperate, perceive, and learn — from multi-robot transport systems to
+          reinforcement-learned quadrotor controllers.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-wrap gap-4 animate-slide-up" style="animation-delay: 0.45s; opacity: 0;">
+          <a
+            href="/projects"
+            class="inline-flex items-center gap-2 px-6 py-3 font-mono text-sm font-semibold rounded-md transition-all duration-200 hover:-translate-y-0.5"
+            style={`background: var(--color-accent-blue); color: white`}
+          >
+            View Projects
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+          <a
+            href="/about"
+            class="inline-flex items-center gap-2 px-6 py-3 font-mono text-sm font-semibold rounded-md border transition-all duration-200 hover:-translate-y-0.5"
+            style={`border-color: var(--color-border); color: var(--color-text)`}
+          >
+            About Me
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in" style="animation-delay: 1s; opacity: 0;">
+      <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>scroll</span>
+      <div class="w-px h-8" style={`background: var(--color-border)`}></div>
+    </div>
+  </section>
+
+  <!-- Featured projects teaser -->
+  <section class="py-24 border-t" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex items-baseline justify-between mb-12">
+        <div>
+          <h2 class="text-3xl font-mono font-bold tracking-tight mb-2" style={`color: var(--color-text)`}>
+            Featured Work
+          </h2>
+          <p class="font-mono text-sm" style={`color: var(--color-text-secondary)`}>
+            Selected research and engineering projects
+          </p>
+        </div>
+        <a
+          href="/projects"
+          class="hidden sm:inline-flex items-center gap-1 font-mono text-sm transition-colors"
+          style={`color: var(--color-accent-blue)`}
+        >
+          All projects &rarr;
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ProjectCard
+          title="DYNAMO — Multi-Robot Transport"
+          description="Dynamic admittance parameterization for non-prehensile cooperative transport using mobile robots with manipulator arms. Combines hybrid admittance-impedance control with optimal coordinated planning."
+          tags={["ROS", "C++", "Python", "SLAM", "Controls"]}
+          status="active"
+        />
+        <ProjectCard
+          title="RL Quadrotor Control"
+          description="End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques, trained in NVIDIA Isaac simulation environments."
+          tags={["PyTorch", "Isaac Sim", "Reinforcement Learning", "CUDA"]}
+          status="active"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick stats / terminal block -->
+  <section class="py-16 border-t" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <div
+        class="rounded-lg border p-6 font-mono text-sm leading-relaxed"
+        style={`background: var(--color-surface); border-color: var(--color-border)`}
+      >
+        <div class="flex items-center gap-2 mb-4">
+          <span class="w-3 h-3 rounded-full" style={`background: var(--color-accent-coral)`}></span>
+          <span class="w-3 h-3 rounded-full" style={`background: var(--color-accent-yellow)`}></span>
+          <span class="w-3 h-3 rounded-full" style="background: #22C55E"></span>
+          <span class="ml-2" style={`color: var(--color-text-secondary)`}>~/calvin</span>
+        </div>
+        <div style={`color: var(--color-text-secondary)`}>
+          <span style={`color: var(--color-accent-blue)`}>$</span> cat stats.txt<br />
+          <br />
+          <span style={`color: var(--color-text)`}>Education</span>&nbsp;&nbsp;&nbsp;&nbsp;M.S. Computer Science, University of New Mexico (GPA 3.83)<br />
+          <span style={`color: var(--color-text)`}>Thesis</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Awarded distinction, Dec. 2025<br />
+          <span style={`color: var(--color-text)`}>Publications</span>&nbsp;4 peer-reviewed papers (2 in preparation)<br />
+          <span style={`color: var(--color-text)`}>Languages</span>&nbsp;&nbsp;&nbsp;C++, CUDA, Python, MATLAB, and more<br />
+          <span style={`color: var(--color-text)`}>Focus</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Autonomous robotics, RL, computer vision<br />
+          <br />
+          <span style={`color: var(--color-accent-blue)`}>$</span> <span class="cursor-blink"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

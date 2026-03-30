@@ -1,0 +1,260 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TimelineEntry from '../components/TimelineEntry.astro';
+import SkillCategory from '../components/SkillCategory.astro';
+---
+
+<BaseLayout title="About — Calvin Stahoviak" description="Background, skills, and experience of Calvin Stahoviak — roboticist and computer scientist.">
+  <section class="max-w-6xl mx-auto px-6 pt-28 pb-20">
+    <!-- Page header -->
+    <div class="mb-16">
+      <h1 class="text-4xl md:text-5xl font-mono font-bold tracking-tight mb-4" style={`color: var(--color-text)`}>
+        About
+      </h1>
+      <div class="h-1 w-16 rounded" style={`background: var(--color-accent-blue)`}></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <!-- Left column: Bio + photo -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="flex flex-col sm:flex-row gap-8 items-start">
+          <img
+            src="/calvin_stahoviak.jpg"
+            alt="Calvin Stahoviak"
+            class="w-36 h-36 rounded-lg object-cover border-2 shrink-0"
+            style={`border-color: var(--color-border)`}
+            width="144"
+            height="144"
+          />
+          <div>
+            <p class="text-base leading-relaxed mb-4" style={`color: var(--color-text-secondary)`}>
+              I'm a computer scientist and roboticist based in Albuquerque, New Mexico.
+              I recently completed my M.S. in Computer Science at the University of New Mexico,
+              where my thesis on dynamic admittance parameterization for multi-robot transport
+              was awarded distinction.
+            </p>
+            <p class="text-base leading-relaxed mb-4" style={`color: var(--color-text-secondary)`}>
+              My research spans the intersection of autonomous robotics, reinforcement learning,
+              and computer vision. At Sandia National Laboratories, I've developed everything
+              from physics-informed neural networks for robotic manipulation to end-to-end
+              RL-based quadrotor controllers. I care deeply about building intelligent systems
+              that operate reliably in the real world.
+            </p>
+            <p class="text-base leading-relaxed" style={`color: var(--color-text-secondary)`}>
+              Outside the lab, I studied abroad in Akita, Japan, and continue studying
+              Japanese (JLPT ~N3). I also volunteer as a judge chair for regional STEM
+              research competitions.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column: Quick info -->
+      <div class="space-y-6">
+        <div
+          class="rounded-lg border p-5"
+          style={`background: var(--color-surface); border-color: var(--color-border)`}
+        >
+          <h3 class="font-mono text-xs font-semibold tracking-widest uppercase mb-4" style={`color: var(--color-accent-blue)`}>
+            Quick Info
+          </h3>
+          <dl class="space-y-3 text-sm">
+            {[
+              { label: 'Location', value: 'Albuquerque, NM' },
+              { label: 'Education', value: 'M.S. Computer Science' },
+              { label: 'University', value: 'University of New Mexico' },
+              { label: 'Focus', value: 'Robotics, RL, Computer Vision' },
+              { label: 'Clearance', value: 'Active DOE L' },
+            ].map(({ label, value }) => (
+              <div class="flex justify-between gap-4">
+                <dt class="font-mono" style={`color: var(--color-text-secondary)`}>{label}</dt>
+                <dd class="text-right" style={`color: var(--color-text)`}>{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <a
+          href="/Calvin_Stahoviak_Resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center justify-center gap-2 w-full px-4 py-3 font-mono text-sm font-semibold rounded-md border transition-colors"
+          style={`border-color: var(--color-accent-blue); color: var(--color-accent-blue)`}
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Download Resume
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Skills -->
+  <section class="border-t py-20" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-mono font-bold tracking-tight mb-10" style={`color: var(--color-text)`}>
+        Technical Skills
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <SkillCategory
+          title="Languages"
+          skills={["C++", "CUDA", "C", "Python", "Bash", "MATLAB", "Java", "Haskell", "HTML/CSS", "XML"]}
+          accent="var(--color-accent-blue)"
+        />
+        <SkillCategory
+          title="Robotics"
+          skills={["ROS", "Isaac Sim/Lab", "Gazebo", "SLAM", "Admittance/Impedance Control", "Occupancy Mapping", "Motion Planning"]}
+          accent="var(--color-accent-coral)"
+        />
+        <SkillCategory
+          title="Machine Learning"
+          skills={["PyTorch", "TensorFlow", "YOLO", "scikit-learn", "MLFlow", "Optuna", "Reinforcement Learning"]}
+          accent="var(--color-accent-yellow)"
+        />
+        <SkillCategory
+          title="Computer Vision"
+          skills={["OpenCV", "Point Cloud Processing", "OpenGL"]}
+          accent="var(--color-accent-blue)"
+        />
+        <SkillCategory
+          title="Hardware"
+          skills={["RGBD Sensors", "AprilTag", "Mobile Robot Platforms", "Robotic Manipulators", "Low-Level Sensor I/O"]}
+          accent="var(--color-accent-coral)"
+        />
+        <SkillCategory
+          title="Developer Tools"
+          skills={["Git", "Conda", "Linux", "VS Code", "Simulink", "SLURM", "Firebase", "Flutter"]}
+          accent="var(--color-accent-yellow)"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Timeline -->
+  <section class="border-t py-20" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-mono font-bold tracking-tight mb-10" style={`color: var(--color-text)`}>
+        Experience
+      </h2>
+
+      <div class="max-w-3xl">
+        <TimelineEntry
+          title="R&D Graduate Intern"
+          subtitle="Sandia National Laboratories"
+          date="June 2024 — Present"
+          location="Albuquerque, NM"
+          accent="var(--color-accent-blue)"
+          items={[
+            "Built an AprilTag and PID-based outdoor testbed for benchmarking gesture recognition on mobile robots across multiple platforms.",
+            "Trained a physics-informed deep neural network for rapidly estimating mechanical constraints of objects for autonomous robotic manipulation.",
+            "Developed end-to-end multi-behavior policy for quadrotor control using deep reinforcement learning.",
+            "Built a computer vision pipeline for tracking small objects across multiple simultaneous video feeds.",
+          ]}
+        />
+        <TimelineEntry
+          title="Graduate Research Assistant"
+          subtitle="University of New Mexico (with Prof. Melanie Moses)"
+          date="Aug. 2023 — Dec. 2025"
+          location="Albuquerque, NM"
+          accent="var(--color-accent-coral)"
+          items={[
+            "Researched autonomous cooperative transport using mobile robots with fixed manipulator arms, developing hybrid admittance-impedance control and optimal coordinated planning.",
+            "Full-stack robot development: mechanical prototyping, manipulator integration, SLAM-based localization, and pose-estimation pipelines.",
+            "Managed a team of undergraduate researchers — defining roadmaps, allocating tasks, and presenting weekly progress updates.",
+          ]}
+        />
+        <TimelineEntry
+          title="R&D Undergraduate Intern"
+          subtitle="Sandia National Laboratories"
+          date="Apr. 2019 — Aug. 2022"
+          location="Albuquerque, NM"
+          accent="var(--color-accent-yellow)"
+          items={[
+            "Implemented low-level motor controllers for skid-steer mobile robots using MATLAB, Arduino, Raspberry Pi, and ROS.",
+            "Developed a real-time RGBD-based detection, segmentation, and localization ROS package using custom YOLO models, OpenCV, and CUDA acceleration.",
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Timeline -->
+  <section class="border-t py-20" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-mono font-bold tracking-tight mb-10" style={`color: var(--color-text)`}>
+        Education
+      </h2>
+
+      <div class="max-w-3xl">
+        <TimelineEntry
+          title="M.S. Computer Science"
+          subtitle="University of New Mexico — GPA 3.83"
+          date="Aug. 2023 — Dec. 2025"
+          location="Albuquerque, NM"
+          accent="var(--color-accent-blue)"
+          items={[
+            "Thesis (awarded distinction): Dynamic Admittance Parameterization for Non-Prehensile Multi-Robot Transport with Optimal Coordinated Planning",
+            "Coursework: Machine Learning, Advanced ML, Deep Reinforcement Learning, Controls, Parallel Processing, High Performance Computing",
+          ]}
+        />
+        <TimelineEntry
+          title="B.S. Computer Science"
+          subtitle="University of New Mexico"
+          date="Aug. 2018 — May 2022"
+          location="Albuquerque, NM"
+          accent="var(--color-accent-coral)"
+          items={[
+            "Core coursework in Data Structures & Algorithms, Design of Large Programs, Computer Logic Design, and Data Organization.",
+            "Studied abroad at Akita International University, Akita, Japan (Fall 2022).",
+          ]}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Awards -->
+  <section class="border-t py-20" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-mono font-bold tracking-tight mb-10" style={`color: var(--color-text)`}>
+        Awards & Volunteering
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+        <div class="rounded-lg border p-5" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2 h-2 rounded-full" style={`background: var(--color-accent-yellow)`}></span>
+            <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025</span>
+          </div>
+          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`}>Thesis Distinction</h3>
+          <p class="text-sm" style={`color: var(--color-text-secondary)`}>M.S. thesis awarded distinction by UNM Department of Computer Science.</p>
+        </div>
+        <div class="rounded-lg border p-5" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2 h-2 rounded-full" style={`background: var(--color-accent-coral)`}></span>
+            <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025</span>
+          </div>
+          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`}>Lobo Hackathon — 4th Place</h3>
+          <p class="text-sm" style={`color: var(--color-text-secondary)`}>AI-powered web app for consolidating and summarizing government legislature.</p>
+        </div>
+        <div class="rounded-lg border p-5" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2 h-2 rounded-full" style={`background: var(--color-accent-blue)`}></span>
+            <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025–2026</span>
+          </div>
+          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`}>STEM Judge Chair</h3>
+          <p class="text-sm" style={`color: var(--color-text-secondary)`}>Central NM STEM Research Challenge — organized judging panels for regional student research.</p>
+        </div>
+        <div class="rounded-lg border p-5" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-2 h-2 rounded-full" style={`background: #22C55E`}></span>
+            <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025</span>
+          </div>
+          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`}>CS Ambassador</h3>
+          <p class="text-sm" style={`color: var(--color-text-secondary)`}>UNM School of Engineering Open House — represented the Computer Science department.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

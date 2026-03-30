@@ -1,0 +1,25 @@
+---
+interface Props {
+  title: string;
+  skills: string[];
+  accent?: string;
+}
+
+const { title, skills, accent = 'var(--color-accent-blue)' } = Astro.props;
+---
+
+<div>
+  <h4 class="font-mono text-xs font-semibold tracking-widest uppercase mb-3" style={`color: ${accent}`}>
+    {title}
+  </h4>
+  <div class="flex flex-wrap gap-2">
+    {skills.map((skill) => (
+      <span
+        class="px-2.5 py-1 text-sm rounded font-mono"
+        style={`background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-secondary)`}
+      >
+        {skill}
+      </span>
+    ))}
+  </div>
+</div>

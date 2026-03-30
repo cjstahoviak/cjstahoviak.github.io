@@ -1,0 +1,53 @@
+---
+interface Props {
+  phrases: string[];
+  class?: string;
+}
+
+const { phrases, class: className } = Astro.props;
+---
+
+<span
+  class:list={['typing-effect', className]}
+  data-phrases={JSON.stringify(phrases)}
+  aria-label={phrases[0]}
+></span>
+
+<script>
+  function initTypingEffect() {
+    document.querySelectorAll('.typing-effect').forEach((el) => {
+      const phrases: string[] = JSON.parse(el.getAttribute('data-phrases') || '[]');
+      if (phrases.length === 0) return;
+
+      let phraseIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      let timeout: ReturnType<typeof setTimeout>;
+
+      function tick() {
+        const current = phrases[phraseIndex];
+        const display = current.substring(0, charIndex);
+        el.textContent = display;
+
+        let delay = isDeleting ? 30 : 60;
+
+        if (!isDeleting && charIndex === current.length) {
+          delay = 2000;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          delay = 400;
+        }
+
+        charIndex += isDeleting ? -1 : 1;
+        timeout = setTimeout(tick, delay);
+      }
+
+      tick();
+    });
+  }
+
+  initTypingEffect();
+  document.addEventListener('astro:after-swap', initTypingEffect);
+</script>

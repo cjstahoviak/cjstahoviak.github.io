@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Blog — Calvin Stahoviak" description="Thoughts on robotics, machine learning, and software engineering.">
+  <section class="max-w-6xl mx-auto px-6 pt-28 pb-20">
+    <!-- Page header -->
+    <div class="mb-16">
+      <h1 class="text-4xl md:text-5xl font-mono font-bold tracking-tight mb-4" style={`color: var(--color-text)`}>
+        Blog
+      </h1>
+      <p class="text-base max-w-xl" style={`color: var(--color-text-secondary)`}>
+        Notes on robotics, reinforcement learning, and engineering.
+      </p>
+      <div class="h-1 w-16 rounded mt-4" style={`background: var(--color-accent-blue)`}></div>
+    </div>
+
+    <!-- Posts list -->
+    {posts.length === 0 ? (
+      <div class="rounded-lg border p-12 text-center" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+        <p class="font-mono" style={`color: var(--color-text-secondary)`}>No posts yet. Check back soon.</p>
+      </div>
+    ) : (
+      <div class="max-w-3xl space-y-4">
+        {posts.map((post) => {
+          const formattedDate = post.data.date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          });
+          return (
+            <a
+              href={`/blog/${post.id}`}
+              class="group block rounded-lg border p-6 transition-all duration-200 hover:-translate-y-0.5"
+              style={`background: var(--color-surface); border-color: var(--color-border)`}
+            >
+              <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-2">
+                <h2 class="font-mono font-bold text-lg transition-colors group-hover:text-[var(--color-accent-blue)]" style={`color: var(--color-text)`}>
+                  {post.data.title}
+                </h2>
+                <time class="font-mono text-xs shrink-0" style={`color: var(--color-text-secondary)`}>
+                  {formattedDate}
+                </time>
+              </div>
+              <p class="text-sm mb-3" style={`color: var(--color-text-secondary)`}>
+                {post.data.description}
+              </p>
+              {post.data.tags && (
+                <div class="flex flex-wrap gap-2">
+                  {post.data.tags.map((tag: string) => (
+                    <span
+                      class="px-2 py-0.5 font-mono text-xs rounded"
+                      style={`background: var(--color-elevated); border: 1px solid var(--color-border); color: var(--color-text-secondary)`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </a>
+          );
+        })}
+      </div>
+    )}
+  </section>
+</BaseLayout>

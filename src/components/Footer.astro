@@ -1,0 +1,84 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t" style={`border-color: var(--color-border)`}>
+  <div class="max-w-6xl mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Brand -->
+      <div>
+        <div class="font-mono font-bold text-lg mb-2 flex items-center gap-2">
+          <span class="inline-block w-3 h-3 rounded-sm" style={`background: var(--color-accent-blue)`}></span>
+          <span style={`color: var(--color-text)`}>Calvin Stahoviak</span>
+        </div>
+        <p class="text-sm" style={`color: var(--color-text-secondary)`}>
+          Roboticist & Computer Scientist
+        </p>
+      </div>
+
+      <!-- Links -->
+      <div>
+        <h4 class="font-mono text-xs font-semibold tracking-widest uppercase mb-3" style={`color: var(--color-text-secondary)`}>
+          Navigation
+        </h4>
+        <div class="flex flex-col gap-2">
+          {[
+            { href: '/about', label: 'About' },
+            { href: '/projects', label: 'Projects' },
+            { href: '/publications', label: 'Publications' },
+            { href: '/blog', label: 'Blog' },
+          ].map(({ href, label }) => (
+            <a
+              href={href}
+              class="text-sm transition-colors"
+              style={`color: var(--color-text-secondary)`}
+              onmouseover="this.style.color='var(--color-accent-blue)'"
+              onmouseout="this.style.color='var(--color-text-secondary)'"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="font-mono text-xs font-semibold tracking-widest uppercase mb-3" style={`color: var(--color-text-secondary)`}>
+          Connect
+        </h4>
+        <div class="flex flex-col gap-2">
+          <a
+            href="mailto:cjstahoviak@gmail.com"
+            class="text-sm transition-colors"
+            style={`color: var(--color-text-secondary)`}
+            onmouseover="this.style.color='var(--color-accent-blue)'"
+            onmouseout="this.style.color='var(--color-text-secondary)'"
+          >
+            cjstahoviak@gmail.com
+          </a>
+          <a
+            href="https://github.com/cjstahoviak"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm transition-colors"
+            style={`color: var(--color-text-secondary)`}
+            onmouseover="this.style.color='var(--color-accent-blue)'"
+            onmouseout="this.style.color='var(--color-text-secondary)'"
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-10 pt-6 border-t flex flex-col sm:flex-row justify-between items-center gap-4" style={`border-color: var(--color-border)`}>
+      <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
+        &copy; {year} Calvin Stahoviak. All rights reserved.
+      </p>
+      <p class="font-mono text-xs" style={`color: var(--color-border)`}>
+        Built with Astro + Tailwind CSS
+      </p>
+    </div>
+  </div>
+</footer>
