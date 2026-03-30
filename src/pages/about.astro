@@ -243,37 +243,49 @@ import SkillCategory from '../components/SkillCategory.astro';
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
-        <div class="rounded-lg border p-5" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+        <div class="group relative rounded-lg border p-5 transition-all duration-300 hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
           <div class="flex items-center gap-2 mb-2">
             <span class="w-2 h-2 rounded-full" style={`background: var(--color-accent-yellow)`}></span>
             <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025</span>
           </div>
-          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`}>Thesis Distinction</h3>
+          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">Thesis Distinction</h3>
           <p class="text-sm" style={`color: var(--color-text-secondary)`}>M.S. thesis awarded distinction by UNM Department of Computer Science.</p>
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-blue)`}></div>
+          <div class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-coral); z-index: 1`}></div>
+          <div class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style="background: #22C55E; z-index: 2"></div>
         </div>
-        <div class="rounded-lg border p-5" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+        <div class="group relative rounded-lg border p-5 transition-all duration-300 hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
           <div class="flex items-center gap-2 mb-2">
             <span class="w-2 h-2 rounded-full" style={`background: var(--color-accent-coral)`}></span>
             <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025</span>
           </div>
-          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`}>Lobo Hackathon — 4th Place</h3>
+          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">Lobo Hackathon — 4th Place</h3>
           <p class="text-sm" style={`color: var(--color-text-secondary)`}>AI-powered web app for consolidating and summarizing government legislature.</p>
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-blue)`}></div>
+          <div class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-coral); z-index: 1`}></div>
+          <div class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style="background: #22C55E; z-index: 2"></div>
         </div>
-        <div class="rounded-lg border p-5" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+        <div class="group relative rounded-lg border p-5 transition-all duration-300 hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
           <div class="flex items-center gap-2 mb-2">
             <span class="w-2 h-2 rounded-full" style={`background: var(--color-accent-blue)`}></span>
-            <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025–2026</span>
+            <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025, 2026</span>
           </div>
-          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`}>STEM Judge Chair</h3>
+          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">STEM Judge Chair</h3>
           <p class="text-sm" style={`color: var(--color-text-secondary)`}>Central NM STEM Research Challenge — organized judging panels for regional student research.</p>
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-blue)`}></div>
+          <div class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-coral); z-index: 1`}></div>
+          <div class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style="background: #22C55E; z-index: 2"></div>
         </div>
-        <div class="rounded-lg border p-5" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+        <div class="group relative rounded-lg border p-5 transition-all duration-300 hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
           <div class="flex items-center gap-2 mb-2">
             <span class="w-2 h-2 rounded-full" style={`background: #22C55E`}></span>
             <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025</span>
           </div>
-          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`}>CS Ambassador</h3>
+          <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">CS Ambassador</h3>
           <p class="text-sm" style={`color: var(--color-text-secondary)`}>UNM School of Engineering Open House — represented the Computer Science department.</p>
+          <div class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-blue)`}></div>
+          <div class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-coral); z-index: 1`}></div>
+          <div class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style="background: #22C55E; z-index: 2"></div>
         </div>
       </div>
     </div>
