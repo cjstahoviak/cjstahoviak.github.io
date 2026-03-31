@@ -17,24 +17,34 @@ const links = [
 ---
 
 <BaseLayout title="Links — Calvin Stahoviak" description="Find Calvin Stahoviak across the web.">
-  <section class="min-h-screen flex items-center justify-center px-6 py-28">
-    <div class="w-full max-w-md flex flex-col items-center gap-8">
+  <section class="relative min-h-screen flex items-center justify-center px-6 py-28 overflow-hidden">
+    <!-- Grid background (drifts) -->
+    <div class="absolute inset-0 grid-overlay pointer-events-none"></div>
+
+    <!-- Blue radial glow at top -->
+    <div
+      class="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+      style="width: 900px; height: 650px; top: -200px; background: radial-gradient(ellipse at center, rgba(0,102,255,0.15), transparent 70%); z-index: 0"
+    ></div>
+
+    <div class="w-full max-w-md flex flex-col items-center gap-8 relative z-10">
       <!-- Headshot -->
       <Image
         src={calvinImg}
         alt="Calvin Stahoviak"
         width={96}
         height={96}
+        loading="eager"
         class="w-24 h-24 rounded-full object-cover border-2"
         style={`border-color: var(--color-border)`}
       />
 
       <!-- Heading -->
       <h1 class="text-2xl md:text-3xl font-mono font-bold tracking-tight text-center">
-        Hi, I'm <span class="text-gradient">Calvin</span>
+        Hi, I'm <span class="text-gradient" id="calvin-scramble" data-scramble>Calvin</span>
       </h1>
 
-      <p class="text-base leading-relaxed mb-4" style={`color: var(--color-text-secondary)`}>
+      <p class="text-base leading-relaxed" style={`color: var(--color-text-secondary)`}>
         (My "Link Tree")
       </p>
 
@@ -67,3 +77,50 @@ const links = [
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  function initCalvinScramble() {
+    const el = document.getElementById('calvin-scramble') as HTMLElement | null;
+    if (!el) return;
+
+    const original = 'Calvin';
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const duration = 500;
+    const len = original.length;
+    const resolveDelay = duration / len;
+
+    function scramble(node: HTMLElement) {
+      const startTime = performance.now();
+      function tick() {
+        const elapsed = performance.now() - startTime;
+        const resolvedCount = Math.min(len, Math.floor(elapsed / resolveDelay));
+        let result = '';
+        for (let i = 0; i < len; i++) {
+          result += i < resolvedCount ? original[i] : CHARS[Math.floor(Math.random() * CHARS.length)];
+        }
+
+        if (resolvedCount < len) {
+          node.textContent = '';
+          node.appendChild(document.createTextNode(result.slice(0, resolvedCount)));
+          const cursor = document.createElement('span');
+          cursor.className = 'scramble-cursor';
+          cursor.textContent = result[resolvedCount] || '';
+          node.appendChild(cursor);
+          if (resolvedCount + 1 < len) {
+            node.appendChild(document.createTextNode(result.slice(resolvedCount + 1)));
+          }
+          requestAnimationFrame(tick);
+        } else {
+          node.textContent = original;
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    scramble(el);
+    setInterval(() => scramble(el), 5000);
+  }
+
+  initCalvinScramble();
+  document.addEventListener('astro:after-swap', initCalvinScramble);
+</script>
