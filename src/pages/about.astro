@@ -1,7 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TimelineEntry from '../components/TimelineEntry.astro';
 import SkillCategory from '../components/SkillCategory.astro';
+import calvinImg from '../assets/calvin_stahoviak.jpg';
+import scratchImg from '../assets/scratch.jpg';
 ---
 
 <BaseLayout title="About — Calvin Stahoviak" description="Background, skills, and experience of Calvin Stahoviak — roboticist and computer scientist.">
@@ -19,21 +22,21 @@ import SkillCategory from '../components/SkillCategory.astro';
       <div class="lg:col-span-2 space-y-6">
         <div class="flex flex-col sm:flex-row gap-8 items-start">
           <div class="flex flex-col gap-4 shrink-0">
-            <img
-              src="/calvin_stahoviak.jpg"
+            <Image
+              src={calvinImg}
               alt="Calvin Stahoviak"
+              width={144}
+              height={144}
               class="w-36 h-36 rounded-lg object-cover border-2"
               style={`border-color: var(--color-border)`}
-              width="144"
-              height="144"
             />
-            <img
-              src="/scratch.jpg"
+            <Image
+              src={scratchImg}
               alt="Scratch the cat"
+              width={144}
+              height={144}
               class="w-36 h-36 rounded-lg object-cover border-2"
               style={`border-color: var(--color-border)`}
-              width="144"
-              height="144"
             />
           </div>
           <div>
