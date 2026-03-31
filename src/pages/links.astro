@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const links = [
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/calvin-stahoviak/' },
+  { label: 'GitHub', href: 'https://github.com/cjstahoviak' },
+  { label: 'Google Scholar', href: 'https://scholar.google.com/citations?user=0ELvLnwAAAAJ&hl=en' },
+  { label: 'Instagram', href: 'https://www.instagram.com/calvinnjames/' },
+  { label: 'Goodreads', href: 'https://www.goodreads.com/user/show/196701152-calvin' },
+  { label: 'Letterboxd', href: 'https://letterboxd.com/cjstahoviak/' },
+  { label: 'MyAnimeList', href: 'https://myanimelist.net/profile/goToBedCalvin' },
+  { label: 'Strava', href: 'https://www.strava.com/athletes/198820895' },
+  { label: 'Vivino', href: 'https://www.vivino.com/users/calvin.stahoviak' },
+];
+---
+
+<BaseLayout title="Links — Calvin Stahoviak" description="Find Calvin Stahoviak across the web.">
+  <section class="min-h-screen flex items-center justify-center px-6 py-28">
+    <div class="w-full max-w-md flex flex-col items-center gap-8">
+      <!-- Headshot -->
+      <img
+        src="/calvin_stahoviak.jpg"
+        alt="Calvin Stahoviak"
+        class="w-24 h-24 rounded-full object-cover border-2"
+        style={`border-color: var(--color-border)`}
+        width="96"
+        height="96"
+      />
+
+      <!-- Heading -->
+      <h1 class="text-2xl md:text-3xl font-mono font-bold tracking-tight text-center">
+        Hi, I'm <span class="text-gradient">Calvin</span>
+      </h1>
+
+      <!-- Link cells -->
+      <div class="w-full flex flex-col gap-3">
+        {links.map(({ label, href }) => (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group relative block w-full rounded-lg border p-4 font-mono text-sm text-center transition-all duration-300 hover:-translate-y-1"
+            style={`background: var(--color-surface); border-color: var(--color-border); color: var(--color-text)`}
+          >
+            <span data-scramble data-scramble-trigger="parent">{label}</span>
+            <div
+              class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+              style={`background: var(--color-accent-blue)`}
+            ></div>
+            <div
+              class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+              style={`background: var(--color-accent-coral); z-index: 1`}
+            ></div>
+            <div
+              class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+              style="background: #22C55E; z-index: 2"
+            ></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
