@@ -31,6 +31,8 @@
   --color-border-light: #D4D4D0;
   --color-text-light: #0A0A0A;
   --color-text-secondary-light: #525252;
+
+  --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* ── Base styles ── */
@@ -122,11 +124,11 @@
   }
 
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+    animation: fadeIn 0.6s var(--ease-out-expo) forwards;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.8s ease-out forwards;
+    animation: slideUp 0.8s var(--ease-out-expo) forwards;
   }
 
   .cursor-blink::after {
@@ -146,6 +148,49 @@
   .group:hover .accent-bar-1 { transition-delay: 0.2s; }
   .accent-bar-2 { transition-delay: 0s; }
   .group:hover .accent-bar-2 { transition-delay: 0.4s; }
+
+  /* Active press feedback */
+  .active-press {
+    cursor: pointer;
+  }
+  .active-press:active {
+    scale: 0.97;
+  }
+
+  /* Timeline dot fill transition */
+  .timeline-dot-fill {
+    transition: transform 0.3s var(--ease-out-expo), opacity 0.3s var(--ease-out-expo);
+  }
+
+  /* Archive dropdown animation */
+  .dropdown-anim {
+    transition: opacity 0.15s var(--ease-out-expo), transform 0.15s var(--ease-out-expo);
+    transform-origin: top right;
+  }
+
+  /* Mobile menu animation */
+  .mobile-menu-anim {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.3s var(--ease-out-expo), opacity 0.2s var(--ease-out-expo);
+  }
+  .mobile-menu-anim.open {
+    max-height: 400px;
+    opacity: 1;
+  }
+
+  /* Logo dot transition */
+  .nav-logo-dot {
+    transition: width 0.3s var(--ease-out-expo), height 0.3s var(--ease-out-expo), left 0.3s var(--ease-out-expo), top 0.3s var(--ease-out-expo), margin-top 0.3s var(--ease-out-expo), border-radius 0.3s var(--ease-out-expo), background 0.3s var(--ease-out-expo);
+  }
+}
+
+/* ── Touch device: disable hover lifts ── */
+@media not ((hover: hover) and (pointer: fine)) {
+  [class*="hover:-translate-y"]:hover {
+    translate: 0 !important;
+  }
 }
 
 /* ── Animations ── */
@@ -241,3 +286,22 @@ html.light .prose blockquote { color: var(--color-text-secondary-light); }
 .prose img { border-radius: 8px; margin: 1.5em 0; }
 .prose hr { border: none; border-top: 1px solid var(--color-border); margin: 2em 0; }
 html.light .prose hr { border-top-color: var(--color-border-light); }
+
+/* ── Reduced motion ── */
+@keyframes fadeInReduced {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-fade-in,
+  .animate-slide-up {
+    animation: fadeInReduced 0.3s ease forwards !important;
+  }
+}

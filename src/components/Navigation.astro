@@ -21,8 +21,8 @@ const links = [
     <!-- Logo with expanding blue dot → gradient -->
     <a href="/" class="nav-logo relative font-mono font-bold text-xl tracking-tight flex items-center gap-4 pl-7 pr-2 py-1 rounded-md" aria-label="Home">
       <span
-        class="nav-logo-dot absolute rounded-sm transition-all duration-300 ease-in-out"
-        style={`background: var(--color-accent-blue); width: 14px; height: 14px; left: 0; top: 50%; transform: translateY(-50%); z-index: 0`}
+        class="nav-logo-dot absolute rounded-sm"
+        style={`background: var(--color-accent-blue); width: 14px; height: 14px; left: 0; top: 50%; margin-top: -7px; transform-origin: left center; z-index: 0`}
       ></span>
       <span class="nav-logo-text relative z-10 transition-colors duration-300" style={`color: var(--color-text)`}>CS</span>
       <span class="nav-logo-text relative z-10 font-normal transition-colors duration-300" style={`color: var(--color-text-secondary)`}>//</span>
@@ -51,7 +51,7 @@ const links = [
         <!-- Archive dropdown -->
         <div class="relative" id="archive-dropdown">
           <button
-            class="flex items-center gap-1 px-4 py-2 font-mono text-base rounded-md transition-colors"
+            class="flex items-center gap-1 px-4 py-2 font-mono text-base rounded-md transition-colors active-press"
             style={`color: var(--color-text-secondary)`}
             id="archive-btn"
             aria-expanded="false"
@@ -62,7 +62,7 @@ const links = [
             </svg>
           </button>
           <div
-            class="hidden absolute top-full right-0 mt-1 rounded-md border py-1 min-w-[120px] z-50"
+            class="dropdown-anim absolute top-full right-0 mt-1 rounded-md border py-1 min-w-[120px] z-50 opacity-0 scale-95 pointer-events-none"
             style={`background: var(--color-surface); border-color: var(--color-border)`}
             id="archive-menu"
           >
@@ -84,7 +84,7 @@ const links = [
       <ThemeToggle />
       <button
         id="mobile-menu-btn"
-        class="p-2 rounded-md transition-colors"
+        class="p-2 rounded-md transition-colors active-press"
         style={`color: var(--color-text-secondary)`}
         aria-label="Toggle menu"
         aria-expanded="false"
@@ -102,7 +102,7 @@ const links = [
   <!-- Mobile menu -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden border-t"
+    class="mobile-menu-anim md:hidden border-t"
     style={`background: var(--color-bg); border-color: var(--color-border)`}
   >
     <div class="px-6 py-4 flex flex-col gap-1">
@@ -142,8 +142,8 @@ const links = [
   const iconClose = document.getElementById('menu-icon-close');
 
   btn?.addEventListener('click', () => {
-    const isOpen = !menu?.classList.contains('hidden');
-    menu?.classList.toggle('hidden');
+    const isOpen = menu?.classList.contains('open');
+    menu?.classList.toggle('open');
     iconOpen?.classList.toggle('hidden');
     iconClose?.classList.toggle('hidden');
     btn.setAttribute('aria-expanded', String(!isOpen));
@@ -157,15 +157,22 @@ const links = [
     if (!btn || !menu || !chevron) return;
 
     btn.addEventListener('click', () => {
-      const isOpen = !menu.classList.contains('hidden');
-      menu.classList.toggle('hidden');
+      const isOpen = menu.classList.contains('opacity-100');
+      if (isOpen) {
+        menu.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        menu.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+      } else {
+        menu.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+        menu.classList.add('opacity-100', 'scale-100', 'pointer-events-auto');
+      }
       chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
       btn.setAttribute('aria-expanded', String(!isOpen));
     });
 
     document.addEventListener('click', (e) => {
       if (!(e.target as Element).closest('#archive-dropdown')) {
-        menu.classList.add('hidden');
+        menu.classList.remove('opacity-100', 'scale-100', 'pointer-events-auto');
+        menu.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
         chevron.style.transform = '';
         btn.setAttribute('aria-expanded', 'false');
       }
@@ -188,7 +195,7 @@ const links = [
       dot.style.height = '100%';
       dot.style.left = '0';
       dot.style.top = '0';
-      dot.style.transform = 'none';
+      dot.style.marginTop = '0';
       dot.style.borderRadius = '6px';
       dot.style.background = 'linear-gradient(135deg, var(--color-accent-blue), var(--color-accent-coral))';
       textSpans?.forEach((span) => { span.style.color = 'white'; });
@@ -199,7 +206,7 @@ const links = [
       dot.style.height = '14px';
       dot.style.left = '0';
       dot.style.top = '50%';
-      dot.style.transform = 'translateY(-50%)';
+      dot.style.marginTop = '-7px';
       dot.style.borderRadius = '';
       dot.style.background = 'var(--color-accent-blue)';
       textSpans?.forEach((span) => { span.style.color = ''; });
