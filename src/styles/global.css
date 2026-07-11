@@ -35,6 +35,19 @@
   --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
+/* ── Light mode token remap ──
+   Components reference the base --color-* tokens via inline styles. Remap
+   them to their light-mode equivalents here so every component switches
+   theme automatically instead of rendering dark values on a light page. */
+html.light {
+  --color-bg: var(--color-bg-light);
+  --color-surface: var(--color-surface-light);
+  --color-elevated: var(--color-elevated-light);
+  --color-border: var(--color-border-light);
+  --color-text: var(--color-text-light);
+  --color-text-secondary: var(--color-text-secondary-light);
+}
+
 /* ── Base styles ── */
 @layer base {
   html {
