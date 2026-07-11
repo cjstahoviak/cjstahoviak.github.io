@@ -2,8 +2,7 @@
 ---
 
 <button
-  id="theme-toggle"
-  class="px-4 py-2 rounded-md transition-colors active-press"
+  class="theme-toggle px-4 py-2 rounded-md transition-colors active-press"
   style={`color: var(--color-text-secondary)`}
   aria-label="Toggle dark/light mode"
   type="button"
@@ -22,7 +21,7 @@
 
 <script>
   function initThemeToggle() {
-    const toggle = document.getElementById('theme-toggle');
+    const toggles = document.querySelectorAll('.theme-toggle');
     const sunIcons = document.querySelectorAll('.theme-icon-sun');
     const moonIcons = document.querySelectorAll('.theme-icon-moon');
 
@@ -34,18 +33,20 @@
 
     updateIcons();
 
-    toggle?.addEventListener('click', () => {
-      const isLight = document.documentElement.classList.contains('light');
-      if (isLight) {
-        document.documentElement.classList.remove('light');
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        document.documentElement.classList.add('light');
-        localStorage.setItem('theme', 'light');
-      }
-      updateIcons();
+    toggles.forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        const isLight = document.documentElement.classList.contains('light');
+        if (isLight) {
+          document.documentElement.classList.remove('light');
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+          localStorage.setItem('theme', 'light');
+        }
+        updateIcons();
+      });
     });
   }
 
