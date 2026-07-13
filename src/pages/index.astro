@@ -2,15 +2,25 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TypingEffect from '../components/TypingEffect.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
+import { publications, citationSummary } from '../data/publications';
 
-// All projects + publications for the combined carousel
+// All projects + publications for the combined carousel.
+// Data lives in src/data/ — cards here use the shorter `featured`/`shortTitle`
+// variants when present, since carousel cards are a fixed 350×300px.
 const carouselItems = [
-  { title: "RL Quadrotor Control", description: "End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques.", tags: ["PyTorch", "Isaac Sim", "RL", "CUDA"], type: "project" as const },
-  { title: "Legislature Summarizer", description: "AI-powered web app for consolidating and summarizing government legislature. 4th place at Lobo Hackathon.", tags: ["AI", "Web App", "NLP"], type: "project" as const },
-  { title: "Dynamic Admittance Parametrisation of Non-Prehensile Multi-Robot Transport", description: "Stahoviak, C. et al. — MECC, 2026. (accepted)", tags: ["Controls", "Multi-Robot", "Planning"], type: "publication" as const },
-  { title: "Reliability of Mobile Camera-Based Hand Sign Recognition in Outdoor Environments", description: "Stocco, P. et al. — MECC, 2026. (accepted)", tags: ["Computer Vision", "Mobile Robots", "HRI"], type: "publication" as const },
-  { title: "Perceived Constraint Identification Using Physics-Informed Deep Neural Networks", description: "Kim, R. et al. — ASME LDSC, 2025.", tags: ["Physics-Informed ML", "Deep Learning"], type: "publication" as const },
-  { title: "Rapid Constrained Object Motion Estimation via Centroid Localization", description: "Young, C. et al. — AIM, 2024.", tags: ["Computer Vision", "CUDA", "ROS"], type: "publication" as const },
+  ...projects.map((p) => ({
+    title: p.title,
+    description: p.featured?.description ?? p.description,
+    tags: p.featured?.tags ?? p.tags,
+    type: 'project' as const,
+  })),
+  ...publications.map((p) => ({
+    title: p.shortTitle ?? p.title,
+    description: citationSummary(p),
+    tags: p.tags,
+    type: 'publication' as const,
+  })),
 ];
 
 // Shuffle at build time

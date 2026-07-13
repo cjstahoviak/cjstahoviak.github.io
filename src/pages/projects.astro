@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import { projects } from '../data/projects';
 ---
 
 <BaseLayout title="Projects — Calvin Stahoviak" description="Research and engineering projects by Calvin Stahoviak.">
@@ -16,21 +17,18 @@ import ProjectCard from '../components/ProjectCard.astro';
       <div class="h-1 w-16 rounded mt-4" style={`background: var(--color-accent-blue)`}></div>
     </div>
 
-    <!-- Projects grid -->
+    <!-- Projects grid (data lives in src/data/projects.ts) -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <ProjectCard
-        title="RL Quadrotor Control"
-        description="End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques. Trained in NVIDIA Isaac simulation environments with sim-to-real transfer capabilities, enabling complex autonomous flight behaviors from a single learned policy."
-        tags={["PyTorch", "Isaac Sim", "Reinforcement Learning", "CUDA", "Python"]}
-        type="project"
-      />
-
-      <ProjectCard
-        title="Legislature Summarizer"
-        description="AI-powered web application that consolidates and summarizes government legislature, making policy accessible and searchable. Built during the 2025 Lobo Hackathon, where it placed fourth."
-        tags={["AI", "Web App", "NLP", "Hackathon"]}
-        type="project"
-      />
+      {projects.map((project) => (
+        <ProjectCard
+          title={project.title}
+          description={project.description}
+          tags={project.tags}
+          github={project.github}
+          demo={project.demo}
+          type="project"
+        />
+      ))}
     </div>
   </section>
 </BaseLayout>
