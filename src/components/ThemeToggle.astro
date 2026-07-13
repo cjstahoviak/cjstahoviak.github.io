@@ -19,11 +19,39 @@
   </svg>
 </button>
 
+<style is:global>
+  /* Theme-change wipe: a full-viewport panel that travels bottom → top in one
+     weighted motion (same curve as the load splash), covering the page at the
+     midpoint where the theme actually flips. Created dynamically, so this
+     lives in a global style block. */
+  .theme-wipe {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    border-top: 10px solid #0a0a0a;
+    border-bottom: 10px solid #0a0a0a;
+    transform: translateY(101%);
+    animation: themeWipe 1.2s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+  }
+
+  @keyframes themeWipe {
+    from {
+      transform: translateY(101%);
+    }
+    to {
+      transform: translateY(-101%);
+    }
+  }
+</style>
+
 <script>
   function initThemeToggle() {
     const toggles = document.querySelectorAll('.theme-toggle');
     const sunIcons = document.querySelectorAll('.theme-icon-sun');
     const moonIcons = document.querySelectorAll('.theme-icon-moon');
+    const WIPE_MS = 1200;
+    let wiping = false;
 
     function updateIcons() {
       const isLight = document.documentElement.classList.contains('light');
@@ -31,21 +59,42 @@
       moonIcons.forEach(icon => icon.classList.toggle('hidden', !isLight));
     }
 
+    function setTheme(toLight: boolean) {
+      document.documentElement.classList.toggle('light', toLight);
+      document.documentElement.classList.toggle('dark', !toLight);
+      localStorage.setItem('theme', toLight ? 'light' : 'dark');
+      updateIcons();
+    }
+
     updateIcons();
 
     toggles.forEach(toggle => {
       toggle.addEventListener('click', () => {
-        const isLight = document.documentElement.classList.contains('light');
-        if (isLight) {
-          document.documentElement.classList.remove('light');
-          document.documentElement.classList.add('dark');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-          document.documentElement.classList.add('light');
-          localStorage.setItem('theme', 'light');
+        if (wiping) return;
+        const toLight = !document.documentElement.classList.contains('light');
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          setTheme(toLight);
+          return;
         }
-        updateIcons();
+
+        wiping = true;
+        const panel = document.createElement('div');
+        panel.className = 'theme-wipe';
+        // White wipe reveals light mode, accent-blue wipe reveals dark mode
+        panel.style.background = toLight ? '#F5F5F0' : '#0066FF';
+        document.body.appendChild(panel);
+
+        // Flip the theme at the midpoint, while the page is fully covered
+        setTimeout(() => setTheme(toLight), WIPE_MS / 2);
+
+        function cleanup() {
+          panel.remove();
+          wiping = false;
+        }
+        panel.addEventListener('animationend', cleanup);
+        // Safety net in case the animation never fires
+        setTimeout(cleanup, WIPE_MS + 1000);
       });
     });
   }
