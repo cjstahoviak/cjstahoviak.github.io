@@ -1,0 +1,144 @@
+---
+// Terminal boot splash: a full-viewport accent-blue screen that types "hello"
+// with a black block cursor, then slides up to reveal the page. Plays once per
+// browser session; skipped entirely for reduced-motion users and no-JS visitors.
+---
+
+<div id="splash" aria-hidden="true">
+  <p class="splash-line font-mono font-bold tracking-tighter">
+    <span class="splash-prompt">$</span>
+    <span id="splash-text"></span><span id="splash-cursor"></span>
+  </p>
+</div>
+
+<noscript>
+  <style>
+    #splash {
+      display: none;
+    }
+  </style>
+</noscript>
+
+<style>
+  #splash {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent-blue);
+    border-bottom: 10px solid #0a0a0a;
+    cursor: pointer;
+  }
+
+  #splash.splash-exit {
+    animation: splashExit 0.9s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+  }
+
+  @keyframes splashExit {
+    to {
+      transform: translateY(-100.5%);
+    }
+  }
+
+  .splash-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    color: #0a0a0a;
+    line-height: 1;
+  }
+
+  .splash-prompt {
+    opacity: 0.55;
+  }
+
+  #splash-cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1em;
+    margin-left: 0.08em;
+    background: #0a0a0a;
+    transform: translateY(0.08em);
+  }
+
+  #splash-cursor.splash-cursor-blink {
+    animation: splashBlink 1s step-end infinite;
+  }
+
+  @keyframes splashBlink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #splash {
+      display: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var splash = document.getElementById('splash');
+    if (!splash) return;
+
+    var seen = false;
+    try {
+      seen = sessionStorage.getItem('splash-seen') === '1';
+    } catch (e) {}
+
+    if (seen || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      splash.remove();
+      return;
+    }
+
+    try {
+      sessionStorage.setItem('splash-seen', '1');
+    } catch (e) {}
+
+    document.documentElement.style.overflow = 'hidden';
+
+    var textEl = document.getElementById('splash-text');
+    var cursorEl = document.getElementById('splash-cursor');
+    var message = 'hello';
+    var exiting = false;
+
+    function finish() {
+      if (exiting) return;
+      exiting = true;
+      splash.classList.add('splash-exit');
+    }
+
+    function cleanup() {
+      document.documentElement.style.overflow = '';
+      splash.remove();
+    }
+
+    splash.addEventListener('animationend', cleanup);
+    splash.addEventListener('click', finish);
+    // Safety net: never leave the page trapped behind the splash
+    setTimeout(cleanup, 6000);
+
+    var i = 1;
+    function type() {
+      if (exiting) return;
+      textEl.textContent = message.slice(0, i);
+      if (i < message.length) {
+        i++;
+        setTimeout(type, 85);
+      } else {
+        cursorEl.classList.add('splash-cursor-blink');
+        setTimeout(finish, 1400);
+      }
+    }
+    setTimeout(type, 400);
+  })();
+</script>
