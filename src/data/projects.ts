@@ -6,8 +6,8 @@ export interface Project {
   title: string;
   /** Full description, shown on the projects page. */
   description: string;
-  /** Full tag list, shown on the projects page. */
-  tags: string[];
+  /** 2–5 skills demonstrated by the project. Rendered only on the featured carousel. */
+  skillTags: string[];
   github?: string;
   demo?: string;
   /**
@@ -16,7 +16,6 @@ export interface Project {
    */
   featured?: {
     description?: string;
-    tags?: string[];
   };
 }
 
@@ -25,22 +24,20 @@ export const projects: Project[] = [
     title: "RL Quadrotor Control",
     description:
       "End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques. Trained in NVIDIA Isaac simulation environments with sim-to-real transfer capabilities, enabling complex autonomous flight behaviors from a single learned policy.",
-    tags: ["PyTorch", "Isaac Sim", "Reinforcement Learning", "CUDA", "Python"],
+    skillTags: ["Reinforcement Learning", "PyTorch", "Isaac Sim", "CUDA"],
     featured: {
       description:
         "End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques.",
-      tags: ["PyTorch", "Isaac Sim", "RL", "CUDA"],
     },
   },
   {
     title: "Legislature Summarizer",
     description:
       "AI-powered web application that consolidates and summarizes government legislature, making policy accessible and searchable. Built during the 2025 Lobo Hackathon, where it placed fourth.",
-    tags: ["AI", "Web App", "NLP", "Hackathon"],
+    skillTags: ["NLP", "LLMs", "Web Development"],
     featured: {
       description:
         "AI-powered web app for consolidating and summarizing government legislature. 4th place at Lobo Hackathon.",
-      tags: ["AI", "Web App", "NLP"],
     },
   },
 ];
