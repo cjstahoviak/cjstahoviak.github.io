@@ -20,27 +20,85 @@
 </button>
 
 <style is:global>
-  /* Theme-change wipe: a full-viewport panel that travels bottom → top in one
-     weighted motion (same curve as the load splash), covering the page at the
-     midpoint where the theme actually flips. Created dynamically, so this
-     lives in a global style block. */
+  /* Theme-change wipe: replays the load splash on toggle. A panel rises
+     bottom → top with the splash's weighted curve, pauses covering the page
+     while "$ hello" types out (the theme flips here, hidden), then rolls up
+     and off to reveal the new colorway. Created dynamically, so this lives in
+     a global style block. The 'Splash Pixel' font-face is provided by
+     SplashScreen.astro, which is on every page. */
   .theme-wipe {
     position: fixed;
     inset: 0;
     z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
     border-top: 10px solid #0a0a0a;
     border-bottom: 10px solid #0a0a0a;
     transform: translateY(101%);
-    animation: themeWipe 1.2s cubic-bezier(0.87, 0, 0.13, 1) forwards;
   }
 
-  @keyframes themeWipe {
+  .theme-wipe.theme-wipe-enter {
+    animation: themeWipeEnter 0.75s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+  }
+
+  .theme-wipe.theme-wipe-exit {
+    animation: themeWipeExit 0.9s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+  }
+
+  @keyframes themeWipeEnter {
     from {
       transform: translateY(101%);
     }
     to {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes themeWipeExit {
+    from {
+      transform: translateY(0);
+    }
+    to {
       transform: translateY(-101%);
+    }
+  }
+
+  .theme-wipe-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5em;
+    font-family: 'Splash Pixel', var(--font-mono);
+    font-size: clamp(1.75rem, 6vw, 4rem);
+    color: #0a0a0a;
+    line-height: 1;
+  }
+
+  .theme-wipe-prompt {
+    opacity: 0.55;
+  }
+
+  .theme-wipe-cursor {
+    display: inline-block;
+    width: 0.85em;
+    height: 1em;
+    margin-left: 0.15em;
+    background: #0a0a0a;
+    transform: translateY(0.12em);
+  }
+
+  .theme-wipe-cursor.theme-wipe-blink {
+    animation: themeWipeBlink 1s step-end infinite;
+  }
+
+  @keyframes themeWipeBlink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
     }
   }
 </style>
@@ -50,7 +108,6 @@
     const toggles = document.querySelectorAll('.theme-toggle');
     const sunIcons = document.querySelectorAll('.theme-icon-sun');
     const moonIcons = document.querySelectorAll('.theme-icon-moon');
-    const WIPE_MS = 1200;
     let wiping = false;
 
     function updateIcons() {
@@ -80,21 +137,61 @@
 
         wiping = true;
         const panel = document.createElement('div');
-        panel.className = 'theme-wipe';
+        panel.className = 'theme-wipe theme-wipe-enter';
         // White wipe reveals light mode, accent-blue wipe reveals dark mode
         panel.style.background = toLight ? '#F5F5F0' : '#0066FF';
+        panel.innerHTML =
+          '<p class="theme-wipe-line">' +
+          '<span class="theme-wipe-prompt">$</span>' +
+          '<span class="theme-wipe-text"></span>' +
+          '<span class="theme-wipe-cursor"></span>' +
+          '</p>';
         document.body.appendChild(panel);
 
-        // Flip the theme at the midpoint, while the page is fully covered
-        setTimeout(() => setTheme(toLight), WIPE_MS / 2);
+        const textEl = panel.querySelector('.theme-wipe-text')!;
+        const cursorEl = panel.querySelector('.theme-wipe-cursor')!;
+        const message = 'hello';
+        let applied = false;
+
+        function apply() {
+          if (applied) return;
+          applied = true;
+          setTheme(toLight);
+        }
 
         function cleanup() {
+          apply();
           panel.remove();
           wiping = false;
         }
-        panel.addEventListener('animationend', cleanup);
-        // Safety net in case the animation never fires
-        setTimeout(cleanup, WIPE_MS + 1000);
+
+        panel.addEventListener('animationend', (e) => {
+          if (e.animationName === 'themeWipeEnter') {
+            // Paused, page fully covered: flip the theme, type the message,
+            // blink for a beat, then roll up and off
+            apply();
+            let i = 1;
+            (function type() {
+              if (!panel.isConnected) return;
+              textEl.textContent = message.slice(0, i);
+              if (i < message.length) {
+                i++;
+                setTimeout(type, 70);
+              } else {
+                cursorEl.classList.add('theme-wipe-blink');
+                setTimeout(() => {
+                  panel.classList.remove('theme-wipe-enter');
+                  panel.classList.add('theme-wipe-exit');
+                }, 700);
+              }
+            })();
+          } else if (e.animationName === 'themeWipeExit') {
+            cleanup();
+          }
+        });
+
+        // Safety net in case an animation event never fires
+        setTimeout(cleanup, 6000);
       });
     });
   }
