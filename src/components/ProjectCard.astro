@@ -13,7 +13,7 @@ const { title, description, skillTags, github, demo, type } = Astro.props;
 ---
 
 <div
-  class="group relative rounded-lg border p-6 transition-transform duration-300 ease-out-expo active-press hover:-translate-y-1 h-full flex flex-col"
+  class="group relative rounded-lg border p-6 transition-transform duration-300 ease-out-expo active-press hover:-translate-y-1 h-full flex flex-col overflow-hidden"
   style={`background: var(--color-surface); border-color: var(--color-border)`}
 >
   <!-- Type indicator -->
@@ -36,17 +36,17 @@ const { title, description, skillTags, github, demo, type } = Astro.props;
     {title}
   </h3>
 
-  <!-- Description -->
-  <p class="text-sm leading-relaxed mb-4 flex-1" style={`color: var(--color-text-secondary)`}>
+  <!-- Description (min-h-0 lets it shrink inside fixed-height carousel cards so tags stay inside the card) -->
+  <p class="text-sm leading-relaxed mb-4 flex-1 min-h-0 overflow-hidden" style={`color: var(--color-text-secondary)`}>
     {description}
   </p>
 
-  <!-- Skill tags -->
+  <!-- Skill tags (footnote-sized, smaller than the rest of the card) -->
   {skillTags && skillTags.length > 0 && (
-    <div class="flex flex-wrap gap-2 mb-4">
+    <div class="flex flex-wrap gap-1.5 mb-4">
       {skillTags.map((tag) => (
         <span
-          class="px-2 py-1 font-mono text-xs rounded"
+          class="px-1.5 py-0.5 font-mono text-[10px] leading-relaxed rounded"
           style={`background: var(--color-elevated); border: 1px solid var(--color-border); color: var(--color-text-secondary)`}
         >
           {tag}
