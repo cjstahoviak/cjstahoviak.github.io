@@ -2,6 +2,7 @@
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import TextScrambler from '../components/TextScrambler.astro';
+import SplashScreen from '../components/SplashScreen.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -59,6 +60,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body class="min-h-screen flex flex-col">
+    <SplashScreen />
     <Navigation />
     <main class="flex-1">
       <slot />
