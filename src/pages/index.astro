@@ -12,13 +12,13 @@ const carouselItems = [
   ...projects.map((p) => ({
     title: p.title,
     description: p.featured?.description ?? p.description,
-    tags: p.featured?.tags ?? p.tags,
+    skillTags: p.skillTags,
     type: 'project' as const,
   })),
   ...publications.map((p) => ({
     title: p.shortTitle ?? p.title,
     description: citationSummary(p),
-    tags: p.tags,
+    skillTags: p.skillTags,
     type: 'publication' as const,
   })),
 ];
@@ -177,7 +177,7 @@ const skills = [
             <ProjectCard
               title={item.title}
               description={item.description}
-              tags={item.tags}
+              skillTags={item.skillTags}
               type={item.type}
             />
           </div>

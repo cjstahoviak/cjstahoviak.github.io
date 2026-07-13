@@ -14,8 +14,8 @@ export interface Publication {
   venue: string;
   year: number;
   status: "accepted" | "published";
-  /** Topic tags, shown on featured carousel cards. */
-  tags: string[];
+  /** 2–5 skills demonstrated by the work. Rendered only on the featured carousel. */
+  skillTags: string[];
   /** External "see more" link (paper page, DOI, etc.). */
   link?: string;
 }
@@ -30,7 +30,7 @@ export const publications: Publication[] = [
     venue: "MECC",
     year: 2026,
     status: "accepted",
-    tags: ["Controls", "Multi-Robot", "Planning"],
+    skillTags: ["Control Theory", "Multi-Robot Systems", "Motion Planning", "Optimization"],
   },
   {
     title:
@@ -39,7 +39,7 @@ export const publications: Publication[] = [
     venue: "MECC",
     year: 2026,
     status: "accepted",
-    tags: ["Computer Vision", "Mobile Robots", "HRI"],
+    skillTags: ["Computer Vision", "Human-Robot Interaction", "Mobile Robotics"],
   },
   {
     title:
@@ -48,7 +48,7 @@ export const publications: Publication[] = [
     venue: "ASME LDSC",
     year: 2025,
     status: "published",
-    tags: ["Physics-Informed ML", "Deep Learning"],
+    skillTags: ["Physics-Informed ML", "Deep Learning", "System Identification"],
     link: "https://asmedigitalcollection.asme.org/lettersdynsys/article-abstract/6/1/011008/1221793/Perceived-Constraint-Identification-Using-Physics?redirectedFrom=fulltext",
   },
   {
@@ -60,7 +60,7 @@ export const publications: Publication[] = [
     venue: "AIM",
     year: 2024,
     status: "published",
-    tags: ["Computer Vision", "CUDA", "ROS"],
+    skillTags: ["Computer Vision", "CUDA", "ROS", "State Estimation"],
     link: "https://ieeexplore.ieee.org/document/10637056",
   },
 ];

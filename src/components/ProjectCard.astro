@@ -2,13 +2,14 @@
 interface Props {
   title: string;
   description: string;
-  tags: string[];
+  /** Skills demonstrated by the work. Omit to render the card without a tag row. */
+  skillTags?: string[];
   github?: string;
   demo?: string;
   type?: 'project' | 'publication';
 }
 
-const { title, description, tags, github, demo, type } = Astro.props;
+const { title, description, skillTags, github, demo, type } = Astro.props;
 ---
 
 <div
@@ -40,17 +41,19 @@ const { title, description, tags, github, demo, type } = Astro.props;
     {description}
   </p>
 
-  <!-- Tags -->
-  <div class="flex flex-wrap gap-2 mb-4">
-    {tags.map((tag) => (
-      <span
-        class="px-2 py-1 font-mono text-xs rounded"
-        style={`background: var(--color-elevated); border: 1px solid var(--color-border); color: var(--color-text-secondary)`}
-      >
-        {tag}
-      </span>
-    ))}
-  </div>
+  <!-- Skill tags -->
+  {skillTags && skillTags.length > 0 && (
+    <div class="flex flex-wrap gap-2 mb-4">
+      {skillTags.map((tag) => (
+        <span
+          class="px-2 py-1 font-mono text-xs rounded"
+          style={`background: var(--color-elevated); border: 1px solid var(--color-border); color: var(--color-text-secondary)`}
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  )}
 
   <!-- See more link -->
   {(github || demo) && (
