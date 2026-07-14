@@ -19,6 +19,12 @@ const { phrases, class: className } = Astro.props;
       const phrases: string[] = JSON.parse(el.getAttribute('data-phrases') || '[]');
       if (phrases.length === 0) return;
 
+      // Fisher-Yates shuffle so each visit cycles the phrases in a random order
+      for (let i = phrases.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [phrases[i], phrases[j]] = [phrases[j], phrases[i]];
+      }
+
       let phraseIndex = 0;
       let charIndex = 0;
       let isDeleting = false;
