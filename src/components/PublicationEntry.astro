@@ -27,6 +27,9 @@ const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
         {statusLabel}
       </span>
     )}
+    <span class="ml-auto font-mono text-xs tracking-wider" style={`color: var(--color-text-secondary)`}>
+      {pub.year}
+    </span>
   </div>
   <h3 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">
     {pub.title}

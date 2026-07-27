@@ -4,30 +4,41 @@ interface Props {
   description: string;
   /** Skills demonstrated by the work. Omit to render the card without a tag row. */
   skillTags?: string[];
+  /** Year of the work, rendered in the top-right corner. */
+  year?: number | string;
   github?: string;
   demo?: string;
   type?: 'project' | 'publication';
 }
 
-const { title, description, skillTags, github, demo, type } = Astro.props;
+const { title, description, skillTags, year, github, demo, type } = Astro.props;
 ---
 
 <div
   class="group relative rounded-lg border p-6 transition-transform duration-300 ease-out-expo active-press hover:-translate-y-1 h-full flex flex-col overflow-hidden"
   style={`background: var(--color-surface); border-color: var(--color-border)`}
 >
-  <!-- Type indicator -->
-  {type && (
-    <div class="flex items-center gap-2 mb-3">
-      <span
-        class="inline-block w-2 h-2 rounded-full"
-        style={type === 'project'
-          ? 'background: var(--color-accent-blue)'
-          : 'background: var(--color-accent-coral)'}
-      ></span>
-      <span class="font-mono text-xs uppercase tracking-wider" style={`color: var(--color-text-secondary)`}>
-        {type}
-      </span>
+  <!-- Type indicator (left) + year (right) -->
+  {(type || year) && (
+    <div class="flex items-center gap-3 mb-3">
+      {type && (
+        <div class="flex items-center gap-2">
+          <span
+            class="inline-block w-2 h-2 rounded-full"
+            style={type === 'project'
+              ? 'background: var(--color-accent-blue)'
+              : 'background: var(--color-accent-coral)'}
+          ></span>
+          <span class="font-mono text-xs uppercase tracking-wider" style={`color: var(--color-text-secondary)`}>
+            {type}
+          </span>
+        </div>
+      )}
+      {year && (
+        <span class="ml-auto font-mono text-xs tracking-wider" style={`color: var(--color-text-secondary)`}>
+          {year}
+        </span>
+      )}
     </div>
   )}
 
