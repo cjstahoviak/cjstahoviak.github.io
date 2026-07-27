@@ -13,12 +13,14 @@ const carouselItems = [
     title: p.title,
     description: p.featured?.description ?? p.description,
     skillTags: p.skillTags,
+    year: p.year,
     type: 'project' as const,
   })),
   ...publications.map((p) => ({
     title: p.shortTitle ?? p.title,
     description: citationSummary(p),
     skillTags: p.skillTags,
+    year: p.year,
     type: 'publication' as const,
   })),
 ];
@@ -178,6 +180,7 @@ const skills = [
               title={item.title}
               description={item.description}
               skillTags={item.skillTags}
+              year={item.year}
               type={item.type}
             />
           </div>

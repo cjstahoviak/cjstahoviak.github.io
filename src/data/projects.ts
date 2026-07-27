@@ -6,6 +6,8 @@ export interface Project {
   title: string;
   /** Full description, shown on the projects page. */
   description: string;
+  /** Year of the work, rendered in the top-right corner of the card. */
+  year: number;
   /** 2–5 skills demonstrated by the project. Rendered only on the featured carousel. */
   skillTags: string[];
   github?: string;
@@ -22,6 +24,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: "RL Quadrotor Control",
+    year: 2026,
     description:
       "End-to-end multi-behavior policy for quadrotor control using modern deep reinforcement learning techniques. Trained in NVIDIA Isaac simulation environments with sim-to-real transfer capabilities, enabling complex autonomous flight behaviors from a single learned policy.",
     skillTags: ["Reinforcement Learning", "PyTorch", "Isaac Sim", "CUDA"],
@@ -32,6 +35,7 @@ export const projects: Project[] = [
   },
   {
     title: "Legislature Summarizer",
+    year: 2025,
     description:
       "AI-powered web application that consolidates and summarizes government legislature, making policy accessible and searchable. Built during the 2025 Lobo Hackathon, where it placed fourth.",
     skillTags: ["NLP", "LLMs", "Web Development"],
