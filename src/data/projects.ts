@@ -50,12 +50,12 @@ export const projects: Project[] = [
     title: "Lost in Translation",
     year: 2026,
     description:
-      "A browser-based gag translator that plays telephone with Google Translate — English text hops through ten random languages and back, compounding each translation error into gloriously broken output. A single static page with no backend and no API key; the whole language chain is shown so you can trace the damage.",
+      "A web application that emulates the game of telephone with a randomized list of languages. Text is translated from one language directly to the next until a set limit is reached. The result is a strange and funny adaptation of the original text, often with odd grammar and vocabulary usage.",
     skillTags: ["JavaScript", "Web Development", "REST APIs"],
     link: "https://calvinstahoviak.com/lost-in-translation",
     featured: {
       description:
-        "Plays telephone with Google Translate — English hops through ten random languages and back, for gloriously broken results.",
+        "Experience the classic game of telephone with an assortment of randomized languages that adapts text in fun ways.",
     },
   },
 ];
