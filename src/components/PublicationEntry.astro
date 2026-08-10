@@ -11,9 +11,12 @@ const { publication: pub, index } = Astro.props;
 
 const isMe = pub.leadAuthor.startsWith('Stahoviak');
 const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
+
+// The card itself is deliberately not a link — only the "view page" text at the
+// bottom navigates, so the pointer cursor appears only over that.
 ---
 
-<article class="group relative rounded-lg border p-6 transition-transform duration-300 ease-out-expo active-press hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
+<article class="group relative rounded-lg border p-6 transition-transform duration-300 ease-out-expo hover:-translate-y-1" style={`background: var(--color-surface); border-color: var(--color-border)`}>
   <div class="flex items-center gap-3 mb-3">
     <span class="font-mono text-xs font-bold px-2 py-0.5 rounded" style={`background: color-mix(in srgb, var(--color-accent-blue) 15%, transparent); color: var(--color-accent-blue)`}>
       [{index}]
@@ -45,11 +48,10 @@ const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
       href={pub.link}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-block mt-4 font-mono text-sm underline underline-offset-2"
+      class="inline-block mt-4 font-mono text-sm underline underline-offset-2 transition-opacity hover:opacity-70 active-press"
       style={`color: var(--color-accent-blue)`}
-    >
-      see more
-    </a>
+      data-scramble
+    >view page</a>
   )}
   <div
     class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"

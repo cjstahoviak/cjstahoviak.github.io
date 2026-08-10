@@ -15,6 +15,8 @@ const carouselItems = [
     skillTags: p.skillTags,
     year: p.year,
     type: 'project' as const,
+    link: p.github,
+    demo: p.demo,
   })),
   ...publications.map((p) => ({
     title: p.shortTitle ?? p.title,
@@ -22,6 +24,8 @@ const carouselItems = [
     skillTags: p.skillTags,
     year: p.year,
     type: 'publication' as const,
+    link: p.link,
+    demo: undefined,
   })),
 ];
 
@@ -172,7 +176,7 @@ const skills = [
       <div class="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style="background: linear-gradient(to right, var(--color-bg), transparent)"></div>
       <div class="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none" style="background: linear-gradient(to left, var(--color-bg), transparent)"></div>
 
-      <div class="flex gap-6" style="animation: marquee 60s linear infinite; width: max-content;">
+      <div class="marquee-track flex gap-6">
         {/* Render shuffled items twice for seamless loop */}
         {[...shuffled, ...shuffled].map((item) => (
           <div class="shrink-0 w-[350px] h-[330px]">
@@ -182,6 +186,8 @@ const skills = [
               skillTags={item.skillTags}
               year={item.year}
               type={item.type}
+              link={item.link}
+              demo={item.demo}
             />
           </div>
         ))}
