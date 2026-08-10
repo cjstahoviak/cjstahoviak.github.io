@@ -32,17 +32,18 @@ const carouselItems = [
 // Shuffle at build time
 const shuffled = [...carouselItems].sort(() => Math.random() - 0.5);
 
-// Terminal block stats. The publication counts are derived from
-// src/data/publications.ts so they can never drift from the real list.
+// Terminal block stats. The publication count is derived from
+// src/data/publications.ts so it can never drift from the real list. It counts
+// every entry regardless of status — the publications page is where each
+// paper's accepted/published state is spelled out.
 const paperCount = publications.length;
-const acceptedCount = publications.filter((p) => p.status === 'accepted').length;
 
 const terminalStats = [
   { label: 'Education', value: 'M.S. Computer Science, University of New Mexico' },
   { label: 'Thesis', value: 'Awarded distinction, Dec. 2025' },
   {
     label: 'Publications',
-    value: `${paperCount} peer-reviewed ${paperCount === 1 ? 'paper' : 'papers'} (${acceptedCount} accepted)`,
+    value: `${paperCount} peer-reviewed ${paperCount === 1 ? 'paper' : 'papers'}`,
   },
   { label: 'Languages', value: 'C++, CUDA, Python, MATLAB, and more' },
   { label: 'Focus', value: 'Autonomous robotics, RL, computer vision' },
