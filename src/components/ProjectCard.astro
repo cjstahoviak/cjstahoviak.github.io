@@ -6,16 +6,20 @@ interface Props {
   skillTags?: string[];
   /** Year of the work, rendered in the top-right corner. */
   year?: number | string;
-  github?: string;
+  /** Primary external page (repo, paper, write-up). Renders the "view page" link. */
+  link?: string;
+  /** Optional live demo. Renders a second "view demo" link. */
   demo?: string;
   type?: 'project' | 'publication';
 }
 
-const { title, description, skillTags, year, github, demo, type } = Astro.props;
+// The card itself is deliberately not a link — only the "view page" / "view demo"
+// text at the bottom navigates, so the pointer cursor appears only over those.
+const { title, description, skillTags, year, link, demo, type } = Astro.props;
 ---
 
 <div
-  class="group relative rounded-lg border p-6 transition-transform duration-300 ease-out-expo active-press hover:-translate-y-1 h-full flex flex-col overflow-hidden"
+  class="group relative rounded-lg border p-6 transition-transform duration-300 ease-out-expo hover:-translate-y-1 h-full flex flex-col overflow-hidden"
   style={`background: var(--color-surface); border-color: var(--color-border)`}
 >
   <!-- Type indicator (left) + year (right) -->
@@ -66,30 +70,28 @@ const { title, description, skillTags, year, github, demo, type } = Astro.props;
     </div>
   )}
 
-  <!-- See more link -->
-  {(github || demo) && (
-    <div class="flex gap-4">
-      {github && (
+  <!-- Outbound links, pinned bottom-left. Rendered only when a destination exists. -->
+  {(link || demo) && (
+    <div class="flex gap-4 mt-auto">
+      {link && (
         <a
-          href={github}
+          href={link}
           target="_blank"
           rel="noopener noreferrer"
-          class="font-mono text-sm underline underline-offset-2 transition-colors"
+          class="font-mono text-sm underline underline-offset-2 transition-opacity hover:opacity-70 active-press"
           style={`color: var(--color-accent-blue)`}
-        >
-          see more
-        </a>
+          data-scramble
+        >view page</a>
       )}
       {demo && (
         <a
           href={demo}
           target="_blank"
           rel="noopener noreferrer"
-          class="font-mono text-sm underline underline-offset-2 transition-colors"
+          class="font-mono text-sm underline underline-offset-2 transition-opacity hover:opacity-70 active-press"
           style={`color: var(--color-accent-blue)`}
-        >
-          demo
-        </a>
+          data-scramble
+        >view demo</a>
       )}
     </div>
   )}

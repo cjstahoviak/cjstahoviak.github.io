@@ -162,12 +162,25 @@ html.light {
   .accent-bar-2 { transition-delay: 0s; }
   .group:hover .accent-bar-2 { transition-delay: 0.4s; }
 
-  /* Active press feedback */
+  /* Active press feedback.
+     Only put this on elements that actually navigate or act (<a>, <button>).
+     On a static card it promises a click target that isn't there. */
   .active-press {
     cursor: pointer;
   }
   .active-press:active {
     scale: 0.97;
+  }
+
+  /* Featured carousel. The animation lives here rather than in an inline style
+     so the hover rule can win the cascade: the strip holds still while the
+     pointer is over it, making the cards' "view page" links clickable. */
+  .marquee-track {
+    width: max-content;
+    animation: marquee var(--marquee-duration, 60s) linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
   }
 
   /* Timeline dot fill transition */
