@@ -10,7 +10,9 @@ export interface Project {
   year: number;
   /** 2–5 skills demonstrated by the project. Rendered only on the featured carousel. */
   skillTags: string[];
-  github?: string;
+  /** Primary destination — live site, repo, or write-up. Renders the "view page" link. */
+  link?: string;
+  /** Optional live demo, when it is separate from `link`. Renders "view demo". */
   demo?: string;
   /**
    * Optional shorter variants for the featured carousel, whose cards are a
@@ -42,6 +44,18 @@ export const projects: Project[] = [
     featured: {
       description:
         "AI-powered web app for consolidating and summarizing government legislature. 4th place at Lobo Hackathon.",
+    },
+  },
+  {
+    title: "Lost in Translation",
+    year: 2026,
+    description:
+      "A browser-based gag translator that plays telephone with Google Translate — English text hops through ten random languages and back, compounding each translation error into gloriously broken output. A single static page with no backend and no API key; the whole language chain is shown so you can trace the damage.",
+    skillTags: ["JavaScript", "Web Development", "REST APIs"],
+    link: "https://calvinstahoviak.com/lost-in-translation",
+    featured: {
+      description:
+        "Plays telephone with Google Translate — English hops through ten random languages and back, for gloriously broken results.",
     },
   },
 ];
