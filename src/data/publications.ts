@@ -1,7 +1,8 @@
 // Single source of truth for publications.
 // Rendered by the Featured Work carousel (index.astro) and the publications
 // page (publications.astro, via PublicationEntry.astro). Edit here — both
-// pages update. Citation numbers [n] are derived from array order.
+// pages update. The exported list is sorted newest first, and citation
+// numbers [n] follow that order.
 
 export interface Publication {
   /** Full paper title, as shown on the publications page. */
@@ -20,7 +21,7 @@ export interface Publication {
   link?: string;
 }
 
-export const publications: Publication[] = [
+const entries: Publication[] = [
   {
     title:
       "Dynamic Admittance Parametrisation of Non-Prehensile Multi-Robot Transport with Optimal Coordinated Planning",
@@ -64,6 +65,12 @@ export const publications: Publication[] = [
     link: "https://ieeexplore.ieee.org/document/10637056",
   },
 ];
+
+/**
+ * Newest first, sorted at build time. The sort is stable, so papers sharing a
+ * year keep the order they appear in above — reorder them there to control it.
+ */
+export const publications: Publication[] = [...entries].sort((a, b) => b.year - a.year);
 
 /** Citation-style one-liner for compact cards, e.g. "Stahoviak, C. et al. — MECC, 2026. (accepted)" */
 export function citationSummary(pub: Publication): string {
