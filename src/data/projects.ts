@@ -48,7 +48,7 @@ export const projects: Project[] = [
   },
   {
     title: "Lost in Translation",
-    year: 2026,
+    year: 2020,
     description:
       "A web application that emulates the game of telephone with a randomized list of languages. Text is translated from one language directly to the next until a set limit is reached. The result is a strange and funny adaptation of the original text, often with odd grammar and vocabulary usage.",
     skillTags: ["JavaScript", "Web Development", "REST APIs"],
