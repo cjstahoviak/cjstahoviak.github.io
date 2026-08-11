@@ -1,6 +1,6 @@
 // Single source of truth for projects.
 // Rendered by the Featured Work carousel (index.astro) and the projects page (projects.astro).
-// Edit here — both pages update.
+// Edit here — both pages update. The exported list is sorted newest first.
 
 export interface Project {
   title: string;
@@ -23,7 +23,7 @@ export interface Project {
   };
 }
 
-export const projects: Project[] = [
+const entries: Project[] = [
   {
     title: "RL Quadrotor Control",
     year: 2026,
@@ -48,7 +48,7 @@ export const projects: Project[] = [
   },
   {
     title: "Lost in Translation",
-    year: 2026,
+    year: 2020,
     description:
       "A web application that emulates the game of telephone with a randomized list of languages. Text is translated from one language directly to the next until a set limit is reached. The result is a strange and funny adaptation of the original text, often with odd grammar and vocabulary usage.",
     skillTags: ["JavaScript", "Web Development", "REST APIs"],
@@ -59,3 +59,9 @@ export const projects: Project[] = [
     },
   },
 ];
+
+/**
+ * Newest first, sorted at build time. The sort is stable, so projects sharing a
+ * year keep the order they appear in above — reorder them there to control it.
+ */
+export const projects: Project[] = [...entries].sort((a, b) => b.year - a.year);
