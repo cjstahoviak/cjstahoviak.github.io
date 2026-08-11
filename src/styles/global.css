@@ -32,6 +32,16 @@
   --color-text-light: #0A0A0A;
   --color-text-secondary-light: #525252;
 
+  /* "Ink" variants of the yellow and green accents, for anything that has to be
+     legible rather than merely decorative — badge labels, timeline dots. The
+     bright values are unreadable on a light page (#CCFF00 is 1.1:1 on white,
+     #22C55E is 2.0:1), so light mode swaps in darkened equivalents of the same
+     hue. Use the plain accent tokens for fills and bars, these for foregrounds. */
+  --color-accent-yellow-ink: #CCFF00;
+  --color-green-ink: #22C55E;
+  --color-accent-yellow-ink-light: #5C6900;
+  --color-green-ink-light: #166534;
+
   --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -46,6 +56,8 @@ html.light {
   --color-border: var(--color-border-light);
   --color-text: var(--color-text-light);
   --color-text-secondary: var(--color-text-secondary-light);
+  --color-accent-yellow-ink: var(--color-accent-yellow-ink-light);
+  --color-green-ink: var(--color-green-ink-light);
 }
 
 /* ── Base styles ── */

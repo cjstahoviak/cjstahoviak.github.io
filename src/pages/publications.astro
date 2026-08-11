@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PublicationEntry from '../components/PublicationEntry.astro';
+import TimelineItem from '../components/TimelineItem.astro';
 import { publications } from '../data/publications';
 ---
 
@@ -18,9 +19,11 @@ import { publications } from '../data/publications';
     </div>
 
     <!-- Publications list (data lives in src/data/publications.ts) -->
-    <div class="max-w-3xl space-y-8">
+    <div class="max-w-3xl">
       {publications.map((pub, i) => (
-        <PublicationEntry publication={pub} index={i + 1} />
+        <TimelineItem index={i} total={publications.length}>
+          <PublicationEntry publication={pub} index={i + 1} />
+        </TimelineItem>
       ))}
     </div>
   </section>
