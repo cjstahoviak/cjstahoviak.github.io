@@ -222,7 +222,7 @@ const skills = [
         drops its "-terminal" suffix below sm: so the prompt never breaks mid-word.
       -->
       <div
-        class="rounded-lg border p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed"
+        class="max-w-2xl rounded-lg border p-4 sm:p-6 font-mono text-xs sm:text-sm leading-relaxed"
         style={`background: var(--color-surface); border-color: var(--color-border)`}
       >
         <div class="mb-4" style={`color: var(--color-text-secondary)`}>
@@ -246,7 +246,7 @@ const skills = [
             <span style={`color: var(--color-border)`}>┌─[</span><span style="color: #22C55E">calvin@web<span class="hidden sm:inline">-terminal</span></span><span style={`color: var(--color-border)`}>]─[</span><span style={`color: var(--color-accent-blue)`}>~</span><span style={`color: var(--color-border)`}>]</span>
           </div>
           <div>
-            <span style={`color: var(--color-border)`}>└──╼</span> <span style={`color: var(--color-accent-blue)`}>$</span> <a href="/about" class="transition-colors hover:underline" style={`color: var(--color-accent-blue)`}>more about me</a> <span class="cursor-blink"></span>
+            <span style={`color: var(--color-border)`}>└──╼</span> <span style={`color: var(--color-accent-blue)`}>$</span> <a href="/about" class="underline underline-offset-2 transition-opacity hover:opacity-70" style={`color: var(--color-accent-blue)`}>more about me</a> <span class="cursor-blink"></span>
           </div>
         </div>
       </div>

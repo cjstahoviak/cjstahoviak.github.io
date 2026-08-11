@@ -32,6 +32,21 @@
   --color-text-light: #0A0A0A;
   --color-text-secondary-light: #525252;
 
+  /* "Ink" variants of the yellow and green accents, for anything that has to be
+     legible rather than merely decorative — badge labels, timeline dots. The
+     bright values are unreadable on a light page (#CCFF00 is 1.1:1 on white,
+     #22C55E is 2.0:1), so light mode swaps in darkened equivalents of the same
+     hue. Use the plain accent tokens for fills and bars, these for foregrounds. */
+  --color-accent-yellow-ink: #CCFF00;
+  --color-green-ink: #22C55E;
+  --color-accent-yellow-ink-light: #5C6900;
+  --color-green-ink-light: #166534;
+
+  /* Highlight on Calvin's name in a citation. The lime is 1.36:1 on a white
+     card — his own name was the least legible text on the page in light mode. */
+  --color-author-ink: #39FF14;
+  --color-author-ink-light: #2E7D0E;
+
   --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -46,6 +61,9 @@ html.light {
   --color-border: var(--color-border-light);
   --color-text: var(--color-text-light);
   --color-text-secondary: var(--color-text-secondary-light);
+  --color-accent-yellow-ink: var(--color-accent-yellow-ink-light);
+  --color-green-ink: var(--color-green-ink-light);
+  --color-author-ink: var(--color-author-ink-light);
 }
 
 /* ── Base styles ── */
@@ -172,15 +190,10 @@ html.light {
     scale: 0.97;
   }
 
-  /* Featured carousel. The animation lives here rather than in an inline style
-     so the hover rule can win the cascade: the strip holds still while the
-     pointer is over it, making the cards' "view page" links clickable. */
+  /* Featured carousel. Runs continuously — hovering a card does not pause it. */
   .marquee-track {
     width: max-content;
     animation: marquee var(--marquee-duration, 60s) linear infinite;
-  }
-  .marquee-track:hover {
-    animation-play-state: paused;
   }
 
   /* Timeline dot fill transition */

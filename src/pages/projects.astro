@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import TimelineItem from '../components/TimelineItem.astro';
 import { projects } from '../data/projects';
 ---
 
@@ -17,17 +18,21 @@ import { projects } from '../data/projects';
       <div class="h-1 w-16 rounded mt-4" style={`background: var(--color-accent-blue)`}></div>
     </div>
 
-    <!-- Projects grid (data lives in src/data/projects.ts) -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {projects.map((project) => (
-        <ProjectCard
-          title={project.title}
-          description={project.description}
-          year={project.year}
-          link={project.link}
-          demo={project.demo}
-          type="project"
-        />
+    <!-- Projects timeline (data lives in src/data/projects.ts).
+         Single column rather than the previous two-up grid: the timeline rail
+         reads as one vertical sequence, which a two-column grid cannot express. -->
+    <div class="max-w-3xl">
+      {projects.map((project, i) => (
+        <TimelineItem index={i} total={projects.length}>
+          <ProjectCard
+            title={project.title}
+            description={project.description}
+            year={project.year}
+            link={project.link}
+            demo={project.demo}
+            type="project"
+          />
+        </TimelineItem>
       ))}
     </div>
   </section>

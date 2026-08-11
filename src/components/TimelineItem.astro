@@ -1,0 +1,53 @@
+---
+// Timeline rail for list pages (publications, projects). Wraps an existing card
+// in a left-hand line-and-dot marker, matching the experience timeline on the
+// about page. The rail is drawn per item rather than once on the container so
+// the segments stay glued to their rows at any card height: each row carries the
+// segment below its own dot, so consecutive rows join seamlessly.
+interface Props {
+  /** Position in the list, used to pick the accent and trim the rail ends. */
+  index: number;
+  /** Total items, so the last row can stop the line at its dot. */
+  total: number;
+}
+
+const { index, total } = Astro.props;
+
+// Accent rotation: blue → coral → yellow, per the site's timeline convention.
+// Yellow uses its "ink" variant — the bright #CCFF00 ring is 1.07:1 on the light
+// page background, i.e. invisible. Blue and coral are legible as-is (4.4:1, 3.2:1).
+const accents = ['var(--color-accent-blue)', 'var(--color-accent-coral)', 'var(--color-accent-yellow-ink)'];
+const accent = accents[index % accents.length];
+
+const isFirst = index === 0;
+const isLast = index === total - 1;
+
+// The dot is 18px tall at top-2 (8px), so its centre sits 17px below the row top.
+// The first row starts its line at that centre instead of at the row's edge, and
+// the last row stops there. A single-item list needs no line at all.
+const railTop = isFirst ? '17px' : '0';
+const railExtent = isLast ? 'height: 17px;' : 'bottom: 0;';
+const showRail = total > 1 && !(isFirst && isLast);
+---
+
+<div class="relative pl-8 pb-8 group">
+  {showRail && (
+    <div
+      class="absolute left-[9px] w-px"
+      style={`top: ${railTop}; ${railExtent} background: var(--color-border)`}
+    ></div>
+  )}
+
+  <!-- Dot: hollow ring that fills on hover, same treatment as TimelineEntry -->
+  <div
+    class="absolute left-0 top-2 w-[18px] h-[18px] rounded-full border-2"
+    style={`border-color: ${accent}; background: var(--color-bg)`}
+  >
+    <div
+      class="absolute inset-[3px] rounded-full timeline-dot-fill scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100"
+      style={`background: ${accent}`}
+    ></div>
+  </div>
+
+  <slot />
+</div>

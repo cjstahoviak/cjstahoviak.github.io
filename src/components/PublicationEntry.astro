@@ -22,11 +22,11 @@ const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
       [{index}]
     </span>
     {pub.status === 'accepted' ? (
-      <span class="font-mono text-xs px-2 py-0.5 rounded" style={`background: color-mix(in srgb, var(--color-accent-yellow) 15%, transparent); color: var(--color-accent-yellow)`}>
+      <span class="font-mono text-xs px-2 py-0.5 rounded" style={`background: color-mix(in srgb, var(--color-accent-yellow) 15%, transparent); color: var(--color-accent-yellow-ink)`}>
         {statusLabel}
       </span>
     ) : (
-      <span class="font-mono text-xs px-2 py-0.5 rounded" style={`background: color-mix(in srgb, #22C55E 15%, transparent); color: #22C55E`}>
+      <span class="font-mono text-xs px-2 py-0.5 rounded" style={`background: color-mix(in srgb, #22C55E 15%, transparent); color: var(--color-green-ink)`}>
         {statusLabel}
       </span>
     )}
@@ -38,7 +38,7 @@ const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
     {pub.title}
   </h3>
   <p class="text-sm mb-3" style={`color: var(--color-text-secondary)`}>
-    {isMe ? <strong style="color: #39FF14">{pub.leadAuthor}</strong> : pub.leadAuthor} et al.
+    {isMe ? <strong style="color: var(--color-author-ink)">{pub.leadAuthor}</strong> : pub.leadAuthor} et al.
   </p>
   <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
     <em>{pub.venue}</em>, {pub.year}.
