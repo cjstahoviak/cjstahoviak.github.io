@@ -42,6 +42,11 @@
   --color-accent-yellow-ink-light: #5C6900;
   --color-green-ink-light: #166534;
 
+  /* Highlight on Calvin's name in a citation. The lime is 1.36:1 on a white
+     card — his own name was the least legible text on the page in light mode. */
+  --color-author-ink: #39FF14;
+  --color-author-ink-light: #2E7D0E;
+
   --ease-out-expo: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -58,6 +63,7 @@ html.light {
   --color-text-secondary: var(--color-text-secondary-light);
   --color-accent-yellow-ink: var(--color-accent-yellow-ink-light);
   --color-green-ink: var(--color-green-ink-light);
+  --color-author-ink: var(--color-author-ink-light);
 }
 
 /* ── Base styles ── */

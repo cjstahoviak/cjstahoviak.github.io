@@ -38,7 +38,7 @@ const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
     {pub.title}
   </h3>
   <p class="text-sm mb-3" style={`color: var(--color-text-secondary)`}>
-    {isMe ? <strong style="color: #39FF14">{pub.leadAuthor}</strong> : pub.leadAuthor} et al.
+    {isMe ? <strong style="color: var(--color-author-ink)">{pub.leadAuthor}</strong> : pub.leadAuthor} et al.
   </p>
   <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
     <em>{pub.venue}</em>, {pub.year}.
