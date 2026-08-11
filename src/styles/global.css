@@ -172,15 +172,10 @@ html.light {
     scale: 0.97;
   }
 
-  /* Featured carousel. The animation lives here rather than in an inline style
-     so the hover rule can win the cascade: the strip holds still while the
-     pointer is over it, making the cards' "view page" links clickable. */
+  /* Featured carousel. Runs continuously — hovering a card does not pause it. */
   .marquee-track {
     width: max-content;
     animation: marquee var(--marquee-duration, 60s) linear infinite;
-  }
-  .marquee-track:hover {
-    animation-play-state: paused;
   }
 
   /* Timeline dot fill transition */
