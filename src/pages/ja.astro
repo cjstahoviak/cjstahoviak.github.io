@@ -1,0 +1,372 @@
+---
+// Standalone Japanese overview page. Everything the English site spreads across
+// /about, /projects, and /publications, condensed into one scroll.
+//
+// All copy lives in src/data/ja.ts — this file is layout only, so revising the
+// Japanese never means touching markup.
+import { Image } from 'astro:assets';
+import JaLayout from '../layouts/JaLayout.astro';
+import SkillCategory from '../components/SkillCategory.astro';
+import TimelineEntry from '../components/TimelineEntry.astro';
+import TimelineItem from '../components/TimelineItem.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import PublicationEntry from '../components/PublicationEntry.astro';
+import calvinImg from '../assets/calvin_stahoviak.jpg';
+import scratchImg from '../assets/scratch.jpg';
+import {
+  meta,
+  ui,
+  sections,
+  intro,
+  photos,
+  quickInfo,
+  skills,
+  work,
+  education,
+  projects,
+  publications,
+  awards,
+  englishOnly,
+} from '../data/ja';
+
+// Accent rotation: blue → coral → yellow, the site's convention for lists.
+// Yellow uses its "ink" variant, which is the legible one on the light theme.
+const accents = [
+  'var(--color-accent-blue)',
+  'var(--color-accent-coral)',
+  'var(--color-accent-yellow-ink)',
+];
+---
+
+<JaLayout>
+  <!-- ── 自己紹介 ──────────────────────────────────────────────────────────── -->
+  <!-- scroll-mt clears the 7rem fixed header when an anchor link jumps here. -->
+  <section id="intro" class="relative overflow-hidden scroll-mt-32">
+    <div class="absolute inset-0 grid-overlay pointer-events-none"></div>
+    <div
+      class="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+      style="width: 900px; height: 650px; top: -300px; background: radial-gradient(ellipse at center, rgba(0,102,255,0.15), transparent 70%); z-index: 0"
+    >
+    </div>
+
+    <div class="max-w-6xl mx-auto px-6 pt-40 pb-20 relative z-10">
+      <div class="mb-14 animate-fade-in">
+        <h1
+          class="text-4xl md:text-5xl font-mono font-bold tracking-tight mb-3"
+          style={`color: var(--color-text)`}
+        >
+          {meta.name}
+        </h1>
+        <p class="font-mono text-base md:text-lg mb-4" style={`color: var(--color-text-secondary)`}>
+          {meta.role}
+        </p>
+        <div class="h-1 w-16 rounded" style={`background: var(--color-accent-blue)`}></div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
+        <!-- Photos + introduction -->
+        <div class="lg:col-span-2">
+          <div class="flex flex-col sm:flex-row gap-8 items-start">
+            <div class="flex flex-row sm:flex-col gap-4 shrink-0">
+              <Image
+                src={calvinImg}
+                alt={photos.calvinAlt}
+                width={144}
+                height={144}
+                loading="eager"
+                class="w-32 h-32 sm:w-36 sm:h-36 rounded-lg object-cover border-2"
+                style={`border-color: var(--color-border)`}
+              />
+              <figure class="m-0">
+                <Image
+                  src={scratchImg}
+                  alt={photos.scratchAlt}
+                  width={144}
+                  height={144}
+                  class="w-32 h-32 sm:w-36 sm:h-36 rounded-lg object-cover border-2"
+                  style={`border-color: var(--color-border)`}
+                />
+                <figcaption
+                  class="font-mono text-xs mt-2"
+                  style={`color: var(--color-text-secondary)`}
+                >
+                  {photos.scratchCaption}
+                </figcaption>
+              </figure>
+            </div>
+
+            <div class="space-y-4">
+              {
+                intro.map((paragraph) => (
+                  <p class="text-base" style={`color: var(--color-text-secondary)`}>
+                    {paragraph}
+                  </p>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick facts. Label-above-value rather than the English page's
+             justify-between row, because the Japanese values are long enough
+             that a two-column row leaves the value almost no width. -->
+        <div>
+          <div
+            class="rounded-lg border p-5"
+            style={`background: var(--color-surface); border-color: var(--color-border)`}
+          >
+            <dl class="space-y-4">
+              {
+                quickInfo.map(({ label, value }) => (
+                  <div>
+                    <dt
+                      class="font-mono text-xs tracking-widest mb-1"
+                      style={`color: var(--color-accent-blue)`}
+                    >
+                      {label}
+                    </dt>
+                    <dd class="text-sm" style={`color: var(--color-text)`}>
+                      {value}
+                    </dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── スキル ────────────────────────────────────────────────────────────── -->
+  <section id="skills" class="border-t py-20 scroll-mt-32" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <h2
+        class="text-3xl md:text-4xl font-mono font-bold tracking-tight mb-4"
+        style={`color: var(--color-text)`}
+      >
+        {sections.skills}
+      </h2>
+      <div class="h-1 w-16 rounded mb-10" style={`background: var(--color-accent-coral)`}></div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          skills.map((category, i) => (
+            <SkillCategory
+              title={category.title}
+              skills={category.skills}
+              accent={accents[i % accents.length]}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 経歴（職歴・学歴）─────────────────────────────────────────────────── -->
+  <section id="career" class="border-t py-20 scroll-mt-32" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <h2
+        class="text-3xl md:text-4xl font-mono font-bold tracking-tight mb-4"
+        style={`color: var(--color-text)`}
+      >
+        {sections.career}
+      </h2>
+      <div class="h-1 w-16 rounded mb-12" style={`background: var(--color-accent-yellow-ink)`}></div>
+
+      <div class="max-w-3xl">
+        <h3
+          class="font-mono text-xs font-semibold tracking-widest mb-6"
+          style={`color: var(--color-accent-blue)`}
+        >
+          {sections.work}
+        </h3>
+        {
+          work.map((entry, i) => (
+            <TimelineEntry
+              title={entry.title}
+              subtitle={entry.subtitle}
+              date={entry.date}
+              location={entry.location}
+              items={entry.items}
+              accent={accents[i % accents.length]}
+            />
+          ))
+        }
+
+        <h3
+          class="font-mono text-xs font-semibold tracking-widest mb-6 mt-10"
+          style={`color: var(--color-accent-coral)`}
+        >
+          {sections.education}
+        </h3>
+        {
+          education.map((entry, i) => (
+            <TimelineEntry
+              title={entry.title}
+              subtitle={entry.subtitle}
+              date={entry.date}
+              location={entry.location}
+              items={entry.items}
+              accent={accents[i % accents.length]}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── プロジェクト ──────────────────────────────────────────────────────── -->
+  <section
+    id="projects"
+    class="border-t py-20 scroll-mt-32"
+    style={`border-color: var(--color-border)`}
+  >
+    <div class="max-w-6xl mx-auto px-6">
+      <h2
+        class="text-3xl md:text-4xl font-mono font-bold tracking-tight mb-4"
+        style={`color: var(--color-text)`}
+      >
+        {sections.projects}
+      </h2>
+      <div class="h-1 w-16 rounded mb-12" style={`background: var(--color-accent-blue)`}></div>
+
+      <div class="max-w-3xl">
+        {
+          projects.map((project, i) => (
+            <TimelineItem index={i} total={projects.length}>
+              <ProjectCard
+                title={project.title}
+                description={project.description}
+                skillTags={project.skillTags}
+                year={project.year}
+                link={project.link}
+                demo={project.demo}
+                type="project"
+                typeLabel={ui.typeProject}
+                linkLabel={ui.viewPage}
+                demoLabel={ui.viewDemo}
+              />
+            </TimelineItem>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 論文 ──────────────────────────────────────────────────────────────── -->
+  <!-- Titles stay in English: papers are cited in English by convention. Each
+       carries a short Japanese summary underneath. -->
+  <section
+    id="publications"
+    class="border-t py-20 scroll-mt-32"
+    style={`border-color: var(--color-border)`}
+  >
+    <div class="max-w-6xl mx-auto px-6">
+      <h2
+        class="text-3xl md:text-4xl font-mono font-bold tracking-tight mb-4"
+        style={`color: var(--color-text)`}
+      >
+        {sections.publications}
+      </h2>
+      <div class="h-1 w-16 rounded mb-12" style={`background: var(--color-accent-coral)`}></div>
+
+      <div class="max-w-3xl">
+        {
+          publications.map((pub, i) => (
+            <TimelineItem index={i} total={publications.length}>
+              <PublicationEntry
+                publication={pub}
+                index={i + 1}
+                description={pub.description}
+                statusLabel={pub.status === 'accepted' ? ui.statusAccepted : ui.statusPublished}
+                etAl={ui.etAl}
+                viewPageLabel={ui.viewPage}
+              />
+            </TimelineItem>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 受賞・活動 ────────────────────────────────────────────────────────── -->
+  <section class="border-t py-20" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <h2
+        class="text-3xl md:text-4xl font-mono font-bold tracking-tight mb-4"
+        style={`color: var(--color-text)`}
+      >
+        {sections.awards}
+      </h2>
+      <div class="h-1 w-16 rounded mb-12" style={`background: var(--color-accent-yellow-ink)`}></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+        {
+          awards.map((award, i) => (
+            <div
+              class="group relative rounded-lg border p-5 transition-transform duration-300 ease-out-expo hover:-translate-y-1"
+              style={`background: var(--color-surface); border-color: var(--color-border)`}
+            >
+              <div class="flex items-center gap-2 mb-2">
+                <span
+                  class="w-2 h-2 rounded-full shrink-0"
+                  style={`background: ${accents[i % accents.length]}`}
+                />
+                <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
+                  {award.year}
+                </span>
+              </div>
+              <h3
+                class="font-mono font-bold text-sm mb-1"
+                style={`color: var(--color-text)`}
+                data-scramble
+                data-scramble-trigger="parent"
+              >
+                {award.title}
+              </h3>
+              <p class="text-sm" style={`color: var(--color-text-secondary)`}>
+                {award.org}
+              </p>
+              <div
+                class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"
+                style={`background: ${accents[i % accents.length]}`}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 英語のみのコンテンツ ──────────────────────────────────────────────── -->
+  <!-- Saying this outright beats letting a Japanese reader click into English. -->
+  <section class="border-t py-20" style={`border-color: var(--color-border)`}>
+    <div class="max-w-6xl mx-auto px-6">
+      <div
+        class="max-w-3xl rounded-lg border p-6"
+        style={`background: var(--color-surface); border-color: var(--color-border)`}
+      >
+        <h2 class="font-mono font-bold text-base mb-2" style={`color: var(--color-text)`}>
+          {englishOnly.heading}
+        </h2>
+        <p class="text-sm mb-4" style={`color: var(--color-text-secondary)`}>
+          {englishOnly.body}
+        </p>
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+          {
+            englishOnly.links.map(({ label, href }) => (
+              <a
+                href={href}
+                class="font-mono text-sm underline underline-offset-2 transition-opacity hover:opacity-70 active-press"
+                style={`color: var(--color-accent-blue)`}
+              >
+                {label}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</JaLayout>

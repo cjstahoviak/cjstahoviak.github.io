@@ -1,16 +1,39 @@
 ---
 import type { Publication } from '../data/publications';
 
+/**
+ * Only the citation fields are read, so /ja can pass its own publication shape
+ * (which carries a Japanese description instead of skill tags).
+ */
+type PublicationLike = Pick<
+  Publication,
+  'title' | 'leadAuthor' | 'venue' | 'year' | 'status' | 'link'
+>;
+
 interface Props {
-  publication: Publication;
+  publication: PublicationLike;
   /** 1-based citation number, rendered as [n]. */
   index: number;
+  /** Optional one-line summary, rendered under the citation. Used by /ja. */
+  description?: string;
+  /** Label overrides for non-English pages. */
+  statusLabel?: string;
+  etAl?: string;
+  viewPageLabel?: string;
 }
 
-const { publication: pub, index } = Astro.props;
+const {
+  publication: pub,
+  index,
+  description,
+  statusLabel: statusLabelOverride,
+  etAl = 'et al.',
+  viewPageLabel = 'view page',
+} = Astro.props;
 
 const isMe = pub.leadAuthor.startsWith('Stahoviak');
-const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
+const statusLabel =
+  statusLabelOverride ?? (pub.status === 'accepted' ? 'Accepted' : 'Published');
 
 // The card itself is deliberately not a link — only the "view page" text at the
 // bottom navigates, so the pointer cursor appears only over that.
@@ -38,11 +61,16 @@ const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
     {pub.title}
   </h3>
   <p class="text-sm mb-3" style={`color: var(--color-text-secondary)`}>
-    {isMe ? <strong style="color: var(--color-author-ink)">{pub.leadAuthor}</strong> : pub.leadAuthor} et al.
+    {isMe ? <strong style="color: var(--color-author-ink)">{pub.leadAuthor}</strong> : pub.leadAuthor} {etAl}
   </p>
   <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
     <em>{pub.venue}</em>, {pub.year}.
   </p>
+  {description && (
+    <p class="text-sm leading-relaxed mt-3" style={`color: var(--color-text-secondary)`}>
+      {description}
+    </p>
+  )}
   {pub.link && (
     <a
       href={pub.link}
@@ -51,7 +79,7 @@ const statusLabel = pub.status === 'accepted' ? 'Accepted' : 'Published';
       class="inline-block mt-4 font-mono text-sm underline underline-offset-2 transition-opacity hover:opacity-70 active-press"
       style={`color: var(--color-accent-blue)`}
       data-scramble
-    >view page</a>
+    >{viewPageLabel}</a>
   )}
   <div
     class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100"

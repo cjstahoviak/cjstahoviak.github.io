@@ -66,6 +66,49 @@ html.light {
   --color-author-ink: var(--color-author-ink-light);
 }
 
+/* ── Japanese (/ja) typography ──
+   Scoped to html[lang="ja"], so the English pages are untouched.
+
+   The font stacks put the Latin faces FIRST and let CJK glyphs fall through to
+   the Japanese faces. Font fallback is per-glyph, so mixed strings like
+   "PyTorch と強化学習" keep their Latin half in JetBrains Mono / Inter and only
+   the Japanese half switches — the brand type survives.
+
+   Overriding --font-mono and --font-sans (rather than adding new tokens) means
+   every existing .font-mono element on the page switches automatically, the
+   same way html.light remaps the color tokens above. */
+html[lang='ja'] {
+  --font-mono: 'JetBrains Mono', 'M PLUS 1 Code', ui-monospace, 'Hiragino Sans', 'Yu Gothic', Meiryo, monospace;
+  --font-sans: 'Inter', 'Noto Sans JP', ui-sans-serif, system-ui, 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+
+  /* 禁則処理 — never start a line with 。、）」 */
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* Tight tracking is tuned for Latin mono headings. CJK glyphs are already
+   full-width, so negative letter-spacing makes them collide. Wide tracking
+   (tracking-widest) is idiomatic in Japanese and is deliberately left alone. */
+html[lang='ja'] .tracking-tight,
+html[lang='ja'] .tracking-tighter {
+  letter-spacing: normal;
+}
+
+/* Japanese prose wants noticeably more leading than Latin. */
+html[lang='ja'] p,
+html[lang='ja'] li,
+html[lang='ja'] dd {
+  line-height: 1.9;
+}
+
+/* The 日本語 link is the only Japanese text on the English pages, where
+   --font-mono has no CJK coverage. BaseLayout loads a 3-glyph subset for it. */
+.lang-link-ja {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', Meiryo, sans-serif;
+  letter-spacing: normal;
+}
+
 /* ── Base styles ── */
 @layer base {
   html {

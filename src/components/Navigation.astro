@@ -75,6 +75,17 @@ const links = [
             </a>
           </div>
         </div>
+        <!-- Japanese page. lang/hreflang so assistive tech reads it as Japanese
+             rather than spelling the kanji out in English. -->
+        <a
+          href="/ja"
+          lang="ja"
+          hreflang="ja"
+          class="lang-link-ja px-3 py-2 text-base rounded-md transition-colors hover:text-[var(--color-accent-blue)]"
+          style={`color: var(--color-text-secondary)`}
+        >
+          <span data-scramble>日本語</span>
+        </a>
         <ThemeToggle />
       </div>
     </div>
@@ -120,6 +131,15 @@ const links = [
           </a>
         );
       })}
+      <a
+        href="/ja"
+        lang="ja"
+        hreflang="ja"
+        class="lang-link-ja px-3 py-2 text-sm rounded-md transition-colors"
+        style={`color: var(--color-text-secondary)`}
+      >
+        日本語
+      </a>
       <div class="border-t mt-2 pt-2" style={`border-color: var(--color-border)`}>
         <span class="px-3 py-1 font-mono text-xs uppercase tracking-wider block" style={`color: var(--color-text-secondary)`}>Archive</span>
         <a

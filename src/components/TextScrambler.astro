@@ -4,10 +4,27 @@
 // If data-scramble-trigger="parent" is set, the effect triggers on the parent's hover instead.
 // Duration scales with text length: Math.max(500, len * 15).
 // Override with data-scramble-duration="1000" for custom timing.
+//
+// The scramble charset is chosen from the text itself: Japanese text scrambles
+// through katakana, everything else through Latin. Substituting narrow Latin
+// glyphs for full-width CJK ones (or the reverse) changes the element's width on
+// every animation frame, which reads as layout thrash — matching the script
+// keeps the width stable. Force a charset with data-scramble-charset="latin|katakana".
 ---
 
 <script>
-  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const CHARSETS: Record<string, string> = {
+    latin: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+    katakana: 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン',
+  };
+
+  // Hiragana, katakana, and CJK ideographs.
+  const CJK = /[぀-ヿ㐀-䶿一-鿿豈-﫿]/;
+
+  // Left in place rather than scrambled, so the text keeps its silhouette.
+  // Japanese has no inter-word spaces, so its brackets and punctuation do that job.
+  const PRESERVE = new Set([...' 　「」（）()・、。／/—–-']);
+
   const MS_PER_CHAR = 15;
   const MIN_DURATION = 500;
 
@@ -16,6 +33,7 @@
     running: boolean;
     frame: number;
     duration: number;
+    chars: string;
   }
 
   const state = new WeakMap<Element, ScramblerState>();
@@ -24,6 +42,12 @@
     const override = el.getAttribute('data-scramble-duration');
     if (override) return parseInt(override, 10);
     return Math.max(MIN_DURATION, len * MS_PER_CHAR);
+  }
+
+  function getCharset(el: Element, text: string): string {
+    const override = el.getAttribute('data-scramble-charset');
+    if (override && CHARSETS[override]) return CHARSETS[override];
+    return CJK.test(text) ? CHARSETS.katakana : CHARSETS.latin;
   }
 
   function scramble(el: Element) {
@@ -41,12 +65,12 @@
       let result = '';
 
       for (let i = 0; i < len; i++) {
-        if (s.original[i] === ' ') {
-          result += ' ';
+        if (PRESERVE.has(s.original[i])) {
+          result += s.original[i];
         } else if (i < resolvedCount) {
           result += s.original[i];
         } else {
-          result += CHARS[Math.floor(Math.random() * CHARS.length)];
+          result += s.chars[Math.floor(Math.random() * s.chars.length)];
         }
       }
 
@@ -81,6 +105,7 @@
         running: false,
         frame: 0,
         duration: getDuration(el, original.length),
+        chars: getCharset(el, original),
       });
 
       const trigger = el.getAttribute('data-scramble-trigger');

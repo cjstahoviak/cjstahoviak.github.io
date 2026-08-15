@@ -1,0 +1,200 @@
+---
+// Layout for the standalone Japanese page (/ja).
+//
+// Deliberately does NOT reuse BaseLayout/Navigation: the site nav links to
+// English-only pages, which would strand a Japanese reader. Instead this header
+// carries in-page anchors (every target is on /ja) plus a single route out, back
+// to the English home page.
+//
+// The CJK webfonts are requested here and nowhere else, so the English pages
+// keep their current font payload unchanged.
+import ThemeToggle from '../components/ThemeToggle.astro';
+import TextScrambler from '../components/TextScrambler.astro';
+import SplashScreen from '../components/SplashScreen.astro';
+import { meta, ui, anchors } from '../data/ja';
+import '../styles/global.css';
+
+const enURL = new URL('/', Astro.site);
+const jaURL = new URL('/ja', Astro.site);
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="ja" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={meta.description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={meta.title} />
+    <meta property="og:description" content={meta.description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={jaURL} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image" content={new URL('/favicon.svg', Astro.site)} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={meta.title} />
+    <meta name="twitter:description" content={meta.description} />
+
+    <link rel="canonical" href={jaURL} />
+    <link rel="alternate" hreflang="ja" href={jaURL} />
+    <link rel="alternate" hreflang="en" href={enURL} />
+    <link rel="alternate" hreflang="x-default" href={enURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!--
+      Latin faces (Inter, JetBrains Mono) plus their Japanese counterparts.
+      M PLUS 1 Code is a monospaced CJK face, so the terminal aesthetic survives
+      in Japanese; Noto Sans JP covers body prose. Google Fonts splits CJK into
+      unicode-range chunks, so the browser fetches only the glyph ranges used.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=M+PLUS+1+Code:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{meta.title}</title>
+
+    <!-- Theme initialization (prevent flash) -->
+    <script is:inline>
+      (function () {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light') {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <SplashScreen />
+
+    <header
+      class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b"
+      style={`background: color-mix(in srgb, var(--color-bg) 80%, transparent); border-color: var(--color-border)`}
+    >
+      <!-- Row 1: identity + controls -->
+      <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <a
+          href="/ja"
+          class="font-mono font-bold text-xl tracking-tight flex items-center gap-3"
+          aria-label={meta.name}
+        >
+          <span
+            class="inline-block rounded-sm shrink-0"
+            style={`background: var(--color-accent-blue); width: 14px; height: 14px`}></span>
+          <span style={`color: var(--color-text)`}>CS</span>
+          <span class="font-normal" style={`color: var(--color-text-secondary)`}>//</span>
+        </a>
+
+        <div class="flex items-center gap-3">
+          <ThemeToggle />
+          <a
+            href="/"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 font-mono text-sm font-semibold rounded-md border transition-transform duration-200 ease-out-expo active-press hover:-translate-y-0.5"
+            style={`border-color: var(--color-border); color: var(--color-text)`}
+          >
+            <span data-scramble>{ui.toEnglish}</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Row 2: in-page anchors. Scrolls horizontally on narrow screens rather
+           than wrapping into a second line and changing the header height. -->
+      <nav
+        class="border-t"
+        style={`border-color: var(--color-border)`}
+        aria-label={meta.name}
+      >
+        <div class="max-w-6xl mx-auto px-6 h-12 flex items-center gap-1 overflow-x-auto whitespace-nowrap">
+          {
+            anchors.map(({ id, label }) => (
+              <a
+                href={`#${id}`}
+                class="shrink-0 px-3 py-1.5 font-mono text-sm rounded-md transition-colors hover:text-[var(--color-accent-blue)]"
+                style={`color: var(--color-text-secondary)`}
+              >
+                <span data-scramble>{label}</span>
+              </a>
+            ))
+          }
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="border-t" style={`border-color: var(--color-border)`}>
+      <div class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <div class="font-mono font-bold text-lg mb-2 flex items-center gap-2">
+              <span
+                class="inline-block w-3 h-3 rounded-sm shrink-0"
+                style={`background: var(--color-accent-blue)`}></span>
+              <span style={`color: var(--color-text)`}>{meta.name}</span>
+            </div>
+            <p class="text-sm" style={`color: var(--color-text-secondary)`}>{meta.role}</p>
+          </div>
+
+          <div>
+            <h2
+              class="font-mono text-xs font-semibold tracking-widest mb-3"
+              style={`color: var(--color-text-secondary)`}
+            >
+              {ui.contact}
+            </h2>
+            <div class="flex flex-col gap-2">
+              <a
+                href="mailto:cjstahoviak@gmail.com"
+                class="text-sm transition-colors hover:text-[var(--color-accent-blue)]"
+                style={`color: var(--color-text-secondary)`}>cjstahoviak@gmail.com</a>
+              <a
+                href="https://github.com/cjstahoviak"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-sm transition-colors hover:text-[var(--color-accent-blue)]"
+                style={`color: var(--color-text-secondary)`}>GitHub</a>
+            </div>
+          </div>
+
+          <div>
+            <a
+              href="/"
+              class="inline-flex items-center gap-1.5 font-mono text-sm transition-opacity hover:opacity-70"
+              style={`color: var(--color-accent-blue)`}
+            >
+              <span data-scramble>{ui.toEnglish}</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-6 border-t" style={`border-color: var(--color-border)`}>
+          <p class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>
+            &copy; {year} Calvin Stahoviak
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <TextScrambler />
+  </body>
+</html>

@@ -11,11 +11,27 @@ interface Props {
   /** Optional live demo. Renders a second "view demo" link. */
   demo?: string;
   type?: 'project' | 'publication';
+  /** Overrides the visible type label. Defaults to `type` itself. Used by /ja. */
+  typeLabel?: string;
+  /** Overrides the "view page" / "view demo" link text. Used by /ja. */
+  linkLabel?: string;
+  demoLabel?: string;
 }
 
 // The card itself is deliberately not a link — only the "view page" / "view demo"
 // text at the bottom navigates, so the pointer cursor appears only over those.
-const { title, description, skillTags, year, link, demo, type } = Astro.props;
+const {
+  title,
+  description,
+  skillTags,
+  year,
+  link,
+  demo,
+  type,
+  typeLabel,
+  linkLabel = 'view page',
+  demoLabel = 'view demo',
+} = Astro.props;
 ---
 
 <div
@@ -34,7 +50,7 @@ const { title, description, skillTags, year, link, demo, type } = Astro.props;
               : 'background: var(--color-accent-coral)'}
           ></span>
           <span class="font-mono text-xs uppercase tracking-wider" style={`color: var(--color-text-secondary)`}>
-            {type}
+            {typeLabel ?? type}
           </span>
         </div>
       )}
@@ -81,7 +97,7 @@ const { title, description, skillTags, year, link, demo, type } = Astro.props;
           class="font-mono text-sm underline underline-offset-2 transition-opacity hover:opacity-70 active-press"
           style={`color: var(--color-accent-blue)`}
           data-scramble
-        >view page</a>
+        >{linkLabel}</a>
       )}
       {demo && (
         <a
@@ -91,7 +107,7 @@ const { title, description, skillTags, year, link, demo, type } = Astro.props;
           class="font-mono text-sm underline underline-offset-2 transition-opacity hover:opacity-70 active-press"
           style={`color: var(--color-accent-blue)`}
           data-scramble
-        >view demo</a>
+        >{demoLabel}</a>
       )}
     </div>
   )}
