@@ -47,41 +47,44 @@ const links = [
           </a>
         );
       })}
-      <div class="ml-4 pl-4 flex items-center gap-3" style={`border-left: 1px solid var(--color-border)`}>
-        <!-- Archive dropdown -->
-        <div class="relative" id="archive-dropdown">
-          <button
-            class="flex items-center gap-1 px-4 py-2 font-mono text-base rounded-md transition-colors active-press"
+      <!-- Archive is a navigation affordance, so it stays with the nav links. -->
+      <div class="relative ml-2" id="archive-dropdown">
+        <button
+          class="flex items-center gap-1 px-4 py-2 font-mono text-base rounded-md transition-colors active-press"
+          style={`color: var(--color-text-secondary)`}
+          id="archive-btn"
+          aria-expanded="false"
+        >
+          <span data-scramble>Archive</span>
+          <svg class="w-3.5 h-3.5 transition-transform duration-200" id="archive-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div
+          class="dropdown-anim absolute top-full right-0 mt-1 rounded-md border py-1 min-w-[120px] z-50 opacity-0 scale-95 pointer-events-none"
+          style={`background: var(--color-surface); border-color: var(--color-border)`}
+          id="archive-menu"
+        >
+          <a
+            href="/archive/2025/index.html"
+            class="block px-4 py-2 font-mono text-xs transition-colors hover:bg-[var(--color-elevated)]"
             style={`color: var(--color-text-secondary)`}
-            id="archive-btn"
-            aria-expanded="false"
           >
-            <span data-scramble>Archive</span>
-            <svg class="w-3.5 h-3.5 transition-transform duration-200" id="archive-chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-          <div
-            class="dropdown-anim absolute top-full right-0 mt-1 rounded-md border py-1 min-w-[120px] z-50 opacity-0 scale-95 pointer-events-none"
-            style={`background: var(--color-surface); border-color: var(--color-border)`}
-            id="archive-menu"
-          >
-            <a
-              href="/archive/2025/index.html"
-              class="block px-4 py-2 font-mono text-xs transition-colors hover:bg-[var(--color-elevated)]"
-              style={`color: var(--color-text-secondary)`}
-            >
-              <span data-scramble>2025</span>
-            </a>
-          </div>
+            <span data-scramble>2025</span>
+          </a>
         </div>
-        <!-- Japanese page. lang/hreflang so assistive tech reads it as Japanese
-             rather than spelling the kanji out in English. -->
+      </div>
+
+      <!-- Controls: language and theme, grouped together and divided off from the
+           nav links so neither reads as another page in the menu. lang/hreflang
+           so assistive tech reads 日本語 as Japanese rather than spelling out
+           the kanji in English. -->
+      <div class="ml-4 pl-4 flex items-center gap-1" style={`border-left: 1px solid var(--color-border)`}>
         <a
           href="/ja"
           lang="ja"
           hreflang="ja"
-          class="lang-link-ja px-3 py-2 text-base rounded-md transition-colors hover:text-[var(--color-accent-blue)]"
+          class="lang-link-ja px-3 py-2 text-sm rounded-md transition-colors active-press hover:text-[var(--color-accent-blue)]"
           style={`color: var(--color-text-secondary)`}
         >
           <span data-scramble>日本語</span>
@@ -91,7 +94,16 @@ const links = [
     </div>
 
     <!-- Mobile menu button -->
-    <div class="flex items-center gap-3 md:hidden">
+    <div class="flex items-center gap-1 md:hidden">
+      <a
+        href="/ja"
+        lang="ja"
+        hreflang="ja"
+        class="lang-link-ja px-2 py-2 text-sm rounded-md transition-colors active-press"
+        style={`color: var(--color-text-secondary)`}
+      >
+        日本語
+      </a>
       <ThemeToggle />
       <button
         id="mobile-menu-btn"
@@ -131,15 +143,6 @@ const links = [
           </a>
         );
       })}
-      <a
-        href="/ja"
-        lang="ja"
-        hreflang="ja"
-        class="lang-link-ja px-3 py-2 text-sm rounded-md transition-colors"
-        style={`color: var(--color-text-secondary)`}
-      >
-        日本語
-      </a>
       <div class="border-t mt-2 pt-2" style={`border-color: var(--color-border)`}>
         <span class="px-3 py-1 font-mono text-xs uppercase tracking-wider block" style={`color: var(--color-text-secondary)`}>Archive</span>
         <a
