@@ -103,15 +103,13 @@ export const anchors = [
 
 // ── Introduction ─────────────────────────────────────────────────────────────
 
-// ⚠️  PLACEHOLDER — Calvin is writing this section himself.
-// Replace the strings below with his own text; each array entry is one
-// paragraph. Nothing else needs to change. The current text is deliberately
-// plain and factual so the page reads correctly if it ships before the
-// rewrite, but it is not his voice.
+// Mirrors the English About bio (src/pages/about.astro), written for a
+// Japanese reader rather than translated sentence by sentence. Each array
+// entry is one paragraph. The cat sentence is left out because the photo
+// caption below already says it. Worth a native speaker's read for tone.
 export const intro = [
-  'ニューメキシコ州アルバカーキを拠点に、ロボティクスとコンピュータサイエンスの研究をしています。ニューメキシコ大学でコンピュータサイエンスの修士号を取得し、修士論文は優等の評価を受けました。',
-  '研究分野は自律ロボット、機械学習、コンピュータビジョンです。サンディア国立研究所とニューメキシコ大学での研究経験があり、成果は国際会議で発表しています。',
-  '2022年には秋田県の国際教養大学に留学しました。現在も日本語の学習を続けています（JLPT N3程度）。',
+  'ニューメキシコ州アルバカーキのサンディア国立研究所で、ロボティクス研究者・コンピュータサイエンティストとして働いています。研究分野は自律ロボット、機械学習、コンピュータビジョンです。ニューメキシコ大学でコンピュータサイエンスの修士号を取得し、複数ロボットによる協調搬送をテーマにした修士論文は優等の評価を受けました。',
+  '研究以外では、2022年に秋田県の国際教養大学へ留学し、今も日本語の勉強を続けています（JLPT N3程度）。地域のSTEMサイエンスフェアでは、ボランティアとして審査委員長を務めています。好きなものはアート、バスケットボール、デザインです。',
 ];
 
 export const photos = {
