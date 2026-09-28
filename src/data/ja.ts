@@ -122,6 +122,8 @@ export const photos = {
 
 /** Right-hand quick facts card, mirroring the English about page. */
 export const quickInfo = [
+  { label: '役職', value: '技術スタッフ（Member of Technical Staff）' },
+  { label: '所属', value: 'サンディア国立研究所' },
   { label: '所在地', value: 'ニューメキシコ州アルバカーキ' },
   { label: '学位', value: 'コンピュータサイエンス修士' },
   { label: '大学', value: 'ニューメキシコ大学' },
