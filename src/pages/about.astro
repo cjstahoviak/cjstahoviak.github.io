@@ -17,9 +17,11 @@ import scratchImg from '../assets/scratch.jpg';
       <div class="h-1 w-16 rounded" style={`background: var(--color-accent-blue)`}></div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+    <!-- Fixed-width right column: 22rem keeps every Quick Info value on one
+         line at every lg width (the widest row, "Employer", needs ~20.5rem). -->
+    <div class="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_22rem] gap-16">
       <!-- Left column: Bio + photo -->
-      <div class="lg:col-span-2 space-y-6">
+      <div class="space-y-6">
         <div class="flex flex-col sm:flex-row gap-8 items-start">
           <div class="flex flex-col gap-4 shrink-0">
             <Image
@@ -41,21 +43,16 @@ import scratchImg from '../assets/scratch.jpg';
           </div>
           <div>
             <p class="text-base leading-relaxed mb-4" style={`color: var(--color-text-secondary)`}>
-              I'm a computer scientist and roboticist based in Albuquerque, New Mexico.
-              I recently completed my M.S. in Computer Science at the University of New Mexico,
-              where my thesis on dynamic admittance parameterization for multi-robot transport
-              was awarded distinction.
-            </p>
-            <p class="text-base leading-relaxed mb-4" style={`color: var(--color-text-secondary)`}>
-              My research spans autonomous robotics, machine learning, and computer vision. I have 
-              several years of research experience as a graduate assistant researcher and a research
-              scientist at Sandia National Laboratories. This work has been published in conferences.
+              I'm a computer scientist and roboticist at Sandia National Laboratories in
+              Albuquerque, New Mexico. My research spans autonomous robotics, machine learning,
+              and computer vision. I completed my M.S. in Computer Science at the University of
+              New Mexico, where my thesis on multi-robot transport was awarded distinction.
             </p>
             <p class="text-base leading-relaxed" style={`color: var(--color-text-secondary)`}>
               Outside the lab, I studied abroad in Akita, Japan, and continue studying
-              Japanese (JLPT ~N3). I volunteer as a judge chair for regional STEM
-              science fair competitions. I love art and basketball and design. This is my cat Scratch, 
-              she is 3 years old.
+              Japanese (JLPT ~N3). I volunteer as a judge chair for regional STEM science
+              fairs. I love art, basketball, and design. This is my cat Scratch; she is 3
+              years old.
             </p>
             <a
               href="/links"
