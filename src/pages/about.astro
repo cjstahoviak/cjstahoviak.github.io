@@ -48,8 +48,9 @@ import scratchImg from '../assets/scratch.jpg';
             </p>
             <p class="text-base leading-relaxed mb-4" style={`color: var(--color-text-secondary)`}>
               My research spans autonomous robotics, machine learning, and computer vision. I have 
-              several years of research experience as a graudate assistant researcher and a research
+              several years of research experience as a graduate assistant researcher and a research
               scientist at Sandia National Laboratories. This work has been published in conferences.
+            </p>
             <p class="text-base leading-relaxed" style={`color: var(--color-text-secondary)`}>
               Outside the lab, I studied abroad in Akita, Japan, and continue studying
               Japanese (JLPT ~N3). I volunteer as a judge chair for regional STEM
@@ -170,16 +171,27 @@ import scratchImg from '../assets/scratch.jpg';
 
       <div class="max-w-3xl">
         <TimelineEntry
-          title="R&D Graduate Intern"
+          title="Member of Technical Staff"
           subtitle="Sandia National Laboratories"
-          date="June 2024 — Present"
+          date="Aug. 2026 — Present"
           location="Albuquerque, NM"
           accent="var(--color-accent-blue)"
           items={[
-            "Built an AprilTag and PID-based outdoor testbed for benchmarking gesture recognition on mobile robots across multiple platforms.",
-            "Trained a physics-informed deep neural network for rapidly estimating mechanical constraints of objects for autonomous robotic manipulation.",
-            "Developed end-to-end multi-behavior policy for quadrotor control using deep reinforcement learning.",
-            "Built a computer vision pipeline for tracking small objects across multiple simultaneous video feeds.",
+            "Own computer vision (detection, tracking, localization) for robotic automated-assembly systems, and support vision work across other robotics and AI research projects.",
+            "Contribute to funded research in AI-driven robotic assembly, adversarial ML, and RL-based quadrotor control.",
+          ]}
+        />
+        <TimelineEntry
+          title="R&D Graduate Intern"
+          subtitle="Sandia National Laboratories"
+          date="June 2024 — Aug. 2026"
+          location="Albuquerque, NM"
+          accent="var(--color-accent-coral)"
+          items={[
+            "Designed an outdoor reliability benchmark for camera-based hand-sign recognition on a quadruped robot.",
+            "Developed and trained a physics-informed neural network that rapidly identifies the linear and rotational constraints on an object's motion for robotic manipulation, with under 1° of error on three real mechanisms.",
+            "Developed an end-to-end, multi-behavior reinforcement learning policy for quadrotor control.",
+            "Developed a computer vision pipeline to track small objects across multiple video feeds simultaneously.",
           ]}
         />
         <TimelineEntry
@@ -187,11 +199,11 @@ import scratchImg from '../assets/scratch.jpg';
           subtitle="University of New Mexico (with Prof. Melanie Moses)"
           date="Aug. 2023 — Dec. 2025"
           location="Albuquerque, NM"
-          accent="var(--color-accent-coral)"
+          accent="var(--color-accent-yellow-ink)"
           items={[
-            "Researched autonomous cooperative transport using mobile robots with fixed manipulator arms, developing hybrid admittance-impedance control and optimal coordinated planning.",
-            "Full-stack robot development: mechanical prototyping, manipulator integration, SLAM-based localization, and pose-estimation pipelines.",
-            "Managed a team of undergraduate researchers — defining roadmaps, allocating tasks, and presenting weekly progress updates.",
+            "Designed, built, and wrote the full software stack for two mobile manipulators; developed dynamic admittance control and optimal coordinated planning for autonomous cooperative transport.",
+            "Development spanned mechanical prototyping and assembly, manipulator integration, SLAM-based localization, and pose-estimation pipelines.",
+            "Led two undergraduate researchers: set the project roadmap, assigned tasks, and delivered milestones to advisors.",
           ]}
         />
         <TimelineEntry
@@ -199,10 +211,10 @@ import scratchImg from '../assets/scratch.jpg';
           subtitle="Sandia National Laboratories"
           date="Apr. 2019 — Aug. 2022"
           location="Albuquerque, NM"
-          accent="var(--color-accent-yellow)"
+          accent="var(--color-accent-blue)"
           items={[
-            "Implemented low-level motor controllers for skid-steer mobile robots using MATLAB, Arduino, Raspberry Pi, and ROS.",
-            "Developed a real-time RGBD-based detection, segmentation, and localization ROS package using custom YOLO models, OpenCV, and CUDA acceleration.",
+            "Implemented low-level PID control for skid-steer mobile robots using MATLAB, Arduino, and Raspberry Pi, integrated with ROS.",
+            "Developed a real-time RGBD-based detection, segmentation, and localization ROS package with custom YOLO models, OpenCV, and CUDA acceleration, running faster than the camera's 30 Hz frame rate on a single GPU.",
           ]}
         />
       </div>
@@ -231,7 +243,7 @@ import scratchImg from '../assets/scratch.jpg';
         <TimelineEntry
           title="B.S. Computer Science"
           subtitle="University of New Mexico"
-          date="Aug. 2018 — May 2022"
+          date="Aug. 2018 — Dec. 2022"
           location="Albuquerque, NM"
           accent="var(--color-accent-coral)"
           items={[
@@ -268,7 +280,7 @@ import scratchImg from '../assets/scratch.jpg';
             <span class="font-mono text-xs" style={`color: var(--color-text-secondary)`}>2025</span>
           </div>
           <h3 class="font-mono font-bold text-sm mb-1" style={`color: var(--color-text)`} data-scramble data-scramble-trigger="parent">Lobo Hackathon — 4th Place</h3>
-          <p class="text-sm" style={`color: var(--color-text-secondary)`}>AI-powered web app for consolidating and summarizing government legislature.</p>
+          <p class="text-sm" style={`color: var(--color-text-secondary)`}>AI-powered web app for consolidating and summarizing government legislation.</p>
           <div class="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-blue)`}></div>
           <div class="accent-bar-1 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style={`background: var(--color-accent-coral); z-index: 1`}></div>
           <div class="accent-bar-2 absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100" style="background: #22C55E; z-index: 2"></div>

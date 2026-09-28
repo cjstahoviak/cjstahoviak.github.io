@@ -47,7 +47,7 @@ const entries: Publication[] = [
       "Perceived Constraint Identification Using Physics-Informed Deep Neural Networks",
     leadAuthor: "Kim, R.",
     venue: "ASME LDSC",
-    year: 2025,
+    year: 2026,
     status: "published",
     skillTags: ["Physics-Informed ML", "Deep Learning", "System Identification"],
     link: "https://asmedigitalcollection.asme.org/lettersdynsys/article-abstract/6/1/011008/1221793/Perceived-Constraint-Identification-Using-Physics?redirectedFrom=fulltext",

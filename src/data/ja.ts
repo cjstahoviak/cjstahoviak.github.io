@@ -179,9 +179,15 @@ export const skills: { title: string; skills: string[] }[] = [
 
 export const work: JaCareerEntry[] = [
   {
+    title: '技術スタッフ（Member of Technical Staff）',
+    subtitle: 'サンディア国立研究所',
+    date: '2026年8月 — 現在',
+    location: 'ニューメキシコ州アルバカーキ',
+  },
+  {
     title: '研究開発インターン（大学院）',
     subtitle: 'サンディア国立研究所',
-    date: '2024年6月 — 現在',
+    date: '2024年6月 — 2026年8月',
     location: 'ニューメキシコ州アルバカーキ',
   },
   {
@@ -209,7 +215,7 @@ export const education: JaCareerEntry[] = [
   {
     title: 'コンピュータサイエンス 学士（B.S.）',
     subtitle: 'ニューメキシコ大学',
-    date: '2018年8月 — 2022年5月',
+    date: '2018年8月 — 2022年12月',
     location: 'ニューメキシコ州アルバカーキ',
     items: ['国際教養大学（秋田県）に留学 — 2022年秋'],
   },
@@ -273,7 +279,7 @@ export const publications: JaPublication[] = [
     title: 'Perceived Constraint Identification Using Physics-Informed Deep Neural Networks',
     leadAuthor: 'Kim, R.',
     venue: 'ASME LDSC',
-    year: 2025,
+    year: 2026,
     status: 'published',
     description:
       'ロボットが操作する物体の機械的な拘束条件を高速に推定する、物理情報を組み込んだ深層ニューラルネットワーク。',

@@ -39,11 +39,11 @@ const entries: Project[] = [
     title: "Legislature Summarizer",
     year: 2025,
     description:
-      "AI-powered web application that consolidates and summarizes government legislature, making policy accessible and searchable. Built during the 2025 Lobo Hackathon, where it placed fourth.",
+      "AI-powered web application that consolidates and summarizes government legislation, making policy accessible and searchable. Built during the 2025 Lobo Hackathon, where it placed fourth.",
     skillTags: ["NLP", "LLMs", "Web Development"],
     featured: {
       description:
-        "AI-powered web app for consolidating and summarizing government legislature. 4th place at Lobo Hackathon.",
+        "AI-powered web app for consolidating and summarizing government legislation. 4th place at Lobo Hackathon.",
     },
   },
   {
