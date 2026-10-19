@@ -32,6 +32,7 @@ const entries: Publication[] = [
     year: 2026,
     status: "accepted",
     skillTags: ["Control Theory", "Multi-Robot Systems", "Motion Planning", "Optimization"],
+    link: "https://bclab-unm.github.io/MARIAM/",
   },
   {
     title:

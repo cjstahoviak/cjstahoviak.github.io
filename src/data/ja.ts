@@ -265,6 +265,7 @@ export const publications: JaPublication[] = [
     status: 'accepted',
     description:
       '複数の移動ロボットが物体を把持せずに協調搬送するための、ハイブリッドなアドミッタンス・インピーダンス制御と最適協調計画。',
+    link: 'https://bclab-unm.github.io/MARIAM/',
   },
   {
     title: 'Reliability of Mobile Camera-Based Hand Sign Recognition in Outdoor Environments',
