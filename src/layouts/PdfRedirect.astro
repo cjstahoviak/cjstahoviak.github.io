@@ -1,0 +1,40 @@
+---
+// A short link (e.g. /resume) that forwards to a PDF. GitHub Pages can't send
+// real HTTP redirects, so this is a minimal page that forwards on load: a
+// meta refresh, plus location.replace() so the short link doesn't linger in
+// the back-button history. It carries its own title and description because
+// chat apps and LinkedIn build link previews from this page, not the PDF.
+// No BaseLayout: the splash screen and nav would only delay the forward.
+interface Props {
+  title: string;
+  description: string;
+  /** Destination, normally a path from src/data/documents.ts. */
+  href: string;
+}
+
+const { title, description, href } = Astro.props;
+const shortUrl = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={shortUrl} />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta http-equiv="refresh" content={`0;url=${href}`} />
+    <script is:inline define:vars={{ href }}>location.replace(href);</script>
+  </head>
+  <body style="font-family: sans-serif; margin: 3rem 1.5rem">
+    <a href={href}>{title} (PDF)</a>
+  </body>
+</html>

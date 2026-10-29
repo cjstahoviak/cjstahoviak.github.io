@@ -5,6 +5,9 @@ import TimelineEntry from '../components/TimelineEntry.astro';
 import SkillCategory from '../components/SkillCategory.astro';
 import calvinImg from '../assets/calvin_stahoviak.jpg';
 import scratchImg from '../assets/scratch.jpg';
+// Direct PDF paths, not the /resume and /cv short links: `download` on a
+// short link would save the forwarding page instead of the PDF.
+import { resumePdf, cvPdf } from '../data/documents';
 ---
 
 <BaseLayout title="About — Calvin Stahoviak" description="Background, skills, and experience of Calvin Stahoviak — roboticist and computer scientist.">
@@ -93,7 +96,7 @@ import scratchImg from '../assets/scratch.jpg';
         </div>
 
         <a
-          href="/Calvin_Stahoviak_Resume.pdf"
+          href={resumePdf}
           download
           class="group flex items-center justify-center gap-2 w-full px-4 py-3 font-mono text-sm font-semibold rounded-md border transition-colors active-press"
           style={`border-color: var(--color-accent-blue); color: var(--color-accent-blue)`}
@@ -105,7 +108,7 @@ import scratchImg from '../assets/scratch.jpg';
         </a>
 
         <a
-          href="/Calvin_Stahoviak_CV.pdf"
+          href={cvPdf}
           download
           class="group flex items-center justify-center gap-2 w-full px-4 py-3 font-mono text-sm font-semibold rounded-md border transition-colors active-press"
           style={`border-color: var(--color-accent-coral); color: var(--color-accent-coral)`}

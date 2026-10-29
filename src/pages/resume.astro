@@ -1,0 +1,10 @@
+---
+import PdfRedirect from '../layouts/PdfRedirect.astro';
+import { resumePdf } from '../data/documents';
+---
+
+<PdfRedirect
+  title="Calvin Stahoviak — Resume"
+  description="One-page resume of Calvin Stahoviak, roboticist at Sandia National Laboratories."
+  href={resumePdf}
+/>

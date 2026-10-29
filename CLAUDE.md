@@ -166,10 +166,15 @@ src/
 └── env.d.ts
 public/
 ├── calvin_stahoviak.jpg    # Headshot
-├── Calvin_Stahoviak_Resume.pdf
-├── Calvin_Stahoviak_CV.pdf
 └── favicon.svg             # Geometric "C" favicon
 ```
+
+The resume and CV PDFs are not in this repo. The Calvin-Stahoviak-Resume-CV
+repo builds them on every push and publishes them with GitHub Pages under this
+domain, at `/Calvin-Stahoviak-Resume-CV/Calvin_Stahoviak_{Resume,CV}.pdf`.
+`src/data/documents.ts` holds those paths; `/resume` and `/cv`
+(`src/pages/resume.astro`, `cv.astro`) are short links that forward to them.
+Updating the PDFs never requires rebuilding this site.
 
 ---
 

@@ -18,6 +18,8 @@
 //     summaries, to keep machine translation off the load-bearing content.
 // ─────────────────────────────────────────────────────────────────────────────
 
+import { resumePdf, cvPdf } from './documents';
+
 export interface JaCareerEntry {
   title: string;
   subtitle: string;
@@ -330,7 +332,7 @@ export const englishOnly = {
   body: '以下のコンテンツは英語のみでご覧いただけます。',
   links: [
     { label: 'ブログ', href: '/blog' },
-    { label: '履歴書（PDF）', href: '/Calvin_Stahoviak_Resume.pdf' },
-    { label: 'CV（PDF）', href: '/Calvin_Stahoviak_CV.pdf' },
+    { label: '履歴書（PDF）', href: resumePdf },
+    { label: 'CV（PDF）', href: cvPdf },
   ],
 };

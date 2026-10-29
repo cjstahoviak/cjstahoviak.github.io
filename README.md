@@ -50,8 +50,12 @@ src/
 │   ├── publications.astro
 │   └── blog/
 └── styles/         # Global CSS + Tailwind theme
-public/             # Static assets (images, resume PDF)
+public/             # Static assets (images, favicon)
 ```
+
+The resume and CV PDFs are built and published by the
+[Calvin-Stahoviak-Resume-CV](https://github.com/cjstahoviak/Calvin-Stahoviak-Resume-CV)
+repo; this site links to them (see `src/data/documents.ts`).
 
 ## Deployment
 
