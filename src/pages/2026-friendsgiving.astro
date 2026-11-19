@@ -1,0 +1,754 @@
+---
+// Potluck sign-up for Friendsgiving 2026. Deliberately standalone: no
+// BaseLayout, no site theme, not linked from anywhere, not indexed.
+//
+// GitHub Pages can't store data, so the list lives in a Google Sheet and is
+// read and written through an Apps Script web app (apps-script/
+// friendsgiving.gs). Paste that deployment's /exec URL here.
+const SHEET_API = '';
+
+// One tile of the drifting background: two side-on turkeys in a brick
+// layout, slightly darker than the page's brown.
+const turkey = `
+  <g fill="#855327" stroke="#855327" stroke-linecap="round">
+    <g stroke="none">
+      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(-28 56 62)"/>
+      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(2 56 62)"/>
+      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(32 56 62)"/>
+      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(62 56 62)"/>
+      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(92 56 62)"/>
+      <ellipse cx="48" cy="63" rx="24" ry="18"/>
+      <circle cx="22" cy="30" r="7"/>
+      <path d="M17 27 7 32l10 3z"/>
+      <ellipse cx="18" cy="39" rx="2.5" ry="5"/>
+    </g>
+    <path d="M33 56 23 33" stroke-width="9" fill="none"/>
+    <path d="M43 78v15m-6 0h8M55 78v15m-6 0h8" stroke-width="3"
+      fill="none"/>
+  </g>`;
+const tile = `<svg xmlns="http://www.w3.org/2000/svg" width="180"
+  height="180" viewBox="0 0 180 180">
+  <g transform="translate(13 13) scale(.64)">${turkey}</g>
+  <g transform="translate(103 103) scale(.64)">${turkey}</g>
+</svg>`.replace(/\s+/g, ' ');
+const tileUrl = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#96602f" />
+    <meta name="robots" content="noindex" />
+    <title>2026 Friendsgiving</title>
+    <meta name="description" content="Who's bringing what." />
+    <meta property="og:title" content="2026 Friendsgiving" />
+    <meta property="og:description" content="Who's bringing what." />
+    <link rel="icon" href="/friendsgiving/turkey.gif" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Chewy&family=Fredoka:wght@400;500;600&display=swap"
+    />
+  </head>
+  <body>
+    <div class="turkeys" style={`background-image: ${tileUrl}`}></div>
+    <canvas id="leaves" aria-hidden="true"></canvas>
+
+    <main data-api={SHEET_API}>
+      <header>
+        <h1><span>2026</span> Friendsgiving</h1>
+        <img
+          class="mascot"
+          src="/friendsgiving/turkey.gif"
+          width="355"
+          height="261"
+          alt="A hand-drawn turkey wearing a top hat"
+        />
+      </header>
+
+      <section class="card">
+        <h2>What's everybody bringing?</h2>
+
+        <table>
+          <thead>
+            <tr><th scope="col">Name</th><th scope="col">Dish</th></tr>
+          </thead>
+          <tbody id="rows">
+            <tr class="note"><td colspan="2">Fetching the menu…</td></tr>
+          </tbody>
+        </table>
+
+        <form id="add" autocomplete="off">
+          <input
+            name="name"
+            placeholder="Your name"
+            aria-label="Your name"
+            maxlength="120"
+            required
+          />
+          <input
+            name="dish"
+            placeholder="What you're bringing"
+            aria-label="What you're bringing"
+            maxlength="120"
+            required
+          />
+          <button type="submit">Add it!</button>
+        </form>
+
+        <p id="status" role="status"></p>
+        <p class="hint">
+          Bringing two things? Add two rows. Tap the pencil to change or
+          remove one.
+        </p>
+      </section>
+    </main>
+
+    <style is:inline>
+      :root {
+        --brown: #96602f;
+        --brown-dark: #4a2a10;
+        --cream: #fff4dc;
+        --cream-dark: #f3dfb4;
+        --pumpkin: #e8751a;
+        --cranberry: #b3243b;
+        --mustard: #f2b632;
+        --tile: 180px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow-x: hidden;
+        background: var(--brown);
+        color: var(--brown-dark);
+        font-family: 'Fredoka', system-ui, sans-serif;
+        font-size: 1.0625rem;
+        line-height: 1.4;
+      }
+
+      /* Oversized by one tile on every side, so sliding it exactly one
+         tile down and to the left loops without showing an edge. */
+      .turkeys {
+        position: fixed;
+        inset: calc(-1 * var(--tile));
+        background-size: var(--tile) var(--tile);
+        animation: drift 24s linear infinite;
+      }
+
+      @keyframes drift {
+        to {
+          transform: translate(calc(-1 * var(--tile)), var(--tile));
+        }
+      }
+
+      #leaves {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      main {
+        position: relative;
+        width: min(100%, 38rem);
+        margin: 0 auto;
+        padding: 2rem 1rem 4rem;
+      }
+
+      header {
+        text-align: center;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: 'Chewy', 'Fredoka', system-ui, sans-serif;
+        font-weight: 400;
+        font-size: clamp(2.6rem, 13vw, 4.75rem);
+        line-height: 0.95;
+        letter-spacing: 0.01em;
+        color: var(--cream);
+        text-shadow:
+          0.04em 0.04em 0 var(--pumpkin),
+          0.08em 0.08em 0 var(--cranberry),
+          0.12em 0.12em 0 var(--brown-dark);
+        transform: rotate(-2deg);
+      }
+
+      h1 span {
+        display: block;
+        font-size: 0.62em;
+        color: var(--mustard);
+      }
+
+      .mascot {
+        display: block;
+        width: min(62%, 15rem);
+        height: auto;
+        margin: 0.75rem auto -1.6rem;
+        position: relative;
+        z-index: 1;
+        image-rendering: pixelated;
+        animation: bob 1.8s ease-in-out infinite;
+      }
+
+      @keyframes bob {
+        50% {
+          transform: translateY(-6px) rotate(2deg);
+        }
+      }
+
+      .card {
+        position: relative;
+        padding: 2.25rem 1.25rem 1.25rem;
+        background: var(--cream);
+        border: 4px solid var(--brown-dark);
+        border-radius: 1.5rem;
+        box-shadow: 0.5rem 0.5rem 0 var(--brown-dark);
+      }
+
+      h2 {
+        margin: 0 0 1rem;
+        font-family: 'Chewy', 'Fredoka', system-ui, sans-serif;
+        font-weight: 400;
+        font-size: 1.6rem;
+        text-align: center;
+        color: var(--cranberry);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      th {
+        padding: 0.5rem 0.75rem;
+        background: var(--pumpkin);
+        color: var(--cream);
+        font-weight: 600;
+        text-align: left;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.85rem;
+      }
+
+      th:first-child {
+        width: 36%;
+        border-radius: 0.75rem 0 0 0.75rem;
+      }
+
+      th:last-child {
+        border-radius: 0 0.75rem 0.75rem 0;
+      }
+
+      td {
+        padding: 0.6rem 0.75rem;
+        vertical-align: top;
+        overflow-wrap: anywhere;
+        border-bottom: 2px dashed var(--cream-dark);
+      }
+
+      td:first-child {
+        font-weight: 600;
+      }
+
+      .dish {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .dish span {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .note td {
+        padding: 1.25rem 0.75rem;
+        text-align: center;
+        font-weight: 400;
+        font-style: italic;
+        opacity: 0.75;
+      }
+
+      input,
+      button {
+        font: inherit;
+        color: inherit;
+      }
+
+      input {
+        width: 100%;
+        min-width: 0;
+        padding: 0.6rem 0.8rem;
+        background: #fff;
+        border: 3px solid var(--brown-dark);
+        border-radius: 0.75rem;
+      }
+
+      input::placeholder {
+        color: #9a7f63;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--mustard);
+        outline-offset: 2px;
+      }
+
+      button {
+        padding: 0.6rem 1.1rem;
+        background: var(--pumpkin);
+        color: var(--cream);
+        font-weight: 600;
+        border: 3px solid var(--brown-dark);
+        border-radius: 0.75rem;
+        box-shadow: 0.2rem 0.2rem 0 var(--brown-dark);
+        cursor: pointer;
+        white-space: nowrap;
+        touch-action: manipulation;
+        transition:
+          transform 0.1s,
+          box-shadow 0.1s;
+      }
+
+      button:active:not(:disabled) {
+        transform: translate(0.15rem, 0.15rem);
+        box-shadow: 0.05rem 0.05rem 0 var(--brown-dark);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+
+      button.plain {
+        background: var(--cream);
+        color: var(--brown-dark);
+      }
+
+      button.danger {
+        background: var(--cranberry);
+      }
+
+      button.edit {
+        flex: none;
+        margin: -0.2rem 0;
+        padding: 0.2rem 0.45rem;
+        background: none;
+        border-color: transparent;
+        box-shadow: none;
+        line-height: 1.2;
+      }
+
+      button.edit:hover {
+        background: var(--cream-dark);
+      }
+
+      #add {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr auto;
+        gap: 0.6rem;
+        margin-top: 1.25rem;
+      }
+
+      .editing td {
+        padding: 0.75rem;
+        background: var(--cream-dark);
+        border-radius: 0.75rem;
+        font-weight: 400;
+      }
+
+      .editing form {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 0.6rem;
+      }
+
+      .editing .actions {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+
+      .editing .danger {
+        margin-left: auto;
+      }
+
+      #status {
+        min-height: 1.4em;
+        margin: 0.75rem 0 0;
+        text-align: center;
+        font-weight: 500;
+        color: var(--cranberry);
+      }
+
+      .hint {
+        margin: 0.25rem 0 0;
+        text-align: center;
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+
+      @media (max-width: 32rem) {
+        #add,
+        .editing form {
+          grid-template-columns: 1fr;
+        }
+
+        .card {
+          padding-inline: 0.9rem;
+        }
+      }
+    </style>
+
+    <script>
+      // ---- Falling pixel leaves -------------------------------------
+      const SPRITES = [
+        [
+          '....#....',
+          '.#.###.#.',
+          '.###o###.',
+          '####o####',
+          '.##ooo##.',
+          '..##o##..',
+          '.#.#o#.#.',
+          '....o....',
+          '....o....',
+        ],
+        [
+          '...#...',
+          '..###..',
+          '.##o##.',
+          '.##o##.',
+          '###o###',
+          '.##o##.',
+          '.##o##.',
+          '..#o#..',
+          '...o...',
+        ],
+        ['..##.', '.###o', '###o.', '##o..', '.o...'],
+      ];
+      // [leaf colour, vein colour]
+      const PALETTE = [
+        ['#e8751a', '#a84d0b'],
+        ['#f2b632', '#b9811a'],
+        ['#c8372d', '#84201a'],
+        ['#d99a2b', '#96651a'],
+        ['#a5461d', '#6b2a0e'],
+      ];
+
+      interface Leaf {
+        sprite: string[];
+        colors: string[];
+        px: number;
+        x: number;
+        y: number;
+        speed: number;
+        sway: number;
+        phase: number;
+        flip: boolean;
+      }
+
+      function initLeaves() {
+        const canvas = document.getElementById('leaves');
+        if (!(canvas instanceof HTMLCanvasElement)) return;
+        const ctx = canvas.getContext('2d')!;
+        const pick = <T,>(list: T[]) =>
+          list[Math.floor(Math.random() * list.length)];
+        let leaves: Leaf[] = [];
+
+        function spawn(anywhere: boolean): Leaf {
+          const px = pick([3, 3, 4, 5]);
+          return {
+            sprite: pick(SPRITES),
+            colors: pick(PALETTE),
+            px,
+            x: Math.random() * (canvas.width + 200),
+            y: anywhere ? Math.random() * canvas.height : -12 * px,
+            speed: 18 + Math.random() * 30,
+            sway: 12 + Math.random() * 30,
+            phase: Math.random() * Math.PI * 2,
+            flip: Math.random() < 0.5,
+          };
+        }
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          const count = Math.round(
+            Math.min(40, Math.max(12, canvas.width / 45)),
+          );
+          leaves = Array.from({ length: count }, () => spawn(true));
+        }
+
+        function draw(leaf: Leaf, time: number) {
+          const { sprite, colors, px } = leaf;
+          const sway = Math.sin(time * 0.9 + leaf.phase) * leaf.sway;
+          // Snap to the leaf's own pixel grid so it moves in chunky steps.
+          const left = Math.round((leaf.x + sway) / px) * px;
+          const top = Math.round(leaf.y / px) * px;
+          const cols = sprite[0].length;
+          for (let r = 0; r < sprite.length; r++) {
+            for (let c = 0; c < cols; c++) {
+              const cell = sprite[r][leaf.flip ? cols - 1 - c : c];
+              if (cell === '.') continue;
+              ctx.fillStyle = cell === '#' ? colors[0] : colors[1];
+              ctx.fillRect(left + c * px, top + r * px, px, px);
+            }
+          }
+        }
+
+        let last = performance.now();
+        function frame(now: number) {
+          // Clamp so leaves don't teleport after the tab was in the back.
+          const dt = Math.min(0.05, (now - last) / 1000);
+          last = now;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          leaves.forEach((leaf, i) => {
+            leaf.y += leaf.speed * dt;
+            // A light breeze toward the bottom-left, matching the turkeys.
+            leaf.x -= leaf.speed * 0.35 * dt;
+            if (leaf.y > canvas.height + 20) leaves[i] = spawn(false);
+            draw(leaf, now / 1000);
+          });
+          requestAnimationFrame(frame);
+        }
+
+        resize();
+        window.addEventListener('resize', resize);
+        requestAnimationFrame(frame);
+      }
+
+      // ---- Sign-up sheet --------------------------------------------
+      interface Row {
+        id: string;
+        name: string;
+        dish: string;
+      }
+
+      type Change =
+        | { action: 'add'; name: string; dish: string }
+        | { action: 'update'; id: string; name: string; dish: string }
+        | { action: 'delete'; id: string };
+
+      const POLL_MS = 10_000;
+
+      function initSheet() {
+        const api = document.querySelector('main')!.dataset.api;
+        const tbody = document.getElementById('rows')!;
+        const status = document.getElementById('status')!;
+        const addForm = document.getElementById('add') as HTMLFormElement;
+
+        let rows: Row[] | null = null;
+        let editingId: string | null = null;
+        // Requests are numbered so a slow poll can't overwrite the result
+        // of a newer save.
+        let sent = 0;
+        let applied = 0;
+
+        function el<K extends keyof HTMLElementTagNameMap>(
+          tag: K,
+          props: Partial<HTMLElementTagNameMap[K]> = {},
+          children: (Node | string)[] = [],
+        ) {
+          const node = Object.assign(document.createElement(tag), props);
+          node.append(...children);
+          return node;
+        }
+
+        function note(text: string) {
+          const td = el('td', { colSpan: 2, textContent: text });
+          return el('tr', { className: 'note' }, [td]);
+        }
+
+        function viewRow(row: Row) {
+          const edit = el('button', {
+            type: 'button',
+            className: 'edit',
+            textContent: '✏️',
+            ariaLabel: `Edit ${row.name}'s ${row.dish}`,
+            onclick: () => {
+              editingId = row.id;
+              render();
+            },
+          });
+          const dish = el('div', { className: 'dish' }, [
+            el('span', { textContent: row.dish }),
+            edit,
+          ]);
+          return el('tr', {}, [
+            el('td', { textContent: row.name }),
+            el('td', {}, [dish]),
+          ]);
+        }
+
+        function editRow(row: Row) {
+          const name = el('input', {
+            value: row.name,
+            ariaLabel: 'Name',
+            maxLength: 120,
+            required: true,
+          });
+          const dish = el('input', {
+            value: row.dish,
+            ariaLabel: 'Dish',
+            maxLength: 120,
+            required: true,
+          });
+          const stop = () => {
+            editingId = null;
+            render();
+          };
+          const save = el('button', { type: 'submit', textContent: 'Save' });
+          const cancel = el('button', {
+            type: 'button',
+            className: 'plain',
+            textContent: 'Cancel',
+            onclick: stop,
+          });
+          const remove = el('button', {
+            type: 'button',
+            className: 'danger',
+            textContent: 'Remove',
+          });
+          const form = el('form', { autocomplete: 'off' }, [
+            name,
+            dish,
+            el('div', { className: 'actions' }, [save, cancel, remove]),
+          ]);
+          const run = async (change: Change, busy: string) => {
+            const ok = await send(change, form, busy);
+            if (ok) stop();
+          };
+          form.onsubmit = (event) => {
+            event.preventDefault();
+            const values = {
+              name: name.value.trim(),
+              dish: dish.value.trim(),
+            };
+            if (!values.name || !values.dish) return;
+            run({ action: 'update', id: row.id, ...values }, 'Saving…');
+          };
+          remove.onclick = () =>
+            run({ action: 'delete', id: row.id }, 'Removing…');
+          const td = el('td', { colSpan: 2 }, [form]);
+          queueMicrotask(() => dish.focus());
+          return el('tr', { className: 'editing' }, [td]);
+        }
+
+        function render() {
+          if (!rows) return;
+          if (editingId && !rows.some((row) => row.id === editingId)) {
+            editingId = null;
+          }
+          const body = rows.map((row) =>
+            row.id === editingId ? editRow(row) : viewRow(row),
+          );
+          if (!body.length) {
+            body.push(note('Nothing yet. Be the first!'));
+          }
+          tbody.replaceChildren(...body);
+        }
+
+        async function request(change?: Change): Promise<boolean> {
+          const seq = ++sent;
+          const init: RequestInit = change
+            ? {
+                method: 'POST',
+                // text/plain keeps this a "simple" request: no CORS
+                // preflight, which Apps Script can't answer.
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(change),
+              }
+            : { cache: 'no-store' };
+          const res = await fetch(api!, init);
+          const data = await res.json();
+          if (!data.ok) throw new Error(data.error || 'Request failed');
+          if (seq < applied) return true;
+          applied = seq;
+          rows = data.rows as Row[];
+          // Don't yank an open edit form out from under someone typing;
+          // the fresh rows show up as soon as they finish.
+          if (change || !editingId) render();
+          return true;
+        }
+
+        /** Saves a change, locking `form` meanwhile. True on success. */
+        async function send(
+          change: Change,
+          form: HTMLFormElement,
+          busy: string,
+        ) {
+          const controls = [...form.elements] as HTMLInputElement[];
+          controls.forEach((control) => (control.disabled = true));
+          status.textContent = busy;
+          try {
+            await request(change);
+            status.textContent = '';
+            return true;
+          } catch {
+            status.textContent = "That didn't save. Try again?";
+            return false;
+          } finally {
+            controls.forEach((control) => (control.disabled = false));
+          }
+        }
+
+        async function poll() {
+          if (document.hidden) return;
+          try {
+            await request();
+            if (status.dataset.offline) {
+              status.textContent = '';
+              delete status.dataset.offline;
+            }
+          } catch {
+            if (!rows) {
+              tbody.replaceChildren(note("Couldn't load the list."));
+            }
+            status.textContent = "Can't reach the list. Retrying…";
+            status.dataset.offline = 'true';
+          }
+        }
+
+        if (!api) {
+          tbody.replaceChildren(
+            note("The sign-up sheet isn't hooked up yet."),
+          );
+          for (const control of addForm.elements) {
+            (control as HTMLInputElement).disabled = true;
+          }
+          return;
+        }
+
+        addForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const data = new FormData(addForm);
+          const name = String(data.get('name')).trim();
+          const dish = String(data.get('dish')).trim();
+          if (!name || !dish) return;
+          const change: Change = { action: 'add', name, dish };
+          if (await send(change, addForm, 'Adding…')) addForm.reset();
+        });
+
+        poll();
+        setInterval(poll, POLL_MS);
+        document.addEventListener('visibilitychange', poll);
+      }
+
+      initLeaves();
+      initSheet();
+    </script>
+  </body>
+</html>

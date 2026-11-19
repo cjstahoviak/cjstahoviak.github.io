@@ -176,6 +176,13 @@ domain, at `/Calvin-Stahoviak-Resume-CV/Calvin_Stahoviak_{Resume,CV}.pdf`.
 (`src/pages/resume.astro`, `cv.astro`) are short links that forward to them.
 Updating the PDFs never requires rebuilding this site.
 
+`/2026-friendsgiving` (`src/pages/2026-friendsgiving.astro`) is an unlisted
+potluck sign-up page that deliberately ignores the design system: no
+BaseLayout, its own fonts and colors, `noindex`, and excluded from the
+sitemap. Its list lives in a Google Sheet, read and written through an Apps
+Script web app; `apps-script/friendsgiving.gs` is a reference copy of that
+script, and the deployment URL is the `SHEET_API` constant in the page.
+
 ---
 
 ## Content Management
