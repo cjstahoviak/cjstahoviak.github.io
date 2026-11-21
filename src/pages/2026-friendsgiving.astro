@@ -8,31 +8,6 @@
 const SHEET_API =
   'https://script.google.com/macros/s/AKfycby0W84B-2GTEiPwcnUrE3fkus0iU1HiUB55wq5sqJV6dJda6eGp3yvuK-UNWRWmWVhJ/exec';
 
-// One tile of the drifting background: two side-on turkeys in a brick
-// layout, slightly darker than the page's brown.
-const turkey = `
-  <g fill="#855327" stroke="#855327" stroke-linecap="round">
-    <g stroke="none">
-      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(-28 56 62)"/>
-      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(2 56 62)"/>
-      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(32 56 62)"/>
-      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(62 56 62)"/>
-      <ellipse cx="58" cy="30" rx="8" ry="25" transform="rotate(92 56 62)"/>
-      <ellipse cx="48" cy="63" rx="24" ry="18"/>
-      <circle cx="22" cy="30" r="7"/>
-      <path d="M17 27 7 32l10 3z"/>
-      <ellipse cx="18" cy="39" rx="2.5" ry="5"/>
-    </g>
-    <path d="M33 56 23 33" stroke-width="9" fill="none"/>
-    <path d="M43 78v15m-6 0h8M55 78v15m-6 0h8" stroke-width="3"
-      fill="none"/>
-  </g>`;
-const tile = `<svg xmlns="http://www.w3.org/2000/svg" width="180"
-  height="180" viewBox="0 0 180 180">
-  <g transform="translate(13 13) scale(.64)">${turkey}</g>
-  <g transform="translate(103 103) scale(.64)">${turkey}</g>
-</svg>`.replace(/\s+/g, ' ');
-const tileUrl = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
 ---
 
 <!doctype html>
@@ -51,72 +26,37 @@ const tileUrl = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Chewy&family=Fredoka:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Chewy&display=swap"
     />
   </head>
   <body>
-    <div class="turkeys" style={`background-image: ${tileUrl}`}></div>
+    <div class="turkeys"></div>
     <canvas id="leaves" aria-hidden="true"></canvas>
 
     <main data-api={SHEET_API}>
-      <header>
-        <h1><span>2026</span> Friendsgiving</h1>
-        <img
-          class="mascot"
-          src="/friendsgiving/turkey.gif"
-          width="355"
-          height="261"
-          alt="A hand-drawn turkey wearing a top hat"
-        />
-      </header>
+      <h1>2026 Friendsgiving</h1>
+      <img
+        class="mascot"
+        src="/friendsgiving/turkey.gif"
+        width="355"
+        height="261"
+        alt="A hand-drawn turkey wearing a top hat"
+      />
 
-      <section class="card">
-        <h2>What's everybody bringing?</h2>
-
-        <table>
-          <thead>
-            <tr><th scope="col">Name</th><th scope="col">Dish</th></tr>
-          </thead>
-          <tbody id="rows">
-            <tr class="note"><td colspan="2">Fetching the menu…</td></tr>
-          </tbody>
-        </table>
-
-        <form id="add" autocomplete="off">
-          <input
-            name="name"
-            placeholder="Your name"
-            aria-label="Your name"
-            maxlength="120"
-            required
-          />
-          <input
-            name="dish"
-            placeholder="What you're bringing"
-            aria-label="What you're bringing"
-            maxlength="120"
-            required
-          />
-          <button type="submit">Add it!</button>
-        </form>
-
-        <p id="status" role="status"></p>
-        <p class="hint">
-          Bringing two things? Add two rows. Tap the pencil to change or
-          remove one.
-        </p>
-      </section>
+      <table>
+        <thead>
+          <tr><th scope="col">Name</th><th scope="col">Dish</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <p id="status" role="status">Loading…</p>
     </main>
 
     <style is:inline>
       :root {
         --brown: #96602f;
-        --brown-dark: #4a2a10;
-        --cream: #fff4dc;
-        --cream-dark: #f3dfb4;
-        --pumpkin: #e8751a;
-        --cranberry: #b3243b;
-        --mustard: #f2b632;
+        --ink: #2b1a0c;
+        --line: #c7b299;
         --tile: 180px;
       }
 
@@ -130,17 +70,19 @@ const tileUrl = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
         min-height: 100dvh;
         overflow-x: hidden;
         background: var(--brown);
-        color: var(--brown-dark);
-        font-family: 'Fredoka', system-ui, sans-serif;
-        font-size: 1.0625rem;
+        color: var(--ink);
+        font-family: system-ui, sans-serif;
+        font-size: 1rem;
         line-height: 1.4;
       }
 
       /* Oversized by one tile on every side, so sliding it exactly one
-         tile down and to the left loops without showing an edge. */
+         tile down and to the left loops without showing an edge. The tile
+         is built at 2x by hand from a turkey icon (rotated and skewed). */
       .turkeys {
         position: fixed;
         inset: calc(-1 * var(--tile));
+        background-image: url('/friendsgiving/turkey-tile.png');
         background-size: var(--tile) var(--tile);
         animation: drift 24s linear infinite;
       }
@@ -161,255 +103,88 @@ const tileUrl = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
 
       main {
         position: relative;
-        width: min(100%, 38rem);
+        width: min(100%, 34rem);
         margin: 0 auto;
         padding: 2rem 1rem 4rem;
       }
 
-      header {
-        text-align: center;
-      }
-
       h1 {
         margin: 0;
-        font-family: 'Chewy', 'Fredoka', system-ui, sans-serif;
+        font-family: 'Chewy', system-ui, sans-serif;
         font-weight: 400;
-        font-size: clamp(2.6rem, 13vw, 4.75rem);
-        line-height: 0.95;
-        letter-spacing: 0.01em;
-        color: var(--cream);
-        text-shadow:
-          0.04em 0.04em 0 var(--pumpkin),
-          0.08em 0.08em 0 var(--cranberry),
-          0.12em 0.12em 0 var(--brown-dark);
-        transform: rotate(-2deg);
-      }
-
-      h1 span {
-        display: block;
-        font-size: 0.62em;
-        color: var(--mustard);
+        font-size: clamp(2.2rem, 10vw, 3.5rem);
+        line-height: 1;
+        text-align: center;
+        color: #fff4dc;
+        text-shadow: 0.06em 0.06em 0 var(--ink);
       }
 
       .mascot {
         display: block;
-        width: min(62%, 15rem);
+        width: min(50%, 12rem);
         height: auto;
-        margin: 0.75rem auto -1.6rem;
-        position: relative;
-        z-index: 1;
+        margin: 0.5rem auto;
         image-rendering: pixelated;
-        animation: bob 1.8s ease-in-out infinite;
-      }
-
-      @keyframes bob {
-        50% {
-          transform: translateY(-6px) rotate(2deg);
-        }
-      }
-
-      .card {
-        position: relative;
-        padding: 2.25rem 1.25rem 1.25rem;
-        background: var(--cream);
-        border: 4px solid var(--brown-dark);
-        border-radius: 1.5rem;
-        box-shadow: 0.5rem 0.5rem 0 var(--brown-dark);
-      }
-
-      h2 {
-        margin: 0 0 1rem;
-        font-family: 'Chewy', 'Fredoka', system-ui, sans-serif;
-        font-weight: 400;
-        font-size: 1.6rem;
-        text-align: center;
-        color: var(--cranberry);
       }
 
       table {
         width: 100%;
         border-collapse: collapse;
         table-layout: fixed;
+        background: #fffdf8;
+      }
+
+      th,
+      td {
+        border: 1px solid var(--line);
       }
 
       th {
-        padding: 0.5rem 0.75rem;
-        background: var(--pumpkin);
-        color: var(--cream);
+        padding: 0.45rem 0.6rem;
+        background: #efe3d0;
+        font-size: 0.85rem;
         font-weight: 600;
         text-align: left;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        font-size: 0.85rem;
       }
 
       th:first-child {
         width: 36%;
-        border-radius: 0.75rem 0 0 0.75rem;
-      }
-
-      th:last-child {
-        border-radius: 0 0.75rem 0.75rem 0;
       }
 
       td {
-        padding: 0.6rem 0.75rem;
-        vertical-align: top;
-        overflow-wrap: anywhere;
-        border-bottom: 2px dashed var(--cream-dark);
+        padding: 0;
       }
 
-      td:first-child {
-        font-weight: 600;
-      }
-
-      .dish {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.5rem;
-      }
-
-      .dish span {
-        flex: 1;
-        min-width: 0;
-      }
-
-      .note td {
-        padding: 1.25rem 0.75rem;
-        text-align: center;
-        font-weight: 400;
-        font-style: italic;
-        opacity: 0.75;
-      }
-
-      input,
-      button {
-        font: inherit;
-        color: inherit;
-      }
-
+      /* Each cell is an input, like a spreadsheet. 16px keeps iOS from
+         zooming in on focus. */
       input {
+        display: block;
         width: 100%;
-        min-width: 0;
-        padding: 0.6rem 0.8rem;
-        background: #fff;
-        border: 3px solid var(--brown-dark);
-        border-radius: 0.75rem;
+        padding: 0.55rem 0.6rem;
+        font: inherit;
+        font-size: 16px;
+        color: inherit;
+        background: none;
+        border: 0;
+        border-radius: 0;
+        text-overflow: ellipsis;
       }
 
       input::placeholder {
-        color: #9a7f63;
+        color: #a8977f;
       }
 
-      :focus-visible {
-        outline: 3px solid var(--mustard);
-        outline-offset: 2px;
-      }
-
-      button {
-        padding: 0.6rem 1.1rem;
-        background: var(--pumpkin);
-        color: var(--cream);
-        font-weight: 600;
-        border: 3px solid var(--brown-dark);
-        border-radius: 0.75rem;
-        box-shadow: 0.2rem 0.2rem 0 var(--brown-dark);
-        cursor: pointer;
-        white-space: nowrap;
-        touch-action: manipulation;
-        transition:
-          transform 0.1s,
-          box-shadow 0.1s;
-      }
-
-      button:active:not(:disabled) {
-        transform: translate(0.15rem, 0.15rem);
-        box-shadow: 0.05rem 0.05rem 0 var(--brown-dark);
-      }
-
-      button:disabled {
-        opacity: 0.6;
-        cursor: wait;
-      }
-
-      button.plain {
-        background: var(--cream);
-        color: var(--brown-dark);
-      }
-
-      button.danger {
-        background: var(--cranberry);
-      }
-
-      button.edit {
-        flex: none;
-        margin: -0.2rem 0;
-        padding: 0.2rem 0.45rem;
-        background: none;
-        border-color: transparent;
-        box-shadow: none;
-        line-height: 1.2;
-      }
-
-      button.edit:hover {
-        background: var(--cream-dark);
-      }
-
-      #add {
-        display: grid;
-        grid-template-columns: 1fr 1.4fr auto;
-        gap: 0.6rem;
-        margin-top: 1.25rem;
-      }
-
-      .editing td {
-        padding: 0.75rem;
-        background: var(--cream-dark);
-        border-radius: 0.75rem;
-        font-weight: 400;
-      }
-
-      .editing form {
-        display: grid;
-        grid-template-columns: 1fr 1.4fr;
-        gap: 0.6rem;
-      }
-
-      .editing .actions {
-        grid-column: 1 / -1;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-      }
-
-      .editing .danger {
-        margin-left: auto;
+      input:focus {
+        outline: 2px solid #c8641a;
+        outline-offset: -2px;
       }
 
       #status {
         min-height: 1.4em;
-        margin: 0.75rem 0 0;
-        text-align: center;
-        font-weight: 500;
-        color: var(--cranberry);
-      }
-
-      .hint {
-        margin: 0.25rem 0 0;
-        text-align: center;
-        font-size: 0.9rem;
-        opacity: 0.7;
-      }
-
-      @media (max-width: 32rem) {
-        #add,
-        .editing form {
-          grid-template-columns: 1fr;
-        }
-
-        .card {
-          padding-inline: 0.9rem;
-        }
+        margin: 0.4rem 0 0;
+        font-size: 0.85rem;
+        text-align: right;
+        color: #fff4dc;
       }
     </style>
 
@@ -532,6 +307,9 @@ const tileUrl = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
       }
 
       // ---- Sign-up sheet --------------------------------------------
+      // The table behaves like a two-column spreadsheet: every cell is an
+      // input, a row saves when you leave it, clearing both cells of a
+      // row removes it, and the blank last row adds a new one.
       interface Row {
         id: string;
         name: string;
@@ -549,120 +327,46 @@ const tileUrl = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
         const api = document.querySelector('main')!.dataset.api;
         const tbody = document.getElementById('rows')!;
         const status = document.getElementById('status')!;
-        const addForm = document.getElementById('add') as HTMLFormElement;
 
-        let rows: Row[] | null = null;
-        let editingId: string | null = null;
+        let rows: Row[] = [];
         // Requests are numbered so a slow poll can't overwrite the result
         // of a newer save.
         let sent = 0;
         let applied = 0;
 
-        function el<K extends keyof HTMLElementTagNameMap>(
-          tag: K,
-          props: Partial<HTMLElementTagNameMap[K]> = {},
-          children: (Node | string)[] = [],
-        ) {
-          const node = Object.assign(document.createElement(tag), props);
-          node.append(...children);
-          return node;
+        function buildRow(row?: Row) {
+          const tr = document.createElement('tr');
+          if (row) tr.dataset.id = row.id;
+          for (const key of ['name', 'dish'] as const) {
+            const input = document.createElement('input');
+            input.name = key;
+            input.value = row ? row[key] : '';
+            input.maxLength = 120;
+            input.autocomplete = 'off';
+            input.enterKeyHint = key === 'name' ? 'next' : 'done';
+            input.ariaLabel = key === 'name' ? 'Name' : 'Dish';
+            if (!row) {
+              input.placeholder = key === 'name' ? 'Your name' : 'Your dish';
+            }
+            const td = document.createElement('td');
+            td.append(input);
+            tr.append(td);
+          }
+          return tr;
         }
 
-        function note(text: string) {
-          const td = el('td', { colSpan: 2, textContent: text });
-          return el('tr', { className: 'note' }, [td]);
-        }
-
-        function viewRow(row: Row) {
-          const edit = el('button', {
-            type: 'button',
-            className: 'edit',
-            textContent: '✏️',
-            ariaLabel: `Edit ${row.name}'s ${row.dish}`,
-            onclick: () => {
-              editingId = row.id;
-              render();
-            },
-          });
-          const dish = el('div', { className: 'dish' }, [
-            el('span', { textContent: row.dish }),
-            edit,
-          ]);
-          return el('tr', {}, [
-            el('td', { textContent: row.name }),
-            el('td', {}, [dish]),
-          ]);
-        }
-
-        function editRow(row: Row) {
-          const name = el('input', {
-            value: row.name,
-            ariaLabel: 'Name',
-            maxLength: 120,
-            required: true,
-          });
-          const dish = el('input', {
-            value: row.dish,
-            ariaLabel: 'Dish',
-            maxLength: 120,
-            required: true,
-          });
-          const stop = () => {
-            editingId = null;
-            render();
-          };
-          const save = el('button', { type: 'submit', textContent: 'Save' });
-          const cancel = el('button', {
-            type: 'button',
-            className: 'plain',
-            textContent: 'Cancel',
-            onclick: stop,
-          });
-          const remove = el('button', {
-            type: 'button',
-            className: 'danger',
-            textContent: 'Remove',
-          });
-          const form = el('form', { autocomplete: 'off' }, [
-            name,
-            dish,
-            el('div', { className: 'actions' }, [save, cancel, remove]),
-          ]);
-          const run = async (change: Change, busy: string) => {
-            const ok = await send(change, form, busy);
-            if (ok) stop();
-          };
-          form.onsubmit = (event) => {
-            event.preventDefault();
-            const values = {
-              name: name.value.trim(),
-              dish: dish.value.trim(),
-            };
-            if (!values.name || !values.dish) return;
-            run({ action: 'update', id: row.id, ...values }, 'Saving…');
-          };
-          remove.onclick = () =>
-            run({ action: 'delete', id: row.id }, 'Removing…');
-          const td = el('td', { colSpan: 2 }, [form]);
-          queueMicrotask(() => dish.focus());
-          return el('tr', { className: 'editing' }, [td]);
-        }
+        // The blank row is kept across renders so a half-typed entry
+        // survives a refresh of the rows above it.
+        const blank = buildRow();
 
         function render() {
-          if (!rows) return;
-          if (editingId && !rows.some((row) => row.id === editingId)) {
-            editingId = null;
-          }
-          const body = rows.map((row) =>
-            row.id === editingId ? editRow(row) : viewRow(row),
-          );
-          if (!body.length) {
-            body.push(note('Nothing yet. Be the first!'));
-          }
-          tbody.replaceChildren(...body);
+          // Never redraw under someone who is typing; the focusout
+          // handler calls this again once they leave the table.
+          if (tbody.contains(document.activeElement)) return;
+          tbody.replaceChildren(...rows.map(buildRow), blank);
         }
 
-        async function request(change?: Change): Promise<boolean> {
+        async function request(change?: Change) {
           const seq = ++sent;
           const init: RequestInit = change
             ? {
@@ -676,73 +380,95 @@ const tileUrl = `url("data:image/svg+xml,${encodeURIComponent(tile)}")`;
           const res = await fetch(api!, init);
           const data = await res.json();
           if (!data.ok) throw new Error(data.error || 'Request failed');
-          if (seq < applied) return true;
+          if (seq < applied) return;
           applied = seq;
           rows = data.rows as Row[];
-          // Don't yank an open edit form out from under someone typing;
-          // the fresh rows show up as soon as they finish.
-          if (change || !editingId) render();
-          return true;
+          render();
         }
 
-        /** Saves a change, locking `form` meanwhile. True on success. */
-        async function send(
-          change: Change,
-          form: HTMLFormElement,
-          busy: string,
-        ) {
-          const controls = [...form.elements] as HTMLInputElement[];
-          controls.forEach((control) => (control.disabled = true));
-          status.textContent = busy;
+        async function save(change: Change) {
+          status.textContent = 'Saving…';
           try {
             await request(change);
             status.textContent = '';
             return true;
           } catch {
             status.textContent = "That didn't save. Try again?";
+            render();
             return false;
-          } finally {
-            controls.forEach((control) => (control.disabled = false));
           }
         }
+
+        /** Works out what leaving `tr` should save, if anything. */
+        async function commit(tr: HTMLTableRowElement) {
+          const [nameInput, dishInput] = tr.querySelectorAll('input');
+          const name = nameInput.value.trim();
+          const dish = dishInput.value.trim();
+          const id = tr.dataset.id;
+          if (!id) {
+            if (!name || !dish) return;
+            // Cleared up front so the row is free for the next entry
+            // while this one saves; put back only if the save fails.
+            nameInput.value = dishInput.value = '';
+            const ok = await save({ action: 'add', name, dish });
+            if (!ok && !nameInput.value && !dishInput.value) {
+              nameInput.value = name;
+              dishInput.value = dish;
+            }
+            return;
+          }
+          const saved = rows.find((row) => row.id === id);
+          if (!saved) return;
+          if (!name && !dish) {
+            await save({ action: 'delete', id });
+          } else if (
+            name &&
+            dish &&
+            (name !== saved.name || dish !== saved.dish)
+          ) {
+            await save({ action: 'update', id, name, dish });
+          }
+          // A row with only one cell filled isn't saved; the redraw
+          // below puts its last saved values back.
+        }
+
+        tbody.addEventListener('focusout', (event) => {
+          const tr = (event.target as HTMLElement).closest('tr')!;
+          // Moving between the two cells of one row isn't leaving it.
+          if (tr.contains(event.relatedTarget as Node | null)) return;
+          commit(tr);
+          // Deferred so document.activeElement has already moved on.
+          setTimeout(render);
+        });
+
+        tbody.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter') return;
+          const input = event.target as HTMLInputElement;
+          const next = input.closest('tr')!.querySelectorAll('input')[1];
+          if (input === next) input.blur();
+          else next.focus();
+        });
 
         async function poll() {
           if (document.hidden) return;
           try {
             await request();
-            if (status.dataset.offline) {
+            if (status.dataset.offline || status.textContent === 'Loading…') {
               status.textContent = '';
               delete status.dataset.offline;
             }
           } catch {
-            if (!rows) {
-              tbody.replaceChildren(note("Couldn't load the list."));
-            }
             status.textContent = "Can't reach the list. Retrying…";
             status.dataset.offline = 'true';
           }
         }
 
         if (!api) {
-          tbody.replaceChildren(
-            note("The sign-up sheet isn't hooked up yet."),
-          );
-          for (const control of addForm.elements) {
-            (control as HTMLInputElement).disabled = true;
-          }
+          status.textContent = "The sign-up sheet isn't hooked up yet.";
           return;
         }
 
-        addForm.addEventListener('submit', async (event) => {
-          event.preventDefault();
-          const data = new FormData(addForm);
-          const name = String(data.get('name')).trim();
-          const dish = String(data.get('dish')).trim();
-          if (!name || !dish) return;
-          const change: Change = { action: 'add', name, dish };
-          if (await send(change, addForm, 'Adding…')) addForm.reset();
-        });
-
+        render();
         poll();
         setInterval(poll, POLL_MS);
         document.addEventListener('visibilitychange', poll);
